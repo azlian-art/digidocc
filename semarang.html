@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Docking Space Checker - PT PAL Indonesia</title>
+</head>
+<body style="font-family: 'Arial', sans-serif; background-color: #f4f4f4; background-image: url('img/DJI_0710.JPG'); background-size: cover; background-position: center; background-repeat: no-repeat; margin: 0; padding: 0;">
+    <header>
+        <div class="header-container">
+            <img src="img/LOGO CII.png" class="logo" alt="Company Logo">
+
+            <h1>SEMARANG DOCK</h1>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="homepage.html">Home</a></li>
+                    <li><a href="display.html">View Schedule</a></li>
+                    <li><a href="update.html">View map</a></li>
+                    <li>
+                        <a href="#" id="dockingSpaceChecker">Docking Space Checker</a>
+                        <div id="dockDropdown" style="display: none;">
+                            <ul>
+                                <li><a href="irian.html">Dock Irian</a></li>
+                                <li><a href="sby.html">Dock Surabaya</a></li>
+                                <li><a href="semarang.html">Dock Semarang</a></li>
+                                <li><a href="floating.html">Dock 2</a></li>
+                                <li><a href="dock1.html">Dock 1</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="docking-container"> <!-- New container for side-by-side layout -->
+            <section id="docking-space" class="input-section">
+                <h2>Enter Ship Details</h2>
+                <form id="dockingForm">
+                    <div class="input-group">
+                        <label for="shipName">Ship Name:</label>
+                        <input type="text" id="shipName" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="loa">Ship LOA (Length Overall in meters):</label>
+                        <input type="number" id="loa" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="b">Ship Beam (Width in meters):</label>
+                        <input type="number" id="b" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="t">Ship Draft (Depth in meters):</label>
+                        <input type="number" id="t" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="gt">Ship GT (Gross Tonnage):</label>
+                        <input type="number" id="gt" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="dwt">Ship DWT (Deadweight Tonnage):</label>
+                        <input type="number" id="dwt" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="date">Date of Docking:</label>
+                        <input type="date" id="date" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="stayStart">Stay Start Date:</label>
+                        <input type="date" id="stayStart" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="stayEnd">Stay End Date:</label>
+                        <input type="date" id="stayEnd" required>
+                    </div>
+                    <button type="submit">Add Ship</button>
+                </form>
+                <div id="result" class="result"></div> <!-- Move this section here -->
+            </section>
+    
+            <section id="results" class="results-section">
+                <div id="shipList" class="ship-list">
+                    <h3>List of Docked Ships</h3>
+                    <table>
+                        <thead>
+                            <button id="deleteAllButton">Delete All Ships</button>
+                            <tr>
+                                <th>Ship Name</th>
+                                <th>LOA (m)</th>
+                                <th>Beam (m)</th>
+                                <th>Draft (m)</th>
+                                <th>GT</th>
+                                <th>DWT</th>
+                                <th>Stay Duration</th>
+                                <th>Days of Stay</th>
+                                <th>Date of Docking</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="shipTableBody">
+ <!-- Ship rows will be dynamically added here -->
+                        </tbody>
+                    </table>
+                </div>
+                <canvas id="ganttChart" width="800" height="500"></canvas>
+                <canvas id="remainingSpaceChart" width="0" height="0"></canvas>
+            </section>
+        </div> <!-- End of docking-container -->
+
+        <section id="calendar-schedule" class="calendar-section">
+            <h2>Upcoming Month Schedule</h2>
+            <div class="calendar-navigation">
+                <button id="prevMonthButton">Prev Month</button>
+                <button id="nextMonthButton">Next Month</button>
+                <button id="prevYearButton">Prev Year</button>
+                <button id="nextYearButton">Next Year</button>
+            </div>
+            <h2 id="monthYearLabel"></h2>
+            <table id="calendarTable">
+                <thead>
+                    <tr>
+                        <th>Sunday</th>
+                        <th>Monday</th>
+                        <th>Tuesday</th>
+                        <th>Wednesday</th>
+                        <th>Thursday</th>
+                        <th>Friday</th>
+                        <th>Saturday</th>
+                    </tr>
+                </thead>
+                <tbody id="calendarTableBody">
+                    <!-- Calendar rows will be dynamically added here -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 PT PAL Indonesia. All rights reserved.</p>
+        <p><a href="menu.html" class="button">Back to Menu</a></p>
+    </footer>
+
+    <script src="semarang.js"></script>
+    <script>
+        // Show the dock select dropdown when clicking on "Docking Space Checker"
+        document.getElementById('dockingSpaceChecker').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default link behavior
+            const dockSelect = document.getElementById('dockSelect');
+            dockSelect.style.display = dockSelect.style.display === 'none' ? 'block' : 'none'; // Toggle visibility
+        });
+
+        // Function to navigate to the selected dock page
+        document.getElementById('dockSelect').addEventListener('change', function() {
+            const selectedDock = this.value;
+            if (selectedDock) {
+                window.location.href = selectedDock; // Navigate to the selected dock page
+            }
+        });
+    </script>
+</body>
+</html>
+

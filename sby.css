@@ -1,0 +1,342 @@
+/* General Body Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4; /* Fallback color */
+    background-image: url('background.jpg'); /* Path to your background image */
+    background-size: cover; /* Cover the entire viewport */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    margin: 0;
+    padding: 0;
+}
+/* Dropdown Styles */
+#dockSelect {
+    position: absolute; /* Position it absolutely */
+    z-index: 10; /* Ensure it appears above other elements */
+    display: none; /* Initially hidden */
+    margin-top: 5px; /* Space between the button and dropdown */
+    background-color: white; /* Background color for the dropdown */
+    border: 1px solid #007bff; /* Border color */
+    border-radius: 4px; /* Rounded corners */
+    width: 200px; /* Set a width for the dropdown */
+}
+
+/* Show the dropdown when hovering over the button */
+#dockingSpaceChecker:hover + #dockSelect {
+    display: block; /* Show the dropdown */
+}
+/* Container Styles */
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 10px;
+    border-radius: 8px; /* Rounded corners for the container */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Slight shadow for depth */
+}
+
+/* Header Styles */
+header {
+    background-color: #003366;
+    color: white;
+    padding: 10px 0;
+}
+
+/* Flexbox for header to position logo and nav menu */
+.header-container {
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Space between logo and nav menu */
+    align-items: center; /* Center items vertically */
+    padding: 0 20px; /* Add padding to the sides */
+}
+
+.logo {
+    width: 200px; /* Set a width for the logo */
+}
+
+h1 {
+    margin: 10px 0;
+}
+
+/* Navigation Menu Styles */
+nav {
+    margin-top: 10px;
+}
+
+.nav-menu {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0; /* Remove default padding */
+    display: flex; /* Use flexbox for horizontal layout */
+    justify-content: flex-end; /* Align the menu items to the right */
+}
+
+.nav-menu li {
+    margin: 0 15px; /* Space between menu items */
+}
+
+.nav-menu a {
+    text-decoration: none; /* Remove underline from links */
+    color: white; /* White text color */
+    font-weight: bold; /* Bold text */
+    padding: 5px 10px; /* Padding around the links */
+    transition: background-color 0.3s; /* Smooth background color transition */
+}
+
+.nav-menu a:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Light background on hover */
+    border-radius: 4px; /* Rounded corners */
+}
+
+/* Flexbox for Docking Sections */
+.docking-container {
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Space between the two sections */
+    margin-bottom: 20px; /* Space below the docking container */
+}
+
+.input-section, .results-section {
+    flex: 1; /* Allow both sections to grow equally */
+    margin-right: 10px; /* Space between the two sections */
+}
+
+.results-section {
+    margin-right: 0; /* Remove right margin for the last section */
+}
+
+/* Input and Results Section Styles */
+.input-section, .results-section {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="number"],
+input[type="text"],
+input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #003366;
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+input[type="number"]:focus,
+input[type="text"]:focus,
+input[type="date"]:focus {
+    border-color: #0056b3;
+    outline: none;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #003366;
+    color: white;
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Results Section Styles */
+#results {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the Gantt chart */
+}
+
+.result {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #003366;
+    border-radius: 4px;
+    background-color: #e9f7ff;
+    color: #333;
+}
+
+.ship-list {
+    margin-top: 20px;
+}
+
+.ship-list table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.ship-list th, .ship-list td {
+    border: 1px solid #003366;
+    padding: 10px;
+    text-align: left;
+}
+
+.ship-list th {
+    background-color: #003366;
+    color: white;
+}
+
+.ship-list tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.delete-button {
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 3px 6px; /* Smaller padding for a smaller button */
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 0.9em; /* Smaller font size */
+}
+
+.delete-button:hover {
+    background: #c82333;
+}
+
+/* Calendar Section Styles */
+.calendar-section {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+#calendarTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+#calendarTable th, #calendarTable td {
+    border: 1px solid #003366;
+    padding: 10px;
+    text-align: center; /* Center align text in calendar */
+    font-size: 0.95em;
+}
+
+#calendarTable th {
+    background-color: #007bff;
+    color: white;
+}
+
+#calendarTable tr:nth-child(even) {
+    background-color: #f2f2f2; /* Light gray for even rows */
+}
+
+#calendarTable tr:hover {
+    background-color: rgba(0, 123, 255, 0.1); /* Light blue on hover */
+}
+
+/* Responsive Design for Calendar Table */
+@media (max-width: 768px) {
+    #calendarTable th, #calendarTable td {
+        font-size: 0.8em; /* Smaller font size for mobile */
+        padding: 8px; /* Reduced padding for mobile */
+    }
+}
+
+.leaving-soon {
+    background-color: #f35353; /* Highlight ships leaving soon */
+    font-weight: bold; /* Bold text for emphasis */
+}
+
+/* Month and Year Button Styles */
+.calendar-navigation {
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Space between buttons */
+    margin-bottom: 10px; /* Space below the buttons */
+}
+
+.calendar-navigation button {
+    padding: 5px 10px; /* Smaller padding for smaller buttons */
+    font-size: 0.9em; /* Smaller font size */
+    margin: 5px; /* Margin between buttons */
+    background-color: #007bff; /* Blue background */
+    color: white; /* White text */
+    border: none; /* No border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth background color transition */
+}
+
+.calendar-navigation button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Align buttons to the left */
+#calendar-schedule {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align items to the start (left) */
+}
+
+#calendar-schedule button {
+    align-self: flex-start; /* Align buttons to the left */
+}
+
+/* Footer Styles */
+footer {
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px 0;
+    background-color: #003366;
+    color: white;
+}
+
+/* Fade-in Animation for Main Content */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.container {
+    animation: fadeIn 1s ease-in; /* Apply fade-in animation */
+}
+
+/* Button Hover Animation */
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #003366;
+    color: white;
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s, transform 0.3s; /* Add transform transition */
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05); /* Scale up on hover */
+}
+
+/* Navigation Button Hover Animation */
+.calendar-navigation button {
+    transition: background-color 0.3s, transform 0.3s; /* Add transform transition */
+}
+
+.calendar-navigation button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: scale(1.05); /* Scale up on hover */
+}

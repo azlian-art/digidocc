@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Map with Ship Data</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    #map {
+      height: 100vh;
+      width: 100%;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .custom-popup {
+      font-size: 16px;
+      color: #333;
+      line-height: 1.5;
+    }
+    .popup-table th {
+      background-color: #3498db;
+      color: white;
+    }
+    .popup-table td {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    // Initialize map
+    var map = L.map('map').setView([-7.197, 112.737], 16); // Default location near Dok Semarang
+
+    // Add tile layer from OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Function to create popup content
+    function generatePopupContent(title, data) {
+      let popupContent = `<div class="custom-popup"><b>${title}</b>`;
+      popupContent += '<table class="popup-table">';
+      popupContent += '<thead><tr><th>Ship Name</th><th>LOA</th><th>Status</th></tr></thead><tbody>';
+      data.forEach(ship => {
+        popupContent += `<tr><td>${ship.shipName || 'N/A'}</td><td>${ship.loa || 'N/A'}</td><td>${ship.status || 'N/A'}</td></tr>`;
+      });
+      popupContent += '</tbody></table></div>';
+      return popupContent;
+    }
+
+    // Function to update ship status based on docking date
+    function updateShipStatus(ships) {
+      const today = new Date();
+      ships.forEach(ship => {
+        const dockingDate = new Date(ship.stayStart); // Use stayStart for docking date
+        if (dockingDate < today) {
+          ship.status = 'In Progress'; // If the ship has already docked
+        } else if (dockingDate.toDateString() === today.toDateString()) {
+          ship.status = 'In Progress'; // If the ship is docking today
+        } else {
+          ship.status = 'Waiting'; // If the ship is docking in the future
+        }
+      });
+    }
+
+    // Retrieve ship data from local storage
+    var dokSemarangData = JSON.parse(localStorage.getItem('ships_smg')) || [];
+    var dokIrianData = JSON.parse(localStorage.getItem('ships')) || [];
+    var dokSurabayaData = JSON.parse(localStorage.getItem('ships_sby')) || [];
+
+    // Update statuses for each dock
+    updateShipStatus(dokSemarangData);
+    updateShipStatus(dokIrianData);
+    updateShipStatus(dokSurabayaData);
+
+    // Dok Semarang coordinates
+    var dokSemarangCoordinates = [
+      [-7.1964058527520836, 112.73727942343834],
+      [-7.196363298534857, 112.73753158476643],
+      [-7.199427191973455, 112.73788031851797],
+      [-7.199373999555565, 112.7381271147114],
+      [-7.1964058527520836, 112.73727942343834]
+    ];
+
+    var dokSemarangPolygon = L.polygon(dokSemarangCoordinates, {
+      color: 'transparent',
+      fillColor: 'lightgreen',
+      fillOpacity: 0.5
+    }).addTo(map);
+
+    dokSemarangPolygon.options.originalFillColor = dokSemarangPolygon.options.fillColor;
+
+    dokSemarangPolygon.on('mouseover', function () {
+      highlightPolygon(dokSemarangPolygon, 'yellow');
+    });
+    dokSemarangPolygon.on('mouseout', function () {
+      resetPolygon(dokSemarangPolygon);
+    });
+
+    dokSemarangPolygon.on('click', function (e) {
+      L.popup()
+        .setLatLng(e.latlng)
+        .setContent(generatePopupContent('Ship Data at Dok Semarang', dokSemarangData))
+        .openOn(map);
+    });
+
+    // Marker for Dok Semarang
+    L.marker([-7.1975, 112.7373]).addTo(map)
+      .bindPopup('<b>Dok Semarang</b>');
+
+    // Dok Irian coordinates
+    var dokIrianCoordinates = [
+      [-7.20309431425055, 112.73931821544818],
+      [-7.203035803063672, 112.73956501307482],
+      [-7.2049241148286995, 112.73970987171008],
+      [-7.204897518942988, 112.73993520736497],
+      [-7.20309431425055, 112.73931821544818]
+    ];
+
+    var dokIrianPolygon = L.polygon(dokIrianCoordinates, {
+      color: 'transparent',
+      fillColor: 'lightblue',
+      fillOpacity: 0.5
+    }).addTo(map);
+
+    dokIrianPolygon.options.originalFillColor = dokIrianPolygon.options.fillColor;
+
+    dokIrianPolygon.on('mouseover', function () {
+      highlightPolygon(dokIrianPolygon, 'orange');
+    });
+    dokIrianPolygon.on('mouseout', function () {
+      resetPolygon(dokIrianPolygon);
+    });
+
+    dokIrianPolygon.on('click', function (e) {
+      L.popup()
+        .setLatLng(e.latlng)
+        .setContent(generatePopupContent('Ship Data at Dok Irian', dokIrianData))
+        .openOn(map);
+    });
+
+    // Marker for Dok Irian
+    L.marker([-7.2035, 112.7394]).addTo(map)
+      .bindPopup('<b>Dok Irian</b>');
+
+    // Dok Surabaya coordinates
+    var dokSurabayaCoordinates = [
+      [-7.201194537587325, 112.74064865346462],
+      [-7.201279645111363, 112.74068620940707],
+      [-7.201082833937813, 112.74086325885018],
+      [-7.201141345376718, 112.74089544965805],
+      [-7.201194537587325, 112.74064865346462]
+    ];
+
+    var dokSurabayaPolygon = L.polygon(dokSurabayaCoordinates, {
+      color: 'transparent',
+      fillColor: 'lightcoral',
+      fillOpacity: 0.5
+    }).addTo(map);
+
+    dokSurabayaPolygon.options.originalFillColor = dokSurabayaPolygon.options.fillColor;
+
+    dokSurabayaPolygon.on('mouseover', function () {
+      highlightPolygon(dokSurabayaPolygon, 'purple');
+    });
+    dokSurabayaPolygon.on('mouseout', function () {
+      resetPolygon(dokSurabayaPolygon);
+    });
+
+    dokSurabayaPolygon.on('click', function (e) {
+      L.popup()
+        .setLatLng(e.latlng)
+        .setContent(generatePopupContent('Ship Data at Dok Surabaya', dokSurabayaData))
+        .openOn(map);
+    });
+
+    // Marker for Dok Surabaya
+    L.marker([-7.20115, 112.7407]).addTo(map)
+      .bindPopup('<b>Dok Surabaya</b>');
+  </script>
+</body>
+</html>

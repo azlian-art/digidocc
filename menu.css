@@ -1,0 +1,150 @@
+/* General styles */
+body {
+    font-family: "Montserrat", sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image:  ("https://i.pinimg.com/736x/ad/57/a3/ad57a3a6872a719aaea311c2a8dc0064.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+  }
+  
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  h2 {
+    color: #000000;
+    margin-bottom: 10px;
+  }
+  
+  p {
+    line-height: 1.6;
+    color: #000000;
+  }
+  
+  .image-container {
+    width: 200px; /* Set width */
+    height: 100px; /* Set height */
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/PT-PAL.svg/2560px-PT-PAL.svg.png'); /* Set background image */
+    background-size: contain; /* Scale image to fit the container */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent tiling */
+}
+  
+  
+  /* Navigation bar styles */
+  .navbar {
+    color: #000000;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+  }
+  
+  .navbar a{
+    color: #000000;
+    text-decoration: none;
+    padding: 15px;
+    display: inline-block;
+  }
+  
+  .logo {
+    font-weight: bold;
+  }
+  
+  .nav-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+  
+  .nav-links li {
+    margin-right: 20px;
+  }
+  
+  .nav-links a {
+    color: #000000;
+    text-decoration: none;
+  }
+  
+  .nav-links a:hover {
+    -moz-text-decoration-color:rgb(121, 243, 202) ;
+  }
+  
+  .navbar a:hover{
+      background-color: rgb(9, 36, 78);
+      transition: .3s;
+      touch-action: manipulation;
+  }
+  
+  /* Menu toggle button styles */
+  .menu-toggle {
+    display: none;
+    cursor: pointer;
+  }
+  
+  .bar {
+    width: 25px;
+    height: 3px;
+    background-color: #000000;
+    margin: 5px 0;
+    
+  }
+  
+  /* Button styles */
+  
+  .button-58 {
+    align-items: center;
+    background-color: rgba(80, 80, 80, 0.525);
+    border: 2px solid rgb(255, 255, 255);
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    fill: #ffffff;
+    font-family: Inter,sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    height: 38px;
+    justify-content: center;
+    letter-spacing: -.8px;
+    line-height: 24px;
+    min-width: 180px;
+    outline: 0;
+    padding: 0 17px;
+    text-align: center;
+    text-decoration: none;
+    transition: all .3s;
+    user-select: none;
+    -webkit-user-select: none;
+    margin: 5px;
+    touch-action: manipulation;
+  }
+  
+  .button-58:focus {
+    color: #ffffff;
+  }
+  
+  .button-58:hover {
+    background-color: #3385ff;
+    border-color: #3385ff;
+    fill: #06f;
+  }
+  
+  .button-58:active {
+    background-color: #3385ff;
+    border-color: #3385ff;
+    fill: #06f;
+  }
+  
+  @media (min-width: 768px) {
+    .button-58 {
+      min-width: 170px;
+    }
+  }

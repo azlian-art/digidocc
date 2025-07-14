@@ -1,0 +1,77 @@
+.dock {
+    transition: background-color 0.3s;
+}
+.dock:hover {
+    background-color: #1e3a8a; /* Darker blue on hover */
+}
+.timeline {
+    position: relative;
+    margin: 20px 0;
+}
+.timeline .line {
+    height: 4px; /* Increased height for better visibility */
+    background-color: black; /* Changed to black */
+    position: relative;
+    width: 100%;
+    margin-top: 70px; /* Adjust this value to control distance from the arrows */
+}
+.event {
+    position: absolute;
+    text-align: center;
+    width: 10%; /* Set a fixed width for each event */
+}
+.arrow {
+    font-size: 22px;
+}
+.date {
+    font-size: 12px; /* Set the same font size for both dates */
+    margin-top: 5px; /* Space between arrow and date */
+}
+.start-date {
+    position: absolute;
+    bottom: 60px; /* Position start date above the line */
+    left: 50%;
+    transform: translateX(-50%); /* Center the date */
+    font-size: 12px; /* Ensure the same font size */
+}
+.up-arrow {
+    position: absolute;
+    bottom: 28px; /* Position up arrow below the line */
+    left: 50%;
+    transform: translateX(-50%); /* Center the arrow */
+}
+.down-arrow {
+    position: absolute;
+    top: -47px; /* Position down arrow above the line */
+    left: 50%;
+    transform: translateX(-50%); /* Center the arrow */
+}
+.ship-list {
+    margin-top: 1px; /* Space between up arrow and ship list */
+    text-align: left; /* Align text to the left */
+    font-family: 'Arial', sans-serif; /* Change to your desired font family */
+    font-size: 12px; /* Change the font size */
+    font-weight: bold; /* Make the font bold (optional) */
+    color: #333; /* Change the text color (optional) */
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide overflow text */
+    text-overflow: ellipsis; /* Show ellipsis for overflow text */
+    width: 100%; /* Set a width for the container */
+    max-width: 200px; /* Set a maximum width for the ship name container */
+}
+@media print {
+    #printButton {
+        display: none; /* Hide the print button when printing */
+    }
+
+    /* Ensure all other elements are visible */
+    body {
+        -webkit-print-color-adjust: exact; /* Ensure colors are printed correctly */
+        color: black; /* Ensure text is black for printing */
+    }
+
+    .dock {
+        background-color: white; /* Remove hover effect for print */
+        transition: none; /* Disable transitions for print */
+    }
+}

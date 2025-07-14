@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Map with Dok Semarang, Dok Irian, and Dok Surabaya Ship Data</title>
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  
+  <style>
+    #map {
+      height: 100vh;
+      width: 100%;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .custom-popup {
+      font-size: 16px;
+      color: #333;
+      line-height: 1.5;
+    }
+    .popup-table th {
+      background-color: #3498db;
+      color: white;
+    }
+    .popup-table td {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <script>
+    // Inisialisasi peta
+    var map = L.map('map').setView([-7.197, 112.737], 16); // Lokasi default dekat Dok Semarang
+
+    // Tambahkan tile layer dari OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Fungsi untuk mengubah warna polygon saat kursor masuk
+    function highlightPolygon(polygon, color) {
+      polygon.setStyle({
+        fillColor: color,  // Ganti warna ketika kursor berada di atas
+        color: color
+      });
+    }
+
+    // Fungsi untuk mengembalikan warna polygon ke semula
+    function resetPolygon(polygon) {
+      polygon.setStyle({
+        fillColor: polygon.options.originalFillColor,  // Kembalikan warna asal
+        color: 'transparent'
+      });
+    }
+
+    // Fungsi untuk membuat konten popup
+    function generatePopupContent(title, data) {
+      let popupContent = `<div class="custom-popup"><b>${title}</b>`;
+      popupContent += '<table class="popup-table">';
+      popupContent += '<thead><tr><th>Nama Kapal</th><th>Jenis</th><th>Status</th></tr></thead><tbody>';
+      data.forEach(ship => {
+        popupContent += `<tr><td>${ship.name}</td><td>${ship.type}</td><td>${ship.status}</td></tr>`;
+      });
+      popupContent += '</tbody></table></div>';
+      return popupContent;
+    }
+
+    // Data untuk Dok Semarang
+    var dokSemarangData = [
+      { name: 'Kapal A', type: 'Kargo', status: 'Dalam Perbaikan' },
+      { name: 'Kapal B', type: 'Penumpang', status: 'Siap Berlayar' },
+      { name: 'Kapal C', type: 'Tanker', status: 'Sedang Bongkar Muat' }
+    ];
+
+    // Data untuk Dok Irian
+    var dokIrianData = [
+      { name: 'Kapal X', type: 'Kargo', status: 'Dalam Perbaikan' },
+      { name: 'Kapal Y', type: 'Penumpang', status: 'Siap Berlayar' },
+      { name: 'Kapal Z', type: 'Tanker', status: 'Sedang Bongkar Muat' }
+    ];
+
+    // Data untuk Dok Surabaya
+    var dokSurabayaData = [
+      { name: 'Kapal M', type: 'Kargo', status: 'Dalam Perbaikan' },
+      { name: 'Kapal N', type: 'Penumpang', status: 'Siap Berlayar' },
+      { name: 'Kapal O', type: 'Tanker', status: 'Sedang Bongkar Muat' }
+    ];
+
+    // Dok Semarang
+    var dokSemarangCoordinates = [
+      [-7.1964058527520836, 112.73727942343834],
+      [-7.196363298534857, 112.73753158476643],
+      [-7.199427191973455, 112.73788031851797],
+      [-7.199373999555565, 112.7381271147114],
+      [-7.1964058527520836, 112.73727942343834] // Tutup polygon ke titik awal
+    ];
+
+    var dokSemarangPolygon = L.polygon(dokSemarangCoordinates, {
+      color: 'transparent',
+      fillColor: 'lightgreen',
+      fillOpacity: 0.5
+    }).addTo(map);
+
+    dokSemarangPolygon.options.originalFillColor = dokSemarangPolygon.options.fillColor;
+
+    dokSemarangPolygon.on('mouseover', function () {
+      highlightPolygon(dokSemarangPolygon, 'yellow');
+    });
+    dokSemarangPolygon.on('mouseout', function () {
+      resetPolygon(dokSemarangPolygon);
+    });
+
+    dokSemarangPolygon.on('click', function (e) {
+      L.popup()
+        .setLatLng(e.latlng)
+        .setContent(generatePopupContent('Data Kapal di Dok Semarang', dokSemarangData))
+        .openOn(map);
+    });
+
+    // Marker untuk Dok Semarang
+    L.marker([-7.197, 112.737]).addTo(map)
+      .bindPopup('<b>Dok Semarang</b>')
+      .openPopup();
+
+    // Dok Irian - Koordinat yang diperbarui
+    var dokIrianCoordinates = [
+      [-7.20309431425055, 112.73931821544818],
+      [-7.203035803063672, 112.73956501307482],
+      [-7.2049241148286995, 112.73970987171008],
+      [-7.204897518942988, 112.73993520736497],
+      [-7.20309431425055, 112.73931821544818] // Tutup polygon ke titik awal
+    ];
+
+    var dokIrianPolygon = L.polygon(dokIrianCoordinates, {
+      color: 'transparent',
+      fillColor: 'lightblue',
+      fillOpacity: 0.5
+    }).addTo(map);
+
+    dokIrianPolygon.options.originalFillColor = dokIrianPolygon.options.fillColor;
+
+    dokIrianPolygon.on('mouseover', function () {
+      highlightPolygon(dokIrianPolygon, 'orange');
+    });
+    dokIrianPolygon.on('mouseout', function () {
+      resetPolygon(dokIrianPolygon);
+    });
+
+    dokIrianPolygon.on('click', function (e) {
+      L.popup()
+        .setLatLng(e.latlng)
+        .setContent(generatePopupContent('Data Kapal di Dok Irian', dokIrianData))
+        .openOn(map);
+    });
+
+    // Marker untuk Dok Irian
+    L.marker([-7.203, 112.739]).addTo(map)
+      .bindPopup('<b>Dok Irian</b>')
+      .openPopup();
+
+    // Dok Surabaya - Koordinat yang diperbarui
+    var dokSurabayaCoordinates = [
+      [-7.201194537587325, 112.74064865346462],
+      [-7.201279645111363, 112.74068620940707],
+      [-7.201082833937813, 112.74086325885018],
+      [-7.201141345376718, 112.74089544965805],
+      [-7.201194537587325, 112.74064865346462] // Tutup polygon ke titik awal
+    ];
+
+    var dokSurabayaPolygon = L.polygon(dokSurabayaCoordinates, {
+      color: 'transparent',
+      fillColor: 'lightcoral',
+      fillOpacity: 0.5
+    }).addTo(map);
+
+    dokSurabayaPolygon.options.originalFillColor = dokSurabayaPolygon.options.fillColor;
+
+    dokSurabayaPolygon.on('mouseover', function () {
+      highlightPolygon(dokSurabayaPolygon, 'purple');
+    });
+    dokSurabayaPolygon.on('mouseout', function () {
+      resetPolygon(dokSurabayaPolygon);
+    });
+
+    dokSurabayaPolygon.on('click', function (e) {
+      L.popup()
+        .setLatLng(e.latlng)
+        .setContent(generatePopupContent('Data Kapal di Dok Surabaya', dokSurabayaData))
+        .openOn(map);
+    });
+
+    // Marker untuk Dok Surabaya
+    L.marker([-7.2011, 112.7407]).addTo(map)
+      .bindPopup('<b>Dok Surabaya</b>')
+      .openPopup();
+  </script>
+</body>
+</html>

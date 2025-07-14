@@ -1,0 +1,203 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7fa;
+    color: #333;
+    line-height: 1.6;
+  }
+  
+  .container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2.5rem;
+    color: #2d3e50;
+  }
+  
+  .currency-selector {
+    display: flex;
+    justify-content: flex-end;
+    margin: 20px 0;
+  }
+  
+  .currency-selector label {
+    font-size: 1.1rem;
+    margin-right: 10px;
+  }
+  
+  #vessel-container {
+    margin-top: 30px;
+  }
+  
+  button {
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px 0;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
+  .spreadsheet {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .spreadsheet h3 {
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+    color: #2d3e50;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  button.toggle-btn {
+    font-size: 1.1rem;
+    background-color: transparent;
+    color: #007bff;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  
+  button.toggle-btn:hover {
+    color: #0056b3;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  th {
+    background-color: #f7f7f7;
+  }
+  
+  input[type="number"],
+  input[type="text"],
+  select,
+  input[type="date"] {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+  }
+  
+  input[type="number"]:focus,
+  select:focus,
+  input[type="date"]:focus {
+    border-color: #4CAF50;
+  }
+  
+  canvas {
+    margin-top: 30px;
+    border-radius: 8px;
+  }
+  
+  .profit {
+    font-size: 1.2rem;
+    color: #333;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+  
+  .add-week-btn {
+    background-color: #007bff;
+    margin-top: 20px;
+  }
+  
+  .add-week-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .print-btn {
+    background-color: #FFC107;
+    color: #fff;
+  }
+  
+  .print-btn:hover {
+    background-color: #e0a800;
+  }
+  
+  .collapsed {
+    display: none;
+  }
+  
+  .vessel-details {
+    transition: max-height 0.3s ease-in-out;
+  }
+  
+  .edit-btn {
+    font-size: 1rem;
+    color: #007bff;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  
+  .edit-btn:hover {
+    color: #0056b3;
+  }
+  
+  .project-dates {
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+  }
+  
+  .project-dates label {
+    font-size: 1rem;
+  }
+  
+  /* Responsive */
+  @media screen and (max-width: 768px) {
+    .container {
+      width: 95%;
+    }
+    .currency-selector {
+      flex-direction: column;
+      align-items: flex-end;
+    }
+    button {
+      width: 100%;
+    }
+    .project-dates {
+      flex-direction: column;
+    }
+  }
+  

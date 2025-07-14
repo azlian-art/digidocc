@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Dock Space Management</title>
+    <link rel="stylesheet" href="display.css"> <!-- Link to the CSS file -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+</head>
+<body class="bg-white text-black font-sans">
+    <div class="container mx-auto p-4">
+        <div class="flex justify-between items-center mb-4">
+            <img alt="Logo PT PAL" class="h-8" src="img\logo.png" />
+            <img alt="Logo Team" class="h-12" src="img/LOGO CII.png" />
+            <img alt="Defend Id" class="h-8" src="img\defend id.png" />
+        </div>
+        <h1 class="text-center text-2xl font-bold">Rencana Dock Space</h1>
+        <p class="text-center text-red-600 font-bold">Updated: 26 Juni 2025</p>
+
+        <!-- Dock Irian -->
+        <div class="mt-10">
+            <div class="bg-blue-900 text-white text-center py-2 mb-4 dock">DOCK IRIAN</div>
+            <div id="timelineContainerIrian" class="timeline">
+                <div class="line mb-4"></div>
+            </div>
+        </div>
+
+        <div class="mt-40"></div>
+
+        <!-- Dock Surabaya -->
+        <div class="mt-10">
+            <div class="bg-blue-900 text-white text-center py-2 mb-4 dock">DOCK SURABAYA</div>
+            <div id="timelineContainerSurabaya" class="timeline">
+                <div class="line mb-4"></div>
+            </div>
+        </div>
+
+        <div class="mt-40"></div>
+
+        <!-- Floating Repair -->
+        <div class="mt-10">
+            <div class="bg-blue-900 text-white text-center py-2 mb-4 dock">FLOATING REPAIR</div>
+            <div id="timelineContainerRepair" class="timeline">
+                <div class="line mb-4"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Print Button -->
+    <div class="text-center mt-10">
+        <button id="printButton" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">
+            Print Page
+        </button>
+    </div>
+</div>
+    <script src="display.js"></script> <!-- Link to the JavaScript file -->
+</body>
+</html>
+

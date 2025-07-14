@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vessel Omset Data</title>
+  <link rel="stylesheet" href="omset.css" />
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Vessel Omset Data</h1>
+    <button id="add-vessel-btn">Add New Vessel</button>
+    
+    <div class="currency-selector">
+      <label for="currency-selector">Currency:</label>
+      <select id="currency-selector">
+        <option value="IDR">IDR (Rupiah)</option>
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+      </select>
+    </div>
+    
+    <div id="vessel-container"></div>
+  </div>
+  <script src="omset.js"></script>
+</body>
+</html>
