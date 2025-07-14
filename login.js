@@ -78,7 +78,7 @@ document.getElementById('sign-up-form').addEventListener('submit', function(e) {
     // Validate ID format based on user type
     if (userType === 'employee' && id.length === 3 && parseInt(id.charAt(2)) % 2 !== 0) {
         // Valid Employee ID
-    } else if (userType === 'customer' && id.length === 6 && parseInt(id.charAt(5)) % 2 === 0) {
+    } else if (userType === 'customer' && id.length === 3 && parseInt(id.charAt(5)) % 2 === 0) {
         // Valid Customer ID
     } else {
         document.getElementById('feedback-message').textContent = 'Invalid ID format for selected user type!';
