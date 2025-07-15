@@ -1,22 +1,33 @@
-// Check if accounts are stored in localStorage, if not initialize an empty array
+
+// Inisialisasi akun dari localStorage
 let accounts = JSON.parse(localStorage.getItem('accounts')) || [];
 
-// Toggle between Login and Sign Up forms
-document.getElementById('toggle-link').addEventListener('click', function(e) {
+// Tambahkan akun admin jika belum ada
+const adminExists = accounts.some(acc => acc.username === 'admin' && acc.userType === 'admin');
+if (!adminExists) {
+    accounts.push({
+        username: 'admin',
+        password: 'admin123',
+        id: 'ADM',
+        userType: 'admin'
+    });
+    localStorage.setItem('accounts', JSON.stringify(accounts));
+}
+
+// Toggle Login / Sign Up
+document.getElementById('toggle-link').addEventListener('click', function (e) {
     e.preventDefault();
     const loginForm = document.getElementById('login-form');
     const signUpForm = document.getElementById('sign-up-form');
     const formTitle = document.getElementById('form-title');
     const toggleText = document.getElementById('toggle-link');
-    
+
     if (loginForm.style.display === 'none') {
-        // Switch to login form
         loginForm.style.display = 'block';
         signUpForm.style.display = 'none';
         formTitle.textContent = 'Login';
         toggleText.textContent = "Don't have an account? Sign Up";
     } else {
-        // Switch to sign-up form
         loginForm.style.display = 'none';
         signUpForm.style.display = 'block';
         formTitle.textContent = 'Sign Up';
@@ -24,85 +35,154 @@ document.getElementById('toggle-link').addEventListener('click', function(e) {
     }
 });
 
-// Handle login form submission
-document.getElementById('login-form').addEventListener('submit', function(e) {
+// Login
+document.getElementById('login-form').addEventListener('submit', function (e) {
     e.preventDefault();
 
-    const username = document.getElementById('login-username').value;
-    const password = document.getElementById('login-password').value;
-    const id = document.getElementById('login-id').value;
-    const userType = document.getElementById('user-type-login').value;
+    let username = document.getElementById('login-username').value.trim();
+    let password = document.getElementById('login-password').value;
+    let id = document.getElementById('login-id').value.trim().toUpperCase();
+    let userType = document.getElementById('user-type-login').value;
 
-    // Show loading spinner
+    // Deteksi admin
+    const isAdminLogin = (
+        userType === 'employee' &&
+        username.toLowerCase() === 'admin' &&
+        password === 'admin123' &&
+        id === 'ADM'
+    );
+
+    if (isAdminLogin) {
+        userType = 'admin';
+    }
+
     document.getElementById('loading').style.display = 'block';
-    document.getElementById('feedback-message').textContent = ''; // Clear any previous feedback message
+    document.getElementById('feedback-message').textContent = '';
 
-    // Simulate checking credentials
-    setTimeout(function() {
-        // Hide loading spinner
+    setTimeout(() => {
         document.getElementById('loading').style.display = 'none';
 
-        // Check if account exists
-        const account = accounts.find(acc => acc.username === username && acc.password === password && acc.id === id && acc.userType === userType);
+        const account = accounts.find(acc =>
+            acc.username === username &&
+            acc.password === password &&
+            acc.id === id &&
+            acc.userType === userType
+        );
 
         if (account) {
-            // Successful login
-            document.getElementById('feedback-message').textContent = 'Login successful! Redirecting...';
+            document.getElementById('feedback-message').textContent = 'Login successful!';
             document.getElementById('feedback-message').style.color = 'green';
 
-            // Redirect based on user type
-            setTimeout(function() {
-                if (userType === 'employee') {
-                    window.location.href = 'dashboard.html'; // Redirect to employee page
+            setTimeout(() => {
+                if (userType === 'admin') {
+                    tampilkanPanelAdmin();
+                } else if (userType === 'employee') {
+                    window.location.href = 'dashboard.html';
                 } else if (userType === 'customer') {
-                    window.location.href = 'menu.html'; // Redirect to customer page
+                    window.location.href = 'menu.html';
                 }
-            }, 1000); // Wait 1 second before redirecting
+            }, 1000);
         } else {
-            // Failed login
             document.getElementById('feedback-message').textContent = 'Invalid credentials. Please try again.';
             document.getElementById('feedback-message').style.color = 'red';
         }
-    }, 1500); // Simulate network delay (replace with real async logic if needed)
+    }, 1000);
 });
 
-// Handle sign-up form submission
-document.getElementById('sign-up-form').addEventListener('submit', function(e) {
+// Sign Up
+document.getElementById('sign-up-form').addEventListener('submit', function (e) {
     e.preventDefault();
 
-    const username = document.getElementById('signup-username').value;
+    const username = document.getElementById('signup-username').value.trim();
     const password = document.getElementById('signup-password').value;
-    const id = document.getElementById('signup-id').value;
+    const id = document.getElementById('signup-id').value.trim();
     const userType = document.getElementById('user-type-signup').value;
 
-    // Validate ID format based on user type
-    if (userType === 'employee' && id.length === 3 && parseInt(id.charAt(2)) % 2 !== 0) {
-        // Valid Employee ID
-    } else if (userType === 'customer' && id.length === 3 && parseInt(id.charAt(5)) % 2 === 0) {
-        // Valid Customer ID
-    } else {
+    const isEmployeeValid = userType === 'employee' && id.length === 3 && parseInt(id[2]) % 2 !== 0;
+    const isCustomerValid = userType === 'customer' && id.length === 6 && parseInt(id[5]) % 2 === 0;
+
+    if (!isEmployeeValid && !isCustomerValid) {
         document.getElementById('feedback-message').textContent = 'Invalid ID format for selected user type!';
         document.getElementById('feedback-message').style.color = 'red';
         return;
     }
 
-    // Store new account information
-    const newAccount = {
-        username: username,
-        password: password,
-        id: id,
-        userType: userType
-    };
+    const isDuplicate = accounts.some(acc => acc.username === username || acc.id === id);
+    if (isDuplicate) {
+        document.getElementById('feedback-message').textContent = 'Username or ID already registered!';
+        document.getElementById('feedback-message').style.color = 'red';
+        return;
+    }
 
+    const newAccount = { username, password, id, userType };
     accounts.push(newAccount);
     localStorage.setItem('accounts', JSON.stringify(accounts));
 
-    // Display feedback and redirect to login
     document.getElementById('feedback-message').textContent = 'Account created successfully!';
     document.getElementById('feedback-message').style.color = 'green';
 
-    setTimeout(function() {
-        window.location.href = 'login.html'; // Redirect to login page
+    setTimeout(() => {
+        window.location.href = 'login.html';
     }, 1500);
 });
 
+// Panel Admin
+function tampilkanPanelAdmin() {
+    const adminPanelHTML = `
+        <h2>📋 Admin Panel: Daftar Akun</h2>
+        <table border="1" cellpadding="5" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>ID</th>
+                    <th>Password</th>
+                    <th>User Type</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody id="admin-table-body"></tbody>
+        </table>
+        <br>
+        <button onclick="hapusSemuaAkun()">🗑️ Hapus Semua Akun</button>
+        <button onclick="location.reload()">🔙 Kembali ke Login</button>
+    `;
+    document.body.innerHTML = adminPanelHTML;
+
+    const tbody = document.getElementById('admin-table-body');
+    const akun = JSON.parse(localStorage.getItem('accounts')) || [];
+
+    akun.forEach((acc, index) => {
+        const row = document.createElement('tr');
+        const isAdmin = acc.username === 'admin' && acc.userType === 'admin';
+        row.innerHTML = `
+            <td>${acc.username}</td>
+            <td>${acc.id}</td>
+            <td>${acc.password}</td>
+            <td>${acc.userType}</td>
+            <td>${isAdmin ? '🛡️' : '<button onclick="hapusAkun(' + index + ')">Hapus</button>'}</td>
+        `;
+        tbody.appendChild(row);
+    });
+}
+
+function hapusAkun(index) {
+    let akun = JSON.parse(localStorage.getItem('accounts')) || [];
+
+    if (akun[index].username === 'admin' && akun[index].userType === 'admin') {
+        alert("Akun admin tidak dapat dihapus.");
+        return;
+    }
+
+    if (confirm(`Yakin ingin menghapus akun "${akun[index].username}"?`)) {
+        akun.splice(index, 1);
+        localStorage.setItem('accounts', JSON.stringify(akun));
+        tampilkanPanelAdmin();
+    }
+}
+
+function hapusSemuaAkun() {
+    if (confirm("Hapus semua akun?")) {
+        localStorage.removeItem('accounts');
+        location.reload();
+    }
+}
