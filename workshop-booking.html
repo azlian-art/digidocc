@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Workshop Booking Request | DIGIDOCC</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f5f8fc;
+            color: #1d2939;
+        }
+
+        /* ================= HEADER ================= */
+
+        header {
+            background: #ffffff;
+            height: 78px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo-area img {
+            height: 42px;
+            width: auto;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        nav a,
+        .dropbtn {
+            text-decoration: none;
+            color: #344054;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        nav a:hover,
+        .dropbtn:hover {
+            color: #0A2F6B;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 32px;
+            right: 0;
+            background: white;
+            min-width: 210px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 13px 18px;
+            font-size: 13px;
+        }
+
+        .dropdown-content a:hover {
+            background: #f2f6fb;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            background:
+                linear-gradient(rgba(10,47,107,0.88), rgba(10,47,107,0.92)),
+                url("https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?auto=format&fit=crop&w=2000&q=85");
+            background-size: cover;
+            background-position: center;
+            padding: 75px 7%;
+            color: white;
+        }
+
+        .hero-content {
+            max-width: 850px;
+        }
+
+        .hero-label {
+            font-size: 13px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #d7ad48;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            line-height: 1.2;
+            margin-bottom: 18px;
+        }
+
+        .hero p {
+            max-width: 760px;
+            line-height: 1.8;
+            color: #e5edf8;
+            font-size: 15px;
+        }
+
+        /* ================= MAIN ================= */
+
+        main {
+            padding: 55px 7% 80px;
+        }
+
+        .page-layout {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        /* ================= NOTICE ================= */
+
+        .notice {
+            background: #eef5ff;
+            border-left: 5px solid #0A2F6B;
+            padding: 20px 24px;
+            border-radius: 10px;
+            margin-bottom: 35px;
+        }
+
+        .notice-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #0A2F6B;
+            margin-bottom: 6px;
+        }
+
+        .notice p {
+            font-size: 13px;
+            line-height: 1.7;
+            color: #475467;
+        }
+
+        /* ================= FORM CARD ================= */
+
+        .form-card {
+            background: white;
+            border-radius: 16px;
+            padding: 38px;
+            box-shadow: 0 8px 35px rgba(16,24,40,0.07);
+            margin-bottom: 30px;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 28px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eaecf0;
+        }
+
+        .section-number {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #0A2F6B;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .section-heading h2 {
+            font-size: 20px;
+            color: #0A2F6B;
+        }
+
+        .section-heading p {
+            font-size: 12px;
+            color: #667085;
+            margin-top: 2px;
+        }
+
+        /* ================= FORM ================= */
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #344054;
+            margin-bottom: 8px;
+        }
+
+        .required {
+            color: #c0392b;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            border: 1px solid #d0d5dd;
+            border-radius: 8px;
+            padding: 12px 14px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 13px;
+            color: #344054;
+            outline: none;
+            background: white;
+            transition: 0.25s;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #0A2F6B;
+            box-shadow: 0 0 0 3px rgba(10,47,107,0.08);
+        }
+
+        textarea {
+            min-height: 125px;
+            resize: vertical;
+        }
+
+        .helper {
+            font-size: 11px;
+            color: #667085;
+            margin-top: 6px;
+            line-height: 1.5;
+        }
+
+        /* ================= DIMENSION BOX ================= */
+
+        .dimension-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #344054;
+            margin-bottom: 12px;
+        }
+
+        .dimension-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        /* ================= UPLOAD ================= */
+
+        .upload-box {
+            border: 2px dashed #cbd5e1;
+            border-radius: 10px;
+            padding: 28px;
+            text-align: center;
+            background: #fafcff;
+            transition: 0.3s;
+        }
+
+        .upload-box:hover {
+            border-color: #0A2F6B;
+            background: #f4f8fd;
+        }
+
+        .upload-icon {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .upload-box strong {
+            display: block;
+            font-size: 14px;
+            color: #344054;
+            margin-bottom: 5px;
+        }
+
+        .upload-box span {
+            font-size: 11px;
+            color: #667085;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .upload-box input[type="file"] {
+            border: none;
+            padding: 0;
+            font-size: 12px;
+        }
+
+        /* ================= DECLARATION ================= */
+
+        .declaration {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 18px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .declaration input {
+            width: auto;
+            margin-top: 4px;
+        }
+
+        .declaration label {
+            font-size: 12px;
+            line-height: 1.7;
+            font-weight: 400;
+            color: #475467;
+        }
+
+        /* ================= BUTTON ================= */
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            color: #475467;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .back-btn:hover {
+            color: #0A2F6B;
+        }
+
+        .submit-btn {
+            border: none;
+            background: #0A2F6B;
+            color: white;
+            padding: 14px 30px;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #082555;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 18px rgba(10,47,107,0.2);
+        }
+
+        /* ================= STATUS ================= */
+
+        .status-info {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .status-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #eaecf0;
+        }
+
+        .status-card .status-dot {
+            width: 9px;
+            height: 9px;
+            display: inline-block;
+            border-radius: 50%;
+            background: #d7ad48;
+            margin-right: 7px;
+        }
+
+        .status-card h4 {
+            font-size: 13px;
+            color: #344054;
+            margin-bottom: 6px;
+        }
+
+        .status-card p {
+            font-size: 11px;
+            color: #667085;
+            line-height: 1.6;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #071f46;
+            color: white;
+            padding: 50px 7% 25px;
+        }
+
+        .footer-grid {
+            max-width: 1100px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            gap: 60px;
+        }
+
+        footer h3 {
+            font-size: 15px;
+            margin-bottom: 16px;
+        }
+
+        footer p,
+        footer a {
+            font-size: 12px;
+            color: #c8d4e5;
+            line-height: 1.8;
+            text-decoration: none;
+        }
+
+        footer a {
+            display: block;
+            margin-bottom: 7px;
+        }
+
+        footer a:hover {
+            color: #d7ad48;
+        }
+
+        .footer-bottom {
+            max-width: 1100px;
+            margin: 35px auto 0;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.12);
+            text-align: center;
+            font-size: 11px;
+            color: #9fb0c8;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 850px) {
+
+            header {
+                padding: 0 4%;
+            }
+
+            nav {
+                gap: 15px;
+            }
+
+            .hero {
+                padding: 60px 5%;
+            }
+
+            .hero h1 {
+                font-size: 34px;
+            }
+
+            main {
+                padding: 40px 5% 60px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full-width {
+                grid-column: auto;
+            }
+
+            .dimension-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .status-info {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            header {
+                height: auto;
+                padding: 15px 5%;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 28px;
+            }
+
+            .form-card {
+                padding: 24px;
+            }
+
+            .form-actions {
+                flex-direction: column-reverse;
+                align-items: stretch;
+            }
+
+            .submit-btn {
+                width: 100%;
+            }
+
+            .back-btn {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+    <div class="logo-area">
+        <img src="img/logo.png" alt="PT PAL Indonesia">
+        <img src="img/LOGO CII.png" alt="CII">
+    </div>
+
+    <nav>
+
+        <a href="homepage.html">Dashboard</a>
+
+        <a href="display.html">Schedule</a>
+
+        <a href="login.html">Docking Space Checker</a>
+
+        <div class="dropdown">
+            <span class="dropbtn">Facilities ▾</span>
+
+            <div class="dropdown-content">
+                <a href="dockingfacilities.html">Docking Facilities</a>
+                <a href="workshop.html">Workshop</a>
+            </div>
+        </div>
+
+    </nav>
+
+</header>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <div class="hero-label">
+            DIGIDOCC · Workshop Services
+        </div>
+
+        <h1>
+            Workshop Booking Request
+        </h1>
+
+        <p>
+            Submit your vessel or project requirements to PT PAL Indonesia.
+            Your request will be reviewed by the relevant technical team
+            based on facility capability, project requirements, dimensions,
+            schedule and other technical considerations.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ================= MAIN ================= -->
+
+<main>
+
+    <div class="page-layout">
+
+        <!-- NOTICE -->
+
+        <div class="notice">
+
+            <div class="notice-title">
+                Important Information
+            </div>
+
+            <p>
+                This form is a <strong>booking request</strong> and does not
+                represent a confirmed docking or workshop reservation.
+                All requests are subject to technical review and availability
+                confirmation by PT PAL Indonesia.
+            </p>
+
+        </div>
+
+
+        <!-- ================= FORM ================= -->
+
+        <form id="bookingForm">
+
+            <!-- COMPANY -->
+
+            <div class="form-card">
+
+                <div class="section-heading">
+
+                    <div class="section-number">1</div>
+
+                    <div>
+                        <h2>Client Information</h2>
+                        <p>Provide your company and contact information.</p>
+                    </div>
+
+                </div>
+
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label>
+                            Company Name <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="companyName"
+                            name="company"
+                            placeholder="Enter company name"
+                            required>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>
+                            Contact Person <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="contactPerson"
+                            name="contact"
+                            placeholder="Enter contact person"
+                            required>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>
+                            Email Address <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="example@company.com"
+                            required>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>
+                            Phone Number <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            placeholder="+62 xxx xxxx xxxx"
+                            required>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>
+                            Country / Region
+                        </label>
+
+                        <input
+                            type="text"
+                            id="country"
+                            name="country"
+                            placeholder="Indonesia">
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>
+                            Company Website
+                        </label>
+
+                        <input
+                            type="text"
+                            id="companyWebsite"
+                            name="website"
+                            placeholder="company.com">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- VESSEL -->
+
+            <div class="form-card">
+
+                <div class="section-heading">
+
+                    <div class="section-number">2</div>
+
+                    <div>
+                        <h2>Vessel Information</h2>
+                        <p>Provide the main particulars of the vessel.</p>
+                    </div>
+
+                </div>
+
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label>
+                            Vessel Name <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="vesselName"
+                            name="vessel"
+                            placeholder="Enter vessel name"
+                            required>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>
+                            Vessel Type <span class="required">*</span>
+                        </label>
+
+                        <select
+                            id="vesselType"
+                            name="vesselType"
+                            required>
+
+                            <option value="">
+                                Select vessel type
+                            </option>
+
+                            <option>Bulk Carrier</option>
+                            <option>Container Ship</option>
+                            <option>Tanker</option>
+                            <option>LNG / LPG Carrier</option>
+                            <option>Passenger Ship</option>
+                            <option>Ro-Ro</option>
+                            <option>Offshore Vessel</option>
+                            <option>Warship</option>
+                            <option>Submarine</option>
+                            <option>Other</option>
+
+                        </select>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>
+                            IMO Number
+                        </label>
+
+                        <input
+                            type="text"
+                            id="imo"
+                            name="imo"
+                            placeholder="e.g. 1234567">
+
+                        <span class="helper">
+                            If applicable.
+                        </span>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>
+                            Flag / Country
+                        </label>
+
+                        <input
+                            type="text"
+                            id="flag"
+                            name="flag"
+                            placeholder="Enter vessel flag">
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>
+                            DWT
+                        </label>
+
+                        <input
+                            type="number"
+                            id="dwt"
+                            name="dwt"
+                            placeholder="e.g. 20000">
+
+                        <span class="helper">
+                            Deadweight tonnage.
+                        </span>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>
+                            Gross Tonnage (GT)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="gt"
+                            name="gt"
+                            placeholder="Enter GT">
+                    </div>
+
+
+                    <div class="full-width">
+
+                        <div class="dimension-title">
+                            Vessel Dimensions
+                        </div>
+
+
+                        <div class="dimension-grid">
+
+                            <div class="form-group">
+
+                                <label>
+                                    LOA (m) <span class="required">*</span>
+                                </label>
+
+                                <input
+                                    type="number"
+                                    step="0.01"
+                                    id="loa"
+                                    name="loa"
+                                    placeholder="Length Overall"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>
+                                    Beam (m) <span class="required">*</span>
+                                </label>
+
+                                <input
+                                    type="number"
+                                    step="0.01"
+                                    id="beam"
+                                    name="beam"
+                                    placeholder="Breadth"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>
+                                    Draft (m) <span class="required">*</span>
+                                </label>
+
+                                <input
+                                    type="number"
+                                    step="0.01"
+                                    id="draft"
+                                    name="draft"
+                                    placeholder="Maximum draft"
+                                    required>
+
+                            </div>
+
+                        </div>
+
+                        <span class="helper">
+                            Vessel dimensions will be considered during
+                            technical and facility suitability review.
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PROJECT -->
+
+            <div class="form-card">
+
+                <div class="section-heading">
+
+                    <div class="section-number">3</div>
+
+                    <div>
+                        <h2>Project Requirements</h2>
+                        <p>Tell us about your requested service.</p>
+                    </div>
+
+                </div>
+
+
+                <div class="form-grid">
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Required Service <span class="required">*</span>
+                        </label>
+
+                        <select
+                            id="serviceName"
+                            name="service"
+                            required>
+
+                            <option value="">
+                                Select service
+                            </option>
+
+                            <option>Annual Survey</option>
+                            <option>Special Survey</option>
+                            <option>Floating Repair</option>
+                            <option>Docking Repair</option>
+                            <option>Maintenance</option>
+                            <option>Ship Conversion</option>
+                            <option>Modification / Alteration</option>
+                            <option>Engineering Service</option>
+                            <option>Other</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Preferred Facility
+                        </label>
+
+                        <select
+                            id="facility"
+                            name="facility">
+
+                            <option value="">
+                                Select facility
+                            </option>
+
+                            <option>50,000 DWT Dry Dock</option>
+                            <option>20,000 DWT Dry Dock</option>
+                            <option>1,500 TLC Ship Lift</option>
+                            <option>Floating Dock</option>
+                            <option>Workshop Facility</option>
+                            <option>To be determined by PT PAL</option>
+
+                        </select>
+
+                        <span class="helper">
+                            Final facility selection remains subject
+                            to technical review.
+                        </span>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Planned Start Date <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="date"
+                            id="startDate"
+                            name="startDate"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Estimated Duration (Days)
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="number"
+                            id="duration"
+                            name="duration"
+                            min="1"
+                            placeholder="e.g. 14"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-group full-width">
+
+                        <label>
+                            Scope of Work <span class="required">*</span>
+                        </label>
+
+                        <textarea
+                            id="scope"
+                            name="scope"
+                            placeholder="Describe the repair, maintenance, modification or other work required..."
+                            required></textarea>
+
+                        <span class="helper">
+                            Please provide as much technical detail as possible
+                            to help PT PAL evaluate your request.
+                        </span>
+
+                    </div>
+
+
+                    <div class="form-group full-width">
+
+                        <label>
+                            Required Workshop Capabilities
+                        </label>
+
+                        <textarea
+                            id="capabilities"
+                            name="capabilities"
+                            placeholder="Example: machinery overhaul, piping, electrical, welding, fabrication, blasting & painting, outfitting..."></textarea>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- DOCUMENT -->
+
+            <div class="form-card">
+
+                <div class="section-heading">
+
+                    <div class="section-number">4</div>
+
+                    <div>
+                        <h2>Supporting Documents</h2>
+                        <p>Upload documents that support your project request.</p>
+                    </div>
+
+                </div>
+
+
+                <div class="upload-box">
+
+                    <div class="upload-icon">
+                        📎
+                    </div>
+
+                    <strong>
+                        Upload Repair List / Prepare List
+                    </strong>
+
+                    <span>
+                        PDF, DOC, DOCX, XLS, XLSX — recommended for project evaluation
+                    </span>
+
+                    <input
+                        type="file"
+                        id="repairList"
+                        name="repairList"
+                        accept=".pdf,.doc,.docx,.xls,.xlsx">
+
+                </div>
+
+
+                <br>
+
+
+                <div class="upload-box">
+
+                    <div class="upload-icon">
+                        📄
+                    </div>
+
+                    <strong>
+                        Upload Additional Technical Documents
+                    </strong>
+
+                    <span>
+                        Drawings, specifications, technical documents or other relevant files
+                    </span>
+
+                    <input
+                        type="file"
+                        id="technicalDocs"
+                        name="technicalDocs"
+                        multiple
+                        accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png">
+
+                </div>
+
+            </div>
+
+
+            <!-- ADDITIONAL -->
+
+            <div class="form-card">
+
+                <div class="section-heading">
+
+                    <div class="section-number">5</div>
+
+                    <div>
+                        <h2>Additional Information</h2>
+                        <p>Provide any additional information for the review team.</p>
+                    </div>
+
+                </div>
+
+
+                <div class="form-grid">
+
+                    <div class="form-group full-width">
+
+                        <label>
+                            Additional Notes
+                        </label>
+
+                        <textarea
+                            id="notes"
+                            name="notes"
+                            placeholder="Additional requirements, special conditions, preferred arrangements, or other information..."></textarea>
+
+                    </div>
+
+                </div>
+
+
+                <br>
+
+
+                <div class="declaration">
+
+                    <input
+                        type="checkbox"
+                        id="declaration"
+                        name="declaration"
+                        required>
+
+                    <label for="declaration">
+
+                        I confirm that the information provided in this
+                        booking request is accurate and complete to the best
+                        of my knowledge. I understand that submission of this
+                        form does not constitute a confirmed booking and that
+                        the request is subject to technical review,
+                        facility suitability and availability confirmation
+                        by PT PAL Indonesia.
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <!-- ACTION -->
+
+            <div class="form-actions">
+
+                <a href="workshop.html" class="back-btn">
+                    ← Back to Workshop
+                </a>
+
+                <button
+                    type="submit"
+                    class="submit-btn">
+
+                    Submit Booking Request →
+
+                </button>
+
+            </div>
+
+
+        </form>
+
+
+        <!-- ================= STATUS ================= -->
+
+        <div class="status-info">
+
+            <div class="status-card">
+
+                <h4>
+                    <span class="status-dot"></span>
+                    Submitted
+                </h4>
+
+                <p>
+                    Your request has been successfully submitted
+                    through DIGIDOCC.
+                </p>
+
+            </div>
+
+
+            <div class="status-card">
+
+                <h4>
+                    <span class="status-dot"></span>
+                    Under Review
+                </h4>
+
+                <p>
+                    PT PAL's relevant team reviews the vessel,
+                    project requirements and facility suitability.
+                </p>
+
+            </div>
+
+
+            <div class="status-card">
+
+                <h4>
+                    <span class="status-dot"></span>
+                    Final Decision
+                </h4>
+
+                <p>
+                    The request may proceed to approval, rejection
+                    or revision depending on the review result.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div class="footer-grid">
+
+        <div>
+
+            <h3>DIGIDOCC</h3>
+
+            <p>
+                Digital documentation and facility information platform
+                supporting PT PAL Indonesia's shipyard operations,
+                workshop services and customer interaction.
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <h3>Navigation</h3>
+
+            <a href="homepage.html">Dashboard</a>
+            <a href="display.html">Schedule</a>
+            <a href="login.html">Docking Space Checker</a>
+
+        </div>
+
+
+        <div>
+
+            <h3>Facilities</h3>
+
+            <a href="dockingfacilities.html">
+                Docking Facilities
+            </a>
+
+            <a href="workshop.html">
+                Workshop
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        © 2026 DIGIDOCC · PT PAL Indonesia · Prototype System
+
+    </div>
+
+</footer>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+    const bookingForm = document.getElementById("bookingForm");
+
+    bookingForm.addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+        // =========================
+        // GENERATE REQUEST ID
+        // =========================
+
+        const requestId =
+            "REQ-" +
+            Math.floor(100000 + Math.random() * 900000);
+
+
+        // =========================
+        // AMBIL DATA FORM
+        // =========================
+
+        const companyName =
+            document.getElementById("companyName").value;
+
+        const contactPerson =
+            document.getElementById("contactPerson").value;
+
+        const email =
+            document.getElementById("email").value;
+
+        const phone =
+            document.getElementById("phone").value;
+
+        const vesselName =
+            document.getElementById("vesselName").value;
+
+        const vesselType =
+            document.getElementById("vesselType").value;
+
+        const serviceName =
+            document.getElementById("serviceName").value;
+
+        const facility =
+            document.getElementById("facility").value;
+
+        const startDate =
+            document.getElementById("startDate").value;
+
+        const duration =
+            document.getElementById("duration").value;
+
+        const scope =
+            document.getElementById("scope").value;
+
+
+        // =========================
+        // SIMPAN DATA KE LOCAL STORAGE
+        // =========================
+
+        localStorage.setItem(
+            "bookingRequestId",
+            requestId
+        );
+
+        localStorage.setItem(
+            "bookingStatus",
+            "Under Review"
+        );
+
+        localStorage.setItem(
+            "companyName",
+            companyName
+        );
+
+        localStorage.setItem(
+            "contactPerson",
+            contactPerson
+        );
+
+        localStorage.setItem(
+            "email",
+            email
+        );
+
+        localStorage.setItem(
+            "phone",
+            phone
+        );
+
+        localStorage.setItem(
+            "vesselName",
+            vesselName
+        );
+
+        localStorage.setItem(
+            "vesselType",
+            vesselType
+        );
+
+        localStorage.setItem(
+            "serviceName",
+            serviceName
+        );
+
+        localStorage.setItem(
+            "facility",
+            facility
+        );
+
+        localStorage.setItem(
+            "startDate",
+            startDate
+        );
+
+        localStorage.setItem(
+            "duration",
+            duration
+        );
+
+        localStorage.setItem(
+            "scope",
+            scope
+        );
+
+
+        // =========================
+        // NOTIFICATION
+        // =========================
+
+        alert(
+            "Booking request submitted successfully!\n\n" +
+            "Request ID: " + requestId +
+            "\nStatus: Under Review"
+        );
+
+
+        // =========================
+        // PINDAH KE HALAMAN STATUS
+        // =========================
+
+        window.location.href =
+            "booking-status.html";
+
+    });
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,2196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Booking Status | DIGIDOCC</title>
+
+    <!-- ================= GOOGLE FONT ================= -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+
+    <!-- ================= CSS ================= -->
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            font-family: "Poppins", sans-serif;
+
+            background: #f5f8fc;
+
+            color: #172033;
+
+        }
+
+
+        a {
+
+            text-decoration: none;
+
+            color: inherit;
+
+        }
+
+
+        /* ==================================================
+           HEADER
+        ================================================== */
+
+        header {
+
+            background: #ffffff;
+
+            border-bottom: 1px solid #e7edf5;
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1000;
+
+        }
+
+
+        .navbar {
+
+            max-width: 1250px;
+
+            min-height: 82px;
+
+            margin: auto;
+
+            padding: 0 25px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 30px;
+
+        }
+
+
+        .logo-area {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+        }
+
+
+        .logo-area img:first-child {
+
+            width: 110px;
+
+        }
+
+
+        .logo-area img:last-child {
+
+            width: 58px;
+
+        }
+
+
+        .nav-menu {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            list-style: none;
+
+        }
+
+
+        .nav-menu > li {
+
+            position: relative;
+
+        }
+
+
+        .nav-menu > li > a {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            padding: 11px 15px;
+
+            border-radius: 8px;
+
+            color: #344054;
+
+            font-size: 14px;
+
+            font-weight: 500;
+
+            transition: 0.25s ease;
+
+        }
+
+
+        .nav-menu > li > a:hover,
+        .nav-menu > li > a.active {
+
+            background: #eef5ff;
+
+            color: #0A2F6B;
+
+        }
+
+
+        /* ==================================================
+           DROPDOWN
+        ================================================== */
+
+        .arrow {
+
+            font-size: 10px;
+
+        }
+
+
+        .dropdown-menu {
+
+            position: absolute;
+
+            top: calc(100% + 8px);
+
+            right: 0;
+
+            min-width: 205px;
+
+            background: #ffffff;
+
+            border: 1px solid #e5ebf3;
+
+            border-radius: 10px;
+
+            box-shadow: 0 15px 35px rgba(15, 42, 80, 0.12);
+
+            padding: 8px;
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            transform: translateY(8px);
+
+            transition: 0.25s ease;
+
+        }
+
+
+        .dropdown:hover .dropdown-menu {
+
+            opacity: 1;
+
+            visibility: visible;
+
+            transform: translateY(0);
+
+        }
+
+
+        .dropdown-menu a {
+
+            display: block;
+
+            padding: 10px 12px;
+
+            border-radius: 7px;
+
+            color: #475467;
+
+            font-size: 13px;
+
+        }
+
+
+        .dropdown-menu a:hover {
+
+            background: #eef5ff;
+
+            color: #0A2F6B;
+
+        }
+
+
+        /* ==================================================
+           HERO
+        ================================================== */
+
+        .hero {
+
+            background:
+
+                linear-gradient(
+                    90deg,
+                    rgba(10, 47, 107, 0.97),
+                    rgba(10, 47, 107, 0.88)
+                ),
+
+                url("https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?auto=format&fit=crop&w=2000&q=85");
+
+            background-size: cover;
+
+            background-position: center;
+
+            padding: 72px 25px;
+
+            color: #ffffff;
+
+        }
+
+
+        .hero-inner {
+
+            max-width: 1050px;
+
+            margin: auto;
+
+        }
+
+
+        .hero-label {
+
+            color: #d7ad48;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            letter-spacing: 1.8px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .hero h1 {
+
+            font-size: clamp(30px, 4vw, 48px);
+
+            line-height: 1.2;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .hero p {
+
+            max-width: 720px;
+
+            color: rgba(255,255,255,0.84);
+
+            font-size: 15px;
+
+            line-height: 1.7;
+
+        }
+
+
+        /* ==================================================
+           MAIN
+        ================================================== */
+
+        main {
+
+            max-width: 1050px;
+
+            margin: auto;
+
+            padding: 55px 25px 80px;
+
+        }
+
+
+        /* ==================================================
+           REQUEST CARD
+        ================================================== */
+
+        .request-card {
+
+            background: #ffffff;
+
+            border: 1px solid #e3eaf3;
+
+            border-radius: 16px;
+
+            box-shadow:
+                0 12px 35px rgba(16,45,84,0.07);
+
+            overflow: hidden;
+
+        }
+
+
+        /* ==================================================
+           REQUEST HEADER
+        ================================================== */
+
+        .request-header {
+
+            padding: 30px 34px;
+
+            border-bottom: 1px solid #e8edf4;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 20px;
+
+        }
+
+
+        .request-header h2 {
+
+            color: #0A2F6B;
+
+            font-size: 22px;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .request-header p {
+
+            color: #667085;
+
+            font-size: 13px;
+
+        }
+
+
+        .request-id {
+
+            background: #f0f5fb;
+
+            color: #0A2F6B;
+
+            padding: 10px 15px;
+
+            border-radius: 8px;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            white-space: nowrap;
+
+        }
+
+
+        /* ==================================================
+           STATUS
+        ================================================== */
+
+        .status-section {
+
+            padding: 34px;
+
+        }
+
+
+        .status-badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 8px 13px;
+
+            border-radius: 30px;
+
+            background: #fff7df;
+
+            color: #8a6811;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            margin-bottom: 22px;
+
+        }
+
+
+        .status-dot {
+
+            width: 8px;
+
+            height: 8px;
+
+            border-radius: 50%;
+
+            background: #d7ad48;
+
+        }
+
+
+        .status-section h3 {
+
+            font-size: 18px;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .status-description {
+
+            color: #667085;
+
+            font-size: 13px;
+
+            line-height: 1.7;
+
+            margin-bottom: 35px;
+
+        }
+
+
+        /* ==================================================
+           TIMELINE
+        ================================================== */
+
+        .timeline {
+
+            position: relative;
+
+            display: grid;
+
+            grid-template-columns: repeat(4, 1fr);
+
+            gap: 10px;
+
+            margin-bottom: 42px;
+
+        }
+
+
+        .timeline::before {
+
+            content: "";
+
+            position: absolute;
+
+            top: 18px;
+
+            left: 12%;
+
+            right: 12%;
+
+            height: 2px;
+
+            background: #dfe6ef;
+
+            z-index: 0;
+
+        }
+
+
+        .timeline-item {
+
+            position: relative;
+
+            z-index: 1;
+
+            text-align: center;
+
+        }
+
+
+        .timeline-icon {
+
+            width: 36px;
+
+            height: 36px;
+
+            margin: 0 auto 12px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #ffffff;
+
+            border: 2px solid #d9e2ed;
+
+            color: #98a2b3;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+        }
+
+
+        .timeline-item.completed .timeline-icon {
+
+            background: #0A2F6B;
+
+            border-color: #0A2F6B;
+
+            color: #ffffff;
+
+        }
+
+
+        .timeline-item.current .timeline-icon {
+
+            background: #d7ad48;
+
+            border-color: #d7ad48;
+
+            color: #ffffff;
+
+        }
+
+
+        .timeline-title {
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            color: #344054;
+
+            margin-bottom: 3px;
+
+        }
+
+
+        .timeline-date {
+
+            font-size: 11px;
+
+            color: #98a2b3;
+
+        }
+
+
+        /* ==================================================
+           SECTION TITLE
+        ================================================== */
+
+        .section-title {
+
+            color: #0A2F6B;
+
+            font-size: 16px;
+
+            font-weight: 600;
+
+            margin-bottom: 16px;
+
+        }
+
+
+        /* ==================================================
+           DETAILS
+        ================================================== */
+
+        .details-grid {
+
+            display: grid;
+
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 16px;
+
+        }
+
+
+        .detail-box {
+
+            background: #f8fafc;
+
+            border: 1px solid #e7edf4;
+
+            border-radius: 10px;
+
+            padding: 18px;
+
+        }
+
+
+        .detail-label {
+
+            color: #98a2b3;
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.8px;
+
+            margin-bottom: 6px;
+
+        }
+
+
+        .detail-value {
+
+            color: #172033;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            word-break: break-word;
+
+            line-height: 1.6;
+
+        }
+
+
+        .detail-box.full {
+
+            grid-column: span 2;
+
+        }
+
+
+        .scope-value {
+
+            font-weight: 400;
+
+            color: #475467;
+
+            white-space: pre-line;
+
+        }
+
+
+        /* ==================================================
+           BUTTON
+        ================================================== */
+
+        .button-group {
+
+            display: flex;
+
+            gap: 12px;
+
+            flex-wrap: wrap;
+
+            margin-top: 28px;
+
+        }
+
+
+        .back-button {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            padding: 12px 18px;
+
+            background: #0A2F6B;
+
+            color: #ffffff;
+
+            border-radius: 8px;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            transition: 0.25s ease;
+
+        }
+
+
+        .back-button:hover {
+
+            background: #082452;
+
+            transform: translateY(-1px);
+
+        }
+
+
+        .dashboard-button {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            padding: 12px 18px;
+
+            background: #ffffff;
+
+            color: #0A2F6B;
+
+            border: 1px solid #d8e2ef;
+
+            border-radius: 8px;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            transition: 0.25s ease;
+
+        }
+
+
+        .dashboard-button:hover {
+
+            background: #eef5ff;
+
+        }
+
+
+        /* ==================================================
+           INFORMATION
+        ================================================== */
+
+        .info-grid {
+
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 18px;
+
+            margin-top: 25px;
+
+        }
+
+
+        .info-card {
+
+            background: #ffffff;
+
+            border: 1px solid #e3eaf3;
+
+            border-radius: 12px;
+
+            padding: 22px;
+
+        }
+
+
+        .info-number {
+
+            color: #d7ad48;
+
+            font-size: 22px;
+
+            font-weight: 700;
+
+            margin-bottom: 7px;
+
+        }
+
+
+        .info-card h4 {
+
+            color: #0A2F6B;
+
+            font-size: 14px;
+
+            margin-bottom: 7px;
+
+        }
+
+
+        .info-card p {
+
+            color: #667085;
+
+            font-size: 12px;
+
+            line-height: 1.7;
+
+        }
+
+
+        /* ==================================================
+           FOOTER
+        ================================================== */
+
+        footer {
+
+            background: #071f47;
+
+            color: #ffffff;
+
+            padding: 50px 25px 25px;
+
+        }
+
+
+        .footer-inner {
+
+            max-width: 1050px;
+
+            margin: auto;
+
+        }
+
+
+        .footer-grid {
+
+            display: grid;
+
+            grid-template-columns: 1.5fr 1fr 1fr;
+
+            gap: 45px;
+
+            padding-bottom: 35px;
+
+        }
+
+
+        .footer-brand h3 {
+
+            font-size: 18px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .footer-brand p {
+
+            color: rgba(255,255,255,0.65);
+
+            font-size: 12px;
+
+            line-height: 1.8;
+
+            max-width: 350px;
+
+        }
+
+
+        .footer-col h4 {
+
+            font-size: 13px;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .footer-col a {
+
+            display: block;
+
+            color: rgba(255,255,255,0.65);
+
+            font-size: 12px;
+
+            margin-bottom: 9px;
+
+        }
+
+
+        .footer-col a:hover {
+
+            color: #ffffff;
+
+        }
+
+
+        .footer-bottom {
+
+            border-top: 1px solid rgba(255,255,255,0.12);
+
+            padding-top: 20px;
+
+            color: rgba(255,255,255,0.5);
+
+            font-size: 11px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+        }
+
+
+        /* ==================================================
+           EMPTY STATE
+        ================================================== */
+
+        .empty-state {
+
+            text-align: center;
+
+            padding: 65px 25px;
+
+        }
+
+
+        .empty-icon {
+
+            width: 58px;
+
+            height: 58px;
+
+            margin: 0 auto 18px;
+
+            border-radius: 50%;
+
+            background: #eef5ff;
+
+            color: #0A2F6B;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 25px;
+
+            font-weight: 700;
+
+        }
+
+
+        .empty-state h3 {
+
+            color: #0A2F6B;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .empty-state p {
+
+            color: #667085;
+
+            font-size: 13px;
+
+            max-width: 500px;
+
+            margin: auto;
+
+            line-height: 1.7;
+
+        }
+
+
+        /* ==================================================
+           RESPONSIVE
+        ================================================== */
+
+        @media (max-width: 800px) {
+
+            .navbar {
+
+                flex-direction: column;
+
+                padding: 16px 20px;
+
+                gap: 12px;
+
+            }
+
+
+            .nav-menu {
+
+                flex-wrap: wrap;
+
+                justify-content: center;
+
+            }
+
+
+            .request-header {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+            }
+
+
+            .timeline {
+
+                grid-template-columns: 1fr;
+
+                gap: 18px;
+
+            }
+
+
+            .timeline::before {
+
+                display: none;
+
+            }
+
+
+            .timeline-item {
+
+                text-align: left;
+
+                display: grid;
+
+                grid-template-columns: 36px 1fr;
+
+                column-gap: 12px;
+
+                align-items: center;
+
+            }
+
+
+            .timeline-icon {
+
+                grid-row: span 2;
+
+                margin: 0;
+
+            }
+
+
+            .timeline-title,
+            .timeline-date {
+
+                text-align: left;
+
+            }
+
+
+            .details-grid,
+            .info-grid,
+            .footer-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .detail-box.full {
+
+                grid-column: span 1;
+
+            }
+
+
+            .footer-bottom {
+
+                flex-direction: column;
+
+            }
+
+        }
+
+
+        @media (max-width: 500px) {
+
+            .hero {
+
+                padding: 55px 20px;
+
+            }
+
+
+            main {
+
+                padding: 35px 15px 60px;
+
+            }
+
+
+            .status-section,
+            .request-header {
+
+                padding: 24px;
+
+            }
+
+
+            .nav-menu > li > a {
+
+                padding: 9px 10px;
+
+                font-size: 12px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ==================================================
+     HEADER
+================================================== -->
+
+<header>
+
+    <nav class="navbar">
+
+        <a href="homepage.html" class="logo-area">
+
+            <img src="img/logo.png"
+                 alt="PT PAL Indonesia">
+
+            <img src="img/LOGO CII.png"
+                 alt="DIGIDOCC">
+
+        </a>
+
+
+        <ul class="nav-menu">
+
+            <li>
+
+                <a href="homepage.html">
+                    Dashboard
+                </a>
+
+            </li>
+
+
+            <li>
+
+                <a href="display.html">
+                    Schedule
+                </a>
+
+            </li>
+
+
+            <li>
+
+                <a href="login.html">
+                    Docking Space Checker
+                </a>
+
+            </li>
+
+
+            <li class="dropdown">
+
+                <a href="#">
+
+                    Facilities
+
+                    <span class="arrow">
+                        ▼
+                    </span>
+
+                </a>
+
+
+                <div class="dropdown-menu">
+
+                    <a href="dockingfacilities.html">
+                        Docking Facilities
+                    </a>
+
+
+                    <a href="workshop.html">
+                        Workshop
+                    </a>
+
+                </div>
+
+            </li>
+
+        </ul>
+
+    </nav>
+
+</header>
+
+
+
+<!-- ==================================================
+     HERO
+================================================== -->
+
+<section class="hero">
+
+    <div class="hero-inner">
+
+        <div class="hero-label">
+            DIGIDOCC · Workshop Services
+        </div>
+
+
+        <h1>
+            Booking Request Status
+        </h1>
+
+
+        <p>
+            Monitor the progress of your workshop or ship repair request.
+            Your request will be reviewed by the relevant PT PAL technical
+            team before a final decision is made.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==================================================
+     MAIN
+================================================== -->
+
+<main>
+
+
+    <div class="request-card" id="requestCard">
+
+
+        <!-- ==================================================
+             REQUEST HEADER
+        ================================================== -->
+
+        <div class="request-header">
+
+            <div>
+
+                <h2>
+                    Workshop Booking Request
+                </h2>
+
+                <p>
+                    Request tracking information
+                </p>
+
+            </div>
+
+
+            <div class="request-id"
+                 id="requestId">
+
+                Loading...
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ==================================================
+             STATUS
+        ================================================== -->
+
+        <div class="status-section">
+
+
+            <div class="status-badge">
+
+                <span class="status-dot"></span>
+
+                <span id="statusText">
+                    Under Review
+                </span>
+
+            </div>
+
+
+
+            <h3 id="statusTitle">
+
+                Your request is currently under review
+
+            </h3>
+
+
+
+            <p class="status-description"
+               id="statusDescription">
+
+                Your booking request has been successfully submitted.
+                The PT PAL team will review the project requirements,
+                vessel dimensions, facility suitability, and planned schedule.
+
+            </p>
+
+
+
+            <!-- ==================================================
+                 TIMELINE
+            ================================================== -->
+
+            <div class="timeline">
+
+
+                <div class="timeline-item completed">
+
+                    <div class="timeline-icon">
+                        ✓
+                    </div>
+
+                    <div class="timeline-title">
+                        Submitted
+                    </div>
+
+                    <div class="timeline-date"
+                         id="submittedDate">
+
+                        Completed
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="timeline-item current">
+
+                    <div class="timeline-icon">
+                        2
+                    </div>
+
+                    <div class="timeline-title">
+                        Under Review
+                    </div>
+
+                    <div class="timeline-date">
+                        In progress
+                    </div>
+
+                </div>
+
+
+
+                <div class="timeline-item">
+
+                    <div class="timeline-icon">
+                        3
+                    </div>
+
+                    <div class="timeline-title">
+                        Technical Review
+                    </div>
+
+                    <div class="timeline-date">
+                        Pending
+                    </div>
+
+                </div>
+
+
+
+                <div class="timeline-item">
+
+                    <div class="timeline-icon">
+                        4
+                    </div>
+
+                    <div class="timeline-title">
+                        Final Decision
+                    </div>
+
+                    <div class="timeline-date">
+                        Pending
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 BOOKING DETAILS
+            ================================================== -->
+
+            <div class="section-title">
+
+                Booking Information
+
+            </div>
+
+
+            <div class="details-grid">
+
+
+                <!-- COMPANY -->
+
+                <div class="detail-box">
+
+                    <div class="detail-label">
+                        Company
+                    </div>
+
+                    <div class="detail-value"
+                         id="companyName">
+
+                        -
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- CONTACT PERSON -->
+
+                <div class="detail-box">
+
+                    <div class="detail-label">
+                        Contact Person
+                    </div>
+
+                    <div class="detail-value"
+                         id="contactPerson">
+
+                        -
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- EMAIL -->
+
+                <div class="detail-box">
+
+                    <div class="detail-label">
+                        Email
+                    </div>
+
+                    <div class="detail-value"
+                         id="email">
+
+                        -
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- PHONE -->
+
+                <div class="detail-box">
+
+                    <div class="detail-label">
+                        Phone
+                    </div>
+
+                    <div class="detail-value"
+                         id="phone">
+
+                        -
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- VESSEL -->
+
+                <div class="detail-box">
+
+                    <div class="detail-label">
+                        Vessel Name
+                    </div>
+
+                    <div class="detail-value"
+                         id="vesselName">
+
+                        -
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- VESSEL TYPE -->
+
+                <div class="detail-box">
+
+                    <div class="detail-label">
+                        Vessel Type
+                    </div>
+
+                    <div class="detail-value"
+                         id="vesselType">
+
+                        -
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SERVICE -->
+
+                <div class="detail-box">
+
+                    <div class="detail-label">
+                        Service Requested
+                    </div>
+
+                    <div class="detail-value"
+                         id="serviceName">
+
+                        -
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- FACILITY -->
+
+                <div class="detail-box">
+
+                    <div class="detail-label">
+                        Facility
+                    </div>
+
+                    <div class="detail-value"
+                         id="facility">
+
+                        -
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- START DATE -->
+
+                <div class="detail-box">
+
+                    <div class="detail-label">
+                        Planned Start Date
+                    </div>
+
+                    <div class="detail-value"
+                         id="startDate">
+
+                        -
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- DURATION -->
+
+                <div class="detail-box">
+
+                    <div class="detail-label">
+                        Duration
+                    </div>
+
+                    <div class="detail-value"
+                         id="duration">
+
+                        -
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SCOPE -->
+
+                <div class="detail-box full">
+
+                    <div class="detail-label">
+                        Scope of Work
+                    </div>
+
+                    <div class="detail-value scope-value"
+                         id="scope">
+
+                        -
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 BUTTON
+            ================================================== -->
+
+            <div class="button-group">
+
+                <a href="workshop.html"
+                   class="back-button">
+
+                    ← Back to Workshop
+
+                </a>
+
+
+                <a href="homepage.html"
+                   class="dashboard-button">
+
+                    Back to Dashboard
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ==================================================
+         INFORMATION
+    ================================================== -->
+
+    <div class="info-grid">
+
+
+        <div class="info-card">
+
+            <div class="info-number">
+                01
+            </div>
+
+            <h4>
+                Submitted
+            </h4>
+
+            <p>
+                Your project information and supporting documents
+                have been submitted successfully.
+            </p>
+
+        </div>
+
+
+
+        <div class="info-card">
+
+            <div class="info-number">
+                02
+            </div>
+
+            <h4>
+                Technical Review
+            </h4>
+
+            <p>
+                PT PAL reviews vessel dimensions, service requirements,
+                facility capability, scope of work, and schedule.
+            </p>
+
+        </div>
+
+
+
+        <div class="info-card">
+
+            <div class="info-number">
+                03
+            </div>
+
+            <h4>
+                Final Decision
+            </h4>
+
+            <p>
+                The request will receive a final status after the
+                relevant review process has been completed.
+            </p>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+
+<!-- ==================================================
+     FOOTER
+================================================== -->
+
+<footer>
+
+    <div class="footer-inner">
+
+
+        <div class="footer-grid">
+
+
+            <div class="footer-brand">
+
+                <h3>
+                    DIGIDOCC
+                </h3>
+
+                <p>
+                    Digital documentation and facility management
+                    concept supporting efficient workshop and ship
+                    repair request processes at PT PAL Indonesia.
+                </p>
+
+            </div>
+
+
+
+            <div class="footer-col">
+
+                <h4>
+                    Navigation
+                </h4>
+
+
+                <a href="homepage.html">
+                    Dashboard
+                </a>
+
+
+                <a href="display.html">
+                    Schedule
+                </a>
+
+
+                <a href="login.html">
+                    Docking Space Checker
+                </a>
+
+
+                <a href="dockingfacilities.html">
+                    Docking Facilities
+                </a>
+
+
+                <a href="workshop.html">
+                    Workshop
+                </a>
+
+            </div>
+
+
+
+            <div class="footer-col">
+
+                <h4>
+                    Workshop Services
+                </h4>
+
+
+                <a href="workshop.html#capabilities">
+                    Capabilities
+                </a>
+
+
+                <a href="workshop.html#facilities">
+                    Facilities
+                </a>
+
+
+                <a href="workshop.html#services">
+                    Services
+                </a>
+
+
+                <a href="workshop-booking.html">
+                    Book a Workshop
+                </a>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 DIGIDOCC · PT PAL Indonesia
+            </span>
+
+
+            <span>
+                Workshop Services
+            </span>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+
+<!-- ==================================================
+     JAVASCRIPT
+================================================== -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+
+    /* ==================================================
+       GET DATA FROM LOCAL STORAGE
+    ================================================== */
+
+
+    const requestId =
+        localStorage.getItem("bookingRequestId");
+
+
+    const bookingStatus =
+        localStorage.getItem("bookingStatus")
+        || "Under Review";
+
+
+    const companyName =
+        localStorage.getItem("companyName");
+
+
+    const contactPerson =
+        localStorage.getItem("contactPerson");
+
+
+    const email =
+        localStorage.getItem("email");
+
+
+    const phone =
+        localStorage.getItem("phone");
+
+
+    const vesselName =
+        localStorage.getItem("vesselName");
+
+
+    const vesselType =
+        localStorage.getItem("vesselType");
+
+
+    const serviceName =
+        localStorage.getItem("serviceName");
+
+
+    const facility =
+        localStorage.getItem("facility");
+
+
+    const startDate =
+        localStorage.getItem("startDate");
+
+
+    const duration =
+        localStorage.getItem("duration");
+
+
+    const scope =
+        localStorage.getItem("scope");
+
+
+
+    /* ==================================================
+       CHECK REQUEST
+    ================================================== */
+
+
+    if (!requestId) {
+
+
+        document.getElementById("requestCard").innerHTML = `
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    !
+                </div>
+
+
+                <h3>
+                    No Booking Request Found
+                </h3>
+
+
+                <p>
+
+                    We could not find an active booking request
+                    in this browser. Please submit a workshop
+                    booking request first.
+
+                </p>
+
+
+                <div class="button-group"
+                     style="justify-content:center;">
+
+                    <a href="workshop-booking.html"
+                       class="back-button">
+
+                        Create Booking Request →
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        `;
+
+
+        return;
+
+    }
+
+
+
+    /* ==================================================
+       REQUEST ID
+    ================================================== */
+
+
+    document.getElementById("requestId").textContent =
+        requestId;
+
+
+
+    /* ==================================================
+       STATUS
+    ================================================== */
+
+
+    document.getElementById("statusText").textContent =
+        bookingStatus;
+
+
+
+    /* ==================================================
+       STATUS TITLE
+    ================================================== */
+
+
+    if (bookingStatus === "Approved") {
+
+        document.getElementById("statusTitle").textContent =
+            "Your booking request has been approved";
+
+
+        document.getElementById("statusDescription").textContent =
+            "Your workshop booking request has been approved. Please follow the instructions provided by the PT PAL team for the next stage.";
+
+    }
+
+
+    else if (bookingStatus === "Rejected") {
+
+        document.getElementById("statusTitle").textContent =
+            "Your booking request was not approved";
+
+
+        document.getElementById("statusDescription").textContent =
+            "Your booking request has not been approved. Please contact the relevant PT PAL team for further information.";
+
+    }
+
+
+    else {
+
+        document.getElementById("statusTitle").textContent =
+            "Your request is currently under review";
+
+
+        document.getElementById("statusDescription").textContent =
+            "Your booking request has been successfully submitted. The PT PAL team will review the project requirements, vessel dimensions, facility suitability, and planned schedule.";
+
+    }
+
+
+
+    /* ==================================================
+       DISPLAY BOOKING DATA
+    ================================================== */
+
+
+    document.getElementById("companyName").textContent =
+        companyName || "-";
+
+
+    document.getElementById("contactPerson").textContent =
+        contactPerson || "-";
+
+
+    document.getElementById("email").textContent =
+        email || "-";
+
+
+    document.getElementById("phone").textContent =
+        phone || "-";
+
+
+    document.getElementById("vesselName").textContent =
+        vesselName || "-";
+
+
+    document.getElementById("vesselType").textContent =
+        vesselType || "-";
+
+
+    document.getElementById("serviceName").textContent =
+        serviceName || "-";
+
+
+    document.getElementById("facility").textContent =
+        facility || "-";
+
+
+    document.getElementById("duration").textContent =
+        duration || "-";
+
+
+    document.getElementById("scope").textContent =
+        scope || "-";
+
+
+
+    /* ==================================================
+       FORMAT START DATE
+    ================================================== */
+
+
+    if (startDate) {
+
+
+        const date =
+            new Date(startDate);
+
+
+        if (!isNaN(date.getTime())) {
+
+
+            document.getElementById("startDate").textContent =
+
+                date.toLocaleDateString(
+                    "en-GB",
+                    {
+                        day: "2-digit",
+                        month: "long",
+                        year: "numeric"
+                    }
+                );
+
+        }
+
+
+        else {
+
+            document.getElementById("startDate").textContent =
+                startDate;
+
+        }
+
+    }
+
+
+
+    /* ==================================================
+       SUBMITTED DATE
+    ================================================== */
+
+
+    const today =
+        new Date();
+
+
+    document.getElementById("submittedDate").textContent =
+
+        today.toLocaleDateString(
+            "en-GB",
+            {
+                day: "2-digit",
+                month: "short",
+                year: "numeric"
+            }
+        );
+
+
+});
+
+</script>
+
+
+</body>
+
+</html>

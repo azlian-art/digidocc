@@ -1,2468 +1,2047 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Workshop | PT PAL Indonesia</title>
-
-  <!-- Roboto -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet"
-  >
-
-  <!-- Font Awesome -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-  >
-
-  <style>
-
-    :root {
-      --navy: #071b35;
-      --navy-dark: #041326;
-      --blue: #0868c7;
-      --blue-light: #1688ed;
-      --blue-soft: #eaf4ff;
-
-      --white: #ffffff;
-
-      --gray-50: #f7f9fc;
-      --gray-100: #eef2f6;
-      --gray-200: #e1e7ef;
-      --gray-400: #94a3b8;
-      --gray-500: #64748b;
-      --gray-600: #475569;
-      --gray-700: #334155;
-      --gray-800: #1e293b;
-
-      --green: #168a48;
-      --green-bg: #eaf8ef;
-
-      --orange: #d97706;
-      --orange-bg: #fff5e5;
-
-      --red: #dc2626;
-      --red-bg: #fff0f0;
-
-      --shadow: 0 5px 20px rgba(7, 27, 53, 0.07);
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: "Roboto", sans-serif;
-      background: var(--gray-50);
-      color: var(--gray-800);
-      min-height: 100vh;
-    }
-
-    button,
-    input,
-    select {
-      font-family: inherit;
-    }
-
-    /* ==========================================
-       HEADER
-    ========================================== */
-
-    .header {
-      height: 74px;
-      background: var(--navy);
-      color: white;
-
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      padding: 0 42px;
-
-      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.12);
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-    }
-
-    .brand-logo {
-      width: 42px;
-      height: 42px;
-
-      border-radius: 9px;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Workshop | PT PAL Indonesia</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <style>
+
+        /* =========================================
+           GLOBAL
+        ========================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
 
-      background: linear-gradient(
-        135deg,
-        var(--blue-light),
-        var(--blue)
-      );
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #222;
+            background: #ffffff;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
 
-      box-shadow:
-        0 5px 15px rgba(22, 136, 237, 0.25);
-    }
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
 
-    .brand-logo i {
-      font-size: 19px;
-    }
+        /* =========================================
+           HEADER
+        ========================================= */
 
-    .brand-text h1 {
-      font-size: 15px;
-      font-weight: 600;
-      letter-spacing: 0.4px;
-    }
+        header {
+            width: 100%;
+            min-height: 82px;
+            padding: 12px 5%;
+            background: #ffffff;
+            border-bottom: 1px solid #e5e5e5;
 
-    .brand-text p {
-      margin-top: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
 
-      font-size: 9px;
-      color: #91a9c5;
+            position: relative;
+            z-index: 1000;
+        }
 
-      text-transform: uppercase;
-      letter-spacing: 1.4px;
-    }
+        .brand-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-    }
+        .brand-area img {
+            height: 54px;
+            width: auto;
+            object-fit: contain;
+        }
 
-    .header-date {
-      font-size: 11px;
-      color: #a9bad0;
-    }
+        .brand-area .separator {
+            color: #bdbdbd;
+            font-size: 24px;
+        }
 
-    .header-user {
-      display: flex;
-      align-items: center;
-      gap: 9px;
+        .brand-area .cii-logo {
+            height: 47px;
+        }
 
-      padding-left: 18px;
-      border-left: 1px solid rgba(255,255,255,0.12);
-    }
 
-    .avatar {
-      width: 31px;
-      height: 31px;
+        /* =========================================
+           NAVIGATION
+        ========================================= */
 
-      border-radius: 50%;
+        nav ul {
+            list-style: none;
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
 
-      background: #174b7e;
-      color: #a8d7fa;
+        nav ul li {
+            position: relative;
+        }
 
-      font-size: 10px;
-      font-weight: 600;
-    }
+        nav ul li > a {
+            display: flex;
+            align-items: center;
+            gap: 7px;
 
-    .header-user span {
-      font-size: 11px;
-      color: white;
-    }
+            padding: 10px 13px;
 
+            color: #111111;
+            font-size: 14px;
+            font-weight: 600;
 
-    /* ==========================================
-       MAIN
-    ========================================== */
+            border-radius: 6px;
 
-    .main {
-      width: 100%;
-      max-width: 1500px;
+            transition: 0.25s ease;
+        }
 
-      margin: auto;
+        nav ul li > a:hover,
+        nav ul li > a.active {
+            color: #0A2F6B;
+            background: #eef4fb;
+        }
 
-      padding: 36px 42px 60px;
-    }
 
+        /* =========================================
+           DROPDOWN
+        ========================================= */
 
-    /* ==========================================
-       PAGE TITLE
-    ========================================== */
+        .dropdown > a i {
+            font-size: 10px;
+            transition: 0.25s ease;
+        }
 
-    .page-header {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
+        .dropdown:hover > a i {
+            transform: rotate(180deg);
+        }
 
-      margin-bottom: 27px;
-    }
+        .dropdown-menu {
+            position: absolute;
 
-    .page-title small {
-      color: var(--blue);
-      font-size: 10px;
-      font-weight: 700;
+            top: calc(100% + 8px);
+            right: 0;
 
-      text-transform: uppercase;
-      letter-spacing: 1.4px;
-    }
+            min-width: 220px;
 
-    .page-title h2 {
-      margin-top: 7px;
+            background: #ffffff;
 
-      color: var(--navy);
+            border: 1px solid #e3e7ed;
+            border-radius: 8px;
 
-      font-size: 28px;
-      font-weight: 600;
-      letter-spacing: -0.5px;
-    }
+            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
 
-    .page-title p {
-      margin-top: 7px;
+            padding: 8px;
 
-      color: var(--gray-500);
-      font-size: 12px;
-    }
+            opacity: 0;
+            visibility: hidden;
 
-    .project-total {
-      text-align: right;
-    }
+            transform: translateY(-8px);
 
-    .project-total strong {
-      display: block;
+            transition: 0.25s ease;
+        }
 
-      color: var(--navy);
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
 
-      font-size: 25px;
-      font-weight: 600;
-    }
+        .dropdown-menu li {
+            width: 100%;
+        }
 
-    .project-total span {
-      color: var(--gray-500);
-      font-size: 10px;
-    }
+        .dropdown-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
 
+            padding: 11px 13px;
 
-    /* ==========================================
-       FILTER
-    ========================================== */
+            color: #333333;
+            font-size: 13px;
+            font-weight: 500;
 
-    .filter-container {
-      background: white;
+            border-radius: 6px;
 
-      border: 1px solid var(--gray-200);
-      border-radius: 10px;
+            transition: 0.2s ease;
+        }
 
-      padding: 13px;
+        .dropdown-menu li a i {
+            width: 18px;
+            color: #0A2F6B;
+        }
 
-      display: flex;
-      align-items: center;
-      gap: 10px;
+        .dropdown-menu li a:hover {
+            background: #eef4fb;
+            color: #0A2F6B;
+        }
 
-      box-shadow: var(--shadow);
 
-      margin-bottom: 25px;
-    }
+        /* =========================================
+           HERO
+        ========================================= */
 
-    .search {
-      flex: 1;
-      position: relative;
-    }
+        .hero {
+            height: 480px;
 
-    .search i {
-      position: absolute;
+            position: relative;
+            overflow: hidden;
 
-      left: 13px;
-      top: 50%;
+            background: #0A2F6B;
+        }
 
-      transform: translateY(-50%);
+        .hero-image {
+            width: 100%;
+            height: 100%;
 
-      color: var(--gray-400);
-      font-size: 12px;
-    }
+            object-fit: cover;
+            object-position: center;
 
-    .search input {
-      width: 100%;
-      height: 39px;
+            opacity: 0.72;
+        }
 
-      border: 1px solid var(--gray-200);
-      border-radius: 7px;
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
 
-      background: var(--gray-50);
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(5, 27, 61, 0.95) 0%,
+                    rgba(5, 27, 61, 0.75) 45%,
+                    rgba(5, 27, 61, 0.20) 100%
+                );
+        }
 
-      outline: none;
+        .hero-content {
+            position: absolute;
 
-      padding: 0 12px 0 36px;
+            left: 7%;
+            top: 50%;
 
-      color: var(--gray-700);
-      font-size: 11px;
+            transform: translateY(-50%);
 
-      transition: 0.2s;
-    }
+            max-width: 650px;
 
-    .search input:focus {
-      background: white;
-      border-color: var(--blue);
+            color: #ffffff;
+        }
 
-      box-shadow:
-        0 0 0 3px rgba(8, 104, 199, 0.08);
-    }
+        .hero-label {
+            display: inline-block;
 
-    .filter-select {
-      height: 39px;
-      min-width: 160px;
+            padding: 7px 13px;
 
-      border: 1px solid var(--gray-200);
-      border-radius: 7px;
+            margin-bottom: 17px;
 
-      background: white;
+            border-left: 3px solid #d7ad48;
 
-      color: var(--gray-600);
+            background: rgba(255,255,255,0.10);
 
-      padding: 0 11px;
+            font-size: 11px;
+            font-weight: 700;
 
-      font-size: 11px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
 
-      outline: none;
+        .hero h1 {
+            font-size: 46px;
+            line-height: 1.15;
 
-      cursor: pointer;
-    }
+            margin-bottom: 17px;
 
+            font-weight: 800;
+        }
 
-    /* ==========================================
-       SECTION TITLE
-    ========================================== */
+        .hero p {
+            max-width: 610px;
 
-    .section-title {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+            margin-bottom: 28px;
 
-      margin-bottom: 13px;
-    }
+            color: rgba(255,255,255,0.88);
 
-    .section-title h3 {
-      color: var(--navy);
+            font-size: 15px;
+            line-height: 1.8;
+        }
 
-      font-size: 14px;
-      font-weight: 600;
-    }
 
-    .section-title span {
-      color: var(--gray-500);
-      font-size: 10px;
-    }
+        /* =========================================
+           BUTTON
+        ========================================= */
 
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
 
-    /* ==========================================
-       PROJECT GRID
-    ========================================== */
+            padding: 12px 20px;
 
-    .projects {
-      display: grid;
+            border-radius: 6px;
 
-      grid-template-columns:
-        repeat(3, minmax(0, 1fr));
+            font-size: 13px;
+            font-weight: 700;
 
-      gap: 18px;
-    }
+            transition: 0.25s ease;
+        }
 
+        .btn-primary {
+            background: #d7ad48;
+            color: #0A2F6B;
+        }
 
-    /* ==========================================
-       PROJECT CARD
-    ========================================== */
+        .btn-primary:hover {
+            background: #e7c56f;
+            transform: translateY(-2px);
+        }
 
-    .project-card {
-      background: white;
+        .btn-outline {
+            border: 1px solid rgba(255,255,255,0.7);
+            color: #ffffff;
+            background: transparent;
+        }
 
-      border: 1px solid var(--gray-200);
-      border-radius: 11px;
+        .btn-outline:hover {
+            background: #ffffff;
+            color: #0A2F6B;
+        }
 
-      overflow: hidden;
+        .hero-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
 
-      box-shadow: var(--shadow);
 
-      transition:
-        transform 0.2s,
-        box-shadow 0.2s,
-        border-color 0.2s;
-    }
+        /* =========================================
+           QUICK FACTS
+        ========================================= */
 
-    .project-card:hover {
-      transform: translateY(-3px);
+        .facts-section {
+            background: #ffffff;
 
-      border-color: #c4dced;
+            padding: 0 7%;
+        }
 
-      box-shadow:
-        0 12px 30px rgba(7, 27, 53, 0.10);
-    }
+        .facts-wrapper {
+            max-width: 1180px;
 
-    .card-line {
-      height: 4px;
+            margin: -42px auto 0;
 
-      background:
-        linear-gradient(
-          90deg,
-          var(--blue),
-          var(--blue-light)
-        );
-    }
+            position: relative;
+            z-index: 10;
 
-    .card-content {
-      padding: 19px;
-    }
+            background: #ffffff;
 
+            border-radius: 8px;
 
-    /* PROJECT TOP */
+            box-shadow:
+                0 12px 35px rgba(10,47,107,0.10);
 
-    .project-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
 
-      gap: 10px;
+            overflow: hidden;
+        }
 
-      margin-bottom: 13px;
-    }
+        .fact {
+            padding: 27px 20px;
 
-    .project-code {
-      color: var(--blue);
+            text-align: center;
 
-      font-size: 9px;
-      font-weight: 700;
+            border-right: 1px solid #e6eaf0;
+        }
 
-      text-transform: uppercase;
-      letter-spacing: 1.1px;
+        .fact:last-child {
+            border-right: none;
+        }
 
-      margin-bottom: 5px;
-    }
+        .fact i {
+            color: #0A2F6B;
 
-    .project-name {
-      color: var(--navy);
+            font-size: 22px;
 
-      font-size: 18px;
-      font-weight: 600;
-    }
+            margin-bottom: 7px;
+        }
 
-    .status {
-      padding: 5px 9px;
+        .fact strong {
+            display: block;
 
-      border-radius: 5px;
+            color: #0A2F6B;
 
-      font-size: 9px;
-      font-weight: 600;
+            font-size: 22px;
+            font-weight: 800;
+        }
 
-      white-space: nowrap;
-    }
+        .fact span {
+            display: block;
 
-    .status.active {
-      color: var(--green);
-      background: var(--green-bg);
-    }
+            margin-top: 2px;
 
-    .status.progress {
-      color: var(--blue);
-      background: var(--blue-soft);
-    }
+            color: #6c7684;
 
-    .status.pending {
-      color: var(--orange);
-      background: var(--orange-bg);
-    }
+            font-size: 11px;
+            font-weight: 500;
+        }
 
 
-    /* DESCRIPTION */
+        /* =========================================
+           SECTION
+        ========================================= */
 
-    .description {
-      color: var(--gray-500);
+        section {
+            padding: 75px 7%;
+        }
 
-      font-size: 11px;
-      line-height: 1.65;
+        .section-heading {
+            text-align: center;
 
-      min-height: 54px;
+            margin-bottom: 42px;
+        }
 
-      margin-bottom: 16px;
-    }
+        .section-heading .eyebrow {
+            color: #0A2F6B;
 
+            font-size: 11px;
+            font-weight: 800;
 
-    /* INFO */
+            letter-spacing: 1.7px;
+            text-transform: uppercase;
 
-    .info-grid {
-      display: grid;
+            margin-bottom: 7px;
+        }
 
-      grid-template-columns: 1fr 1fr;
+        .section-heading h2 {
+            color: #17253a;
 
-      border-top: 1px solid var(--gray-100);
-      border-bottom: 1px solid var(--gray-100);
+            font-size: 30px;
+            font-weight: 800;
 
-      padding: 13px 0;
+            margin-bottom: 9px;
+        }
 
-      gap: 15px;
-    }
+        .section-heading p {
+            max-width: 720px;
 
-    .info {
-      display: flex;
-      align-items: center;
+            margin: auto;
 
-      gap: 9px;
-    }
+            color: #6d7785;
 
-    .info-icon {
-      width: 29px;
-      height: 29px;
+            font-size: 13px;
+            line-height: 1.8;
+        }
 
-      flex-shrink: 0;
 
-      border-radius: 6px;
+        /* =========================================
+           CAPABILITIES
+        ========================================= */
 
-      background: var(--blue-soft);
+        .capabilities {
+            padding-top: 78px;
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+            background: #ffffff;
+        }
 
-      color: var(--blue);
+        .capability-grid {
+            max-width: 1180px;
 
-      font-size: 10px;
-    }
+            margin: auto;
 
-    .info label {
-      display: block;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
 
-      color: var(--gray-400);
+            gap: 19px;
+        }
 
-      font-size: 8px;
+        .capability-card {
+            position: relative;
 
-      margin-bottom: 3px;
-    }
+            padding: 26px;
 
-    .info strong {
-      display: block;
+            background: #f8fafc;
 
-      color: var(--gray-700);
+            border: 1px solid #e3e8ef;
+            border-radius: 8px;
 
-      font-size: 10px;
-      font-weight: 500;
-    }
+            overflow: hidden;
 
+            transition: 0.25s ease;
+        }
 
-    /* PROGRESS */
+        .capability-card::before {
+            content: "";
 
-    .progress {
-      padding-top: 15px;
-    }
+            position: absolute;
 
-    .progress-header {
-      display: flex;
-      justify-content: space-between;
+            left: 0;
+            top: 0;
 
-      margin-bottom: 7px;
-    }
+            width: 4px;
+            height: 100%;
 
-    .progress-header span {
-      color: var(--gray-500);
-      font-size: 9px;
-    }
+            background: #0A2F6B;
 
-    .progress-header strong {
-      color: var(--navy);
-      font-size: 10px;
-    }
+            transform: scaleY(0);
+            transform-origin: bottom;
 
-    .progress-track {
-      width: 100%;
-      height: 5px;
+            transition: 0.25s ease;
+        }
 
-      background: var(--gray-100);
+        .capability-card:hover {
+            background: #ffffff;
 
-      border-radius: 10px;
+            transform: translateY(-5px);
 
-      overflow: hidden;
-    }
+            box-shadow:
+                0 12px 28px rgba(10,47,107,0.09);
+        }
 
-    .progress-bar {
-      height: 100%;
+        .capability-card:hover::before {
+            transform: scaleY(1);
+        }
 
-      background:
-        linear-gradient(
-          90deg,
-          var(--blue),
-          var(--blue-light)
-        );
+        .icon-box {
+            width: 47px;
+            height: 47px;
 
-      border-radius: 10px;
-    }
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
+            margin-bottom: 16px;
 
-    /* FOOTER */
+            border-radius: 7px;
 
-    .card-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+            background: #eaf1f9;
 
-      margin-top: 16px;
-    }
+            color: #0A2F6B;
 
-    .pic {
-      display: flex;
-      align-items: center;
+            font-size: 18px;
+        }
 
-      gap: 8px;
-    }
+        .capability-card h3 {
+            color: #17253a;
 
-    .pic-avatar {
-      width: 28px;
-      height: 28px;
+            font-size: 16px;
+            font-weight: 700;
 
-      border-radius: 50%;
+            margin-bottom: 7px;
+        }
 
-      background: #dcecff;
+        .capability-card p {
+            color: #6c7786;
 
-      color: var(--blue);
+            font-size: 12px;
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+            line-height: 1.7;
+        }
 
-      font-size: 9px;
-      font-weight: 700;
-    }
 
-    .pic label {
-      display: block;
+        /* =========================================
+           WORKSHOP FACILITIES
+        ========================================= */
 
-      color: var(--gray-400);
+        .facilities {
+            background: #f4f7fb;
+        }
 
-      font-size: 8px;
+        .facility-grid {
+            max-width: 1180px;
 
-      margin-bottom: 2px;
-    }
+            margin: auto;
 
-    .pic strong {
-      display: block;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
 
-      color: var(--gray-700);
+            gap: 15px;
+        }
 
-      font-size: 10px;
-      font-weight: 500;
-    }
+        .facility-card {
+            min-height: 165px;
 
-    .detail-btn {
-      border: none;
-      background: transparent;
+            padding: 22px 16px;
 
-      color: var(--blue);
+            background: #ffffff;
 
-      font-size: 10px;
-      font-weight: 500;
+            border: 1px solid #e2e7ee;
+            border-radius: 8px;
 
-      display: flex;
-      align-items: center;
+            text-align: center;
 
-      gap: 5px;
+            display: flex;
+            flex-direction: column;
 
-      padding: 7px;
+            align-items: center;
+            justify-content: center;
 
-      border-radius: 5px;
+            transition: 0.25s ease;
+        }
 
-      cursor: pointer;
-    }
+        .facility-card:hover {
+            transform: translateY(-4px);
 
-    .detail-btn:hover {
-      background: var(--blue-soft);
-    }
+            border-color: #b9cbe1;
 
+            box-shadow:
+                0 10px 24px rgba(10,47,107,0.08);
+        }
 
-    /* ==========================================
-       EMPTY RESULT
-    ========================================== */
+        .facility-card i {
+            color: #0A2F6B;
 
-    .empty {
-      display: none;
+            font-size: 24px;
 
-      text-align: center;
+            margin-bottom: 13px;
+        }
 
-      background: white;
+        .facility-card h3 {
+            color: #18263a;
 
-      border: 1px solid var(--gray-200);
-      border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
 
-      padding: 60px 20px;
+            margin-bottom: 5px;
+        }
 
-      color: var(--gray-500);
-    }
+        .facility-card p {
+            color: #788291;
 
-    .empty i {
-      color: var(--gray-300);
-      font-size: 30px;
+            font-size: 11px;
 
-      margin-bottom: 12px;
-    }
+            line-height: 1.55;
+        }
 
-    .empty h3 {
-      color: var(--navy);
 
-      font-size: 14px;
-      margin-bottom: 5px;
-    }
+        /* =========================================
+           SERVICES
+        ========================================= */
 
-    .empty p {
-      font-size: 11px;
-    }
+        .services {
+            background: #ffffff;
+        }
 
+        .services-grid {
+            max-width: 1180px;
 
-    /* ==========================================
-       MODAL
-    ========================================== */
+            margin: auto;
 
-    .modal-overlay {
-      position: fixed;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
 
-      inset: 0;
+            gap: 17px;
+        }
 
-      background:
-        rgba(3, 18, 37, 0.65);
+        .service-card {
+            padding: 23px;
 
-      backdrop-filter: blur(4px);
+            background: #ffffff;
 
-      display: none;
+            border: 1px solid #e1e6ed;
+            border-radius: 8px;
 
-      align-items: center;
-      justify-content: center;
+            transition: 0.25s ease;
+        }
 
-      padding: 20px;
+        .service-card:hover {
+            border-color: #bfcee0;
 
-      z-index: 1000;
-    }
+            box-shadow:
+                0 10px 24px rgba(10,47,107,0.08);
 
-    .modal-overlay.show {
-      display: flex;
-    }
+            transform: translateY(-3px);
+        }
 
-    .modal {
-      width: 100%;
-      max-width: 650px;
+        .service-number {
+            color: #d7ad48;
 
-      background: white;
+            font-size: 11px;
+            font-weight: 800;
 
-      border-radius: 12px;
+            letter-spacing: 1px;
 
-      overflow: hidden;
+            margin-bottom: 8px;
+        }
 
-      box-shadow:
-        0 25px 70px rgba(0,0,0,0.25);
+        .service-card h3 {
+            color: #17253a;
 
-      animation: showModal 0.2s ease;
-    }
+            font-size: 15px;
+            font-weight: 700;
 
-    @keyframes showModal {
-      from {
-        opacity: 0;
-        transform: translateY(15px);
-      }
+            margin-bottom: 6px;
+        }
 
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+        .service-card p {
+            color: #717c8b;
 
-    .modal-header {
-      padding: 20px 22px;
+            font-size: 11.5px;
 
-      background:
-        linear-gradient(
-          135deg,
-          var(--navy),
-          #0d315c
-        );
+            line-height: 1.65;
+        }
 
-      color: white;
 
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-    }
+        /* =========================================
+           BOOKING CTA
+        ========================================= */
 
-    .modal-header small {
-      color: #77b9eb;
+        .booking-section {
+            padding: 0 7% 78px;
 
-      font-size: 9px;
+            background: #ffffff;
+        }
 
-      text-transform: uppercase;
-      letter-spacing: 1.2px;
-    }
+        .booking-box {
+            max-width: 1180px;
 
-    .modal-header h3 {
-      margin-top: 5px;
+            min-height: 265px;
 
-      font-size: 20px;
-      font-weight: 500;
-    }
+            margin: auto;
 
-    .close {
-      width: 31px;
-      height: 31px;
+            padding: 52px 58px;
 
-      border-radius: 6px;
+            border-radius: 10px;
 
-      border: 1px solid rgba(255,255,255,0.15);
+            background:
+                linear-gradient(
+                    105deg,
+                    rgba(5,28,62,0.98),
+                    rgba(10,47,107,0.92)
+                );
 
-      background: rgba(255,255,255,0.08);
+            display: flex;
 
-      color: white;
+            align-items: center;
+            justify-content: space-between;
 
-      cursor: pointer;
-    }
+            gap: 30px;
 
-    .modal-body {
-      padding: 22px;
-    }
+            position: relative;
 
-    .modal-description {
-      color: var(--gray-500);
+            overflow: hidden;
+        }
 
-      font-size: 11px;
-      line-height: 1.7;
+        .booking-box::after {
+            content: "";
 
-      margin-bottom: 20px;
-    }
+            position: absolute;
 
-    .modal-grid {
-      display: grid;
+            width: 290px;
+            height: 290px;
 
-      grid-template-columns: 1fr 1fr;
+            right: -110px;
+            top: -125px;
 
-      border: 1px solid var(--gray-200);
+            border: 1px solid rgba(215,173,72,0.35);
 
-      border-radius: 8px;
+            border-radius: 50%;
 
-      overflow: hidden;
-    }
+            box-shadow:
+                0 0 0 35px rgba(215,173,72,0.04);
+        }
 
-    .modal-info {
-      padding: 14px;
+        .booking-text {
+            position: relative;
+            z-index: 2;
 
-      border-right: 1px solid var(--gray-200);
-      border-bottom: 1px solid var(--gray-200);
-    }
+            max-width: 700px;
 
-    .modal-info:nth-child(even) {
-      border-right: none;
-    }
+            color: #ffffff;
+        }
 
-    .modal-info:nth-last-child(-n+2) {
-      border-bottom: none;
-    }
+        .booking-label {
+            color: #d7ad48;
 
-    .modal-info label {
-      display: block;
+            font-size: 11px;
+            font-weight: 800;
 
-      color: var(--gray-400);
+            letter-spacing: 1.5px;
 
-      font-size: 8px;
+            text-transform: uppercase;
 
-      margin-bottom: 5px;
-    }
+            margin-bottom: 8px;
+        }
 
-    .modal-info strong {
-      color: var(--gray-700);
+        .booking-text h2 {
+            font-size: 29px;
+            font-weight: 800;
 
-      font-size: 11px;
-      font-weight: 500;
-    }
+            margin-bottom: 9px;
+        }
 
-    .modal-footer {
-      display: flex;
-      justify-content: flex-end;
+        .booking-text p {
+            color: rgba(255,255,255,0.80);
 
-      padding: 14px 22px;
+            font-size: 13px;
 
-      background: var(--gray-50);
+            line-height: 1.75;
+        }
 
-      border-top: 1px solid var(--gray-200);
-    }
+        .booking-action {
+            position: relative;
+            z-index: 2;
 
-    .close-button {
-      border: 1px solid var(--gray-200);
+            flex-shrink: 0;
+        }
 
-      background: white;
 
-      color: var(--gray-600);
+        /* =========================================
+           FOOTER
+        ========================================= */
 
-      padding: 9px 15px;
+        footer {
+            padding: 45px 7% 24px;
 
-      border-radius: 6px;
+            background: #0A2F6B;
 
-      font-size: 10px;
+            color: #ffffff;
+        }
 
-      cursor: pointer;
-    }
+        .footer-main {
+            max-width: 1180px;
 
+            margin: auto;
 
-    /* ==========================================
-       RESPONSIVE
-    ========================================== */
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
 
-    @media (max-width: 1100px) {
+            gap: 50px;
 
-      .projects {
-        grid-template-columns: repeat(2, 1fr);
-      }
+            padding-bottom: 30px;
 
-    }
+            border-bottom:
+                1px solid rgba(255,255,255,0.15);
+        }
 
-    @media (max-width: 750px) {
+        .footer-brand h3 {
+            font-size: 20px;
 
-      .header {
-        padding: 0 20px;
-      }
+            margin-bottom: 7px;
+        }
 
-      .header-date {
-        display: none;
-      }
+        .footer-brand p {
+            max-width: 380px;
 
-      .main {
-        padding: 28px 20px 50px;
-      }
+            color: rgba(255,255,255,0.68);
 
-      .page-header {
-        align-items: flex-start;
-      }
+            font-size: 12px;
 
-      .project-total {
-        display: none;
-      }
+            line-height: 1.75;
+        }
 
-      .projects {
-        grid-template-columns: 1fr;
-      }
+        .footer-column h4 {
+            color: #d7ad48;
 
-    }
+            font-size: 11px;
+            font-weight: 700;
 
-    @media (max-width: 550px) {
+            letter-spacing: 1px;
 
-      .filter-container {
-        flex-direction: column;
-        align-items: stretch;
-      }
+            text-transform: uppercase;
 
-      .filter-select {
-        width: 100%;
-      }
+            margin-bottom: 14px;
+        }
 
-      .page-title h2 {
-        font-size: 24px;
-      }
+        .footer-column a {
+            display: block;
 
-      .info-grid {
-        grid-template-columns: 1fr;
-      }
+            color: rgba(255,255,255,0.74);
 
-      .modal-grid {
-        grid-template-columns: 1fr;
-      }
+            font-size: 12px;
 
-      .modal-info,
-      .modal-info:nth-child(even),
-      .modal-info:nth-last-child(-n+2) {
-        border-right: none;
-        border-bottom: 1px solid var(--gray-200);
-      }
+            margin-bottom: 8px;
 
-      .modal-info:last-child {
-        border-bottom: none;
-      }
+            transition: 0.2s ease;
+        }
 
-    }
+        .footer-column a:hover {
+            color: #ffffff;
 
-  </style>
+            padding-left: 4px;
+        }
+
+        .socials {
+            display: flex;
+            gap: 9px;
+        }
+
+        .socials a {
+            width: 34px;
+            height: 34px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid rgba(255,255,255,0.25);
+
+            border-radius: 50%;
+
+            margin: 0;
+        }
+
+        .socials a:hover {
+            padding-left: 0;
+
+            color: #0A2F6B;
+
+            background: #ffffff;
+        }
+
+        .footer-bottom {
+            max-width: 1180px;
+
+            margin: 20px auto 0;
+
+            display: flex;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            color: rgba(255,255,255,0.55);
+
+            font-size: 10px;
+        }
+
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 1100px) {
+
+            nav ul li > a {
+                padding: 9px 8px;
+                font-size: 12px;
+            }
+
+            .facility-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+
+        @media (max-width: 800px) {
+
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+
+                gap: 10px;
+            }
+
+            nav {
+                width: 100%;
+
+                overflow-x: auto;
+            }
+
+            nav ul {
+                width: max-content;
+            }
+
+            .hero {
+                height: 520px;
+            }
+
+            .hero-content {
+                left: 6%;
+                right: 6%;
+            }
+
+            .hero h1 {
+                font-size: 37px;
+            }
+
+            .facts-wrapper {
+                grid-template-columns: repeat(2, 1fr);
+
+                margin-left: 6%;
+                margin-right: 6%;
+            }
+
+            .fact:nth-child(2) {
+                border-right: none;
+            }
+
+            .fact:nth-child(-n+2) {
+                border-bottom: 1px solid #e6eaf0;
+            }
+
+            .capability-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .booking-box {
+                padding: 42px 35px;
+
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+            .footer-main {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+
+        @media (max-width: 560px) {
+
+            section {
+                padding: 55px 5%;
+            }
+
+            .hero {
+                height: 560px;
+            }
+
+            .hero h1 {
+                font-size: 31px;
+            }
+
+            .hero p {
+                font-size: 13px;
+            }
+
+            .facts-wrapper {
+                grid-template-columns: 1fr;
+
+                margin-left: 5%;
+                margin-right: 5%;
+            }
+
+            .fact {
+                border-right: none;
+                border-bottom: 1px solid #e6eaf0;
+            }
+
+            .fact:last-child {
+                border-bottom: none;
+            }
+
+            .capability-grid,
+            .facility-grid,
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-heading h2 {
+                font-size: 26px;
+            }
+
+            .booking-section {
+                padding-left: 5%;
+                padding-right: 5%;
+            }
+
+            .booking-box {
+                padding: 35px 25px;
+            }
+
+            .booking-text h2 {
+                font-size: 24px;
+            }
+
+            .footer-main {
+                grid-template-columns: 1fr;
+
+                gap: 30px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+            }
+        }
+
+    </style>
 </head>
 
 
 <body>
 
 
-  <!-- ==========================================
-       HEADER
-  ========================================== -->
+    <!-- =========================================
+         HEADER
+    ========================================== -->
 
-  <header class="header">
+    <header>
 
-    <div class="brand">
+        <div class="brand-area">
 
-      <div class="brand-logo">
-        <i class="fa-solid fa-anchor"></i>
-      </div>
+            <img src="img/logo.png"
+                 alt="PT PAL Indonesia Logo">
 
-      <div class="brand-text">
-        <h1>PT PAL INDONESIA</h1>
-        <p>Workshop Management</p>
-      </div>
+            <span class="separator">|</span>
 
-    </div>
+            <img src="img/LOGO CII.png"
+                 class="cii-logo"
+                 alt="CII Logo">
 
-
-    <div class="header-right">
-
-      <div class="header-date">
-        <i class="fa-regular fa-calendar"></i>
-        &nbsp; 21 August 2026
-      </div>
-
-      <div class="header-user">
-
-        <div class="avatar">
-          AD
         </div>
 
-        <span>
-          Workshop Management
-        </span>
 
-      </div>
+        <nav>
 
-    </div>
+            <ul>
 
-  </header>
-
-
-  <!-- ==========================================
-       MAIN WORKSHOP
-  ========================================== -->
-
-  <main class="main">
+                <li>
+                    <a href="homepage.html">
+                        Dashboard
+                    </a>
+                </li>
 
 
-    <!-- PAGE HEADER -->
-
-    <section class="page-header">
-
-      <div class="page-title">
-
-        <small>
-          PT PAL Indonesia
-        </small>
-
-        <h2>
-          Workshop
-        </h2>
-
-        <p>
-          Daftar project yang sedang ditangani dan dikelola
-          oleh PT PAL Indonesia.
-        </p>
-
-      </div>
+                <li>
+                    <a href="display.html">
+                        Schedule
+                    </a>
+                </li>
 
 
-      <div class="project-total">
+                <li>
+                    <a href="login.html">
+                        Docking Space Checker
+                    </a>
+                </li>
 
-        <strong id="totalProjects">
-          06
-        </strong>
 
-        <span>
-          Active Workshop Projects
-        </span>
+                <!-- FACILITIES DROPDOWN -->
 
-      </div>
+                <li class="dropdown">
+
+                    <a href="#" class="active">
+
+                        Facilities
+
+                        <i class="fas fa-chevron-down"></i>
+
+                    </a>
+
+
+                    <ul class="dropdown-menu">
+
+                        <li>
+
+                            <a href="dockingfacilities.html">
+
+                                <i class="fas fa-ship"></i>
+
+                                Docking Facilities
+
+                            </a>
+
+                        </li>
+
+
+                        <li>
+
+                            <a href="workshop.html">
+
+                                <i class="fas fa-tools"></i>
+
+                                Workshop
+
+                            </a>
+
+                        </li>
+
+                    </ul>
+
+                </li>
+
+            </ul>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- =========================================
+         HERO
+    ========================================== -->
+
+    <section class="hero">
+
+        <img
+            class="hero-image"
+            src="https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?auto=format&fit=crop&w=2000&q=85"
+            alt="Shipyard Workshop"
+        >
+
+
+        <div class="hero-overlay"></div>
+
+
+        <div class="hero-content">
+
+            <span class="hero-label">
+                PT PAL Indonesia · Workshop Services
+            </span>
+
+
+            <h1>
+                Workshop &amp;<br>
+                Ship Repair Services
+            </h1>
+
+
+            <p>
+                Integrated workshop facilities and ship repair capabilities
+                supporting vessel maintenance, repair, conversion,
+                modernization, and engineering requirements.
+            </p>
+
+
+            <div class="hero-buttons">
+
+                <a href="#capabilities"
+                   class="btn btn-outline">
+
+                    <i class="fas fa-layer-group"></i>
+
+                    Explore Capabilities
+
+                </a>
+
+
+                <a href="workshop-booking.html"
+                   class="btn btn-primary">
+
+                    <i class="fas fa-calendar-check"></i>
+
+                    Book a Workshop
+
+                </a>
+
+            </div>
+
+        </div>
 
     </section>
 
 
-    <!-- ========================================
-         SEARCH & FILTER
-    ========================================= -->
 
-    <section class="filter-container">
+    <!-- =========================================
+         QUICK FACTS
+    ========================================== -->
 
-      <div class="search">
+    <section class="facts-section">
 
-        <i class="fa-solid fa-magnifying-glass"></i>
-
-        <input
-          type="text"
-          id="search"
-          placeholder="Cari project atau PIC..."
-          oninput="filterProjects()"
-        >
-
-      </div>
+        <div class="facts-wrapper">
 
 
-      <select
-        class="filter-select"
-        id="status"
-        onchange="filterProjects()"
-      >
+            <div class="fact">
 
-        <option value="all">
-          Semua Status
-        </option>
+                <i class="fas fa-ship"></i>
 
-        <option value="active">
-          Active
-        </option>
+                <strong>
+                    894,000 DWT
+                </strong>
 
-        <option value="progress">
-          In Progress
-        </option>
+                <span>
+                    Annual Docking Capacity
+                </span>
 
-        <option value="pending">
-          Pending Review
-        </option>
+            </div>
 
-      </select>
+
+            <div class="fact">
+
+                <i class="fas fa-industry"></i>
+
+                <strong>
+                    50,000 DWT
+                </strong>
+
+                <span>
+                    Dry Dock Capacity
+                </span>
+
+            </div>
+
+
+            <div class="fact">
+
+                <i class="fas fa-ship"></i>
+
+                <strong>
+                    20,000 DWT
+                </strong>
+
+                <span>
+                    Dry Dock Capacity
+                </span>
+
+            </div>
+
+
+            <div class="fact">
+
+                <i class="fas fa-arrows-alt-v"></i>
+
+                <strong>
+                    1,500 TLC
+                </strong>
+
+                <span>
+                    Ship Lift Capacity
+                </span>
+
+            </div>
+
+
+        </div>
 
     </section>
 
 
-    <!-- ========================================
-         PROJECT TITLE
-    ========================================= -->
 
-    <div class="section-title">
+    <!-- =========================================
+         CAPABILITIES
+    ========================================== -->
 
-      <h3>
-        Project Workshop
-      </h3>
-
-      <span id="showing">
-        Menampilkan 6 project
-      </span>
-
-    </div>
+    <section class="capabilities"
+             id="capabilities">
 
 
-    <!-- ========================================
-         PROJECTS
-    ========================================= -->
+        <div class="section-heading">
 
-    <section class="projects" id="projects">
-
-
-      <!-- FRIGATE -->
-
-      <article
-        class="project-card"
-        data-name="frigate"
-        data-pic="Amelia Dwi Kusuma"
-        data-status="active"
-      >
-
-        <div class="card-line"></div>
-
-        <div class="card-content">
-
-          <div class="project-top">
-
-            <div>
-
-              <div class="project-code">
-                PRJ-2026-001
-              </div>
-
-              <h3 class="project-name">
-                Frigate
-              </h3>
-
+            <div class="eyebrow">
+                Our Capabilities
             </div>
 
-            <span class="status active">
-              Active
-            </span>
+            <h2>
+                Integrated Workshop Capabilities
+            </h2>
 
-          </div>
-
-
-          <p class="description">
-            Program pembangunan dan integrasi kapal frigate
-            untuk kebutuhan pertahanan maritim.
-          </p>
-
-
-          <div class="info-grid">
-
-            <div class="info">
-
-              <div class="info-icon">
-                <i class="fa-regular fa-calendar"></i>
-              </div>
-
-              <div>
-
-                <label>
-                  DURASI
-                </label>
-
-                <strong>
-                  24 Months
-                </strong>
-
-              </div>
-
-            </div>
-
-
-            <div class="info">
-
-              <div class="info-icon">
-                <i class="fa-solid fa-industry"></i>
-              </div>
-
-              <div>
-
-                <label>
-                  WORKSHOP
-                </label>
-
-                <strong>
-                  Warship Yard
-                </strong>
-
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <div class="progress">
-
-            <div class="progress-header">
-
-              <span>
-                Project Progress
-              </span>
-
-              <strong>
-                78%
-              </strong>
-
-            </div>
-
-            <div class="progress-track">
-
-              <div
-                class="progress-bar"
-                style="width:78%"
-              ></div>
-
-            </div>
-
-          </div>
-
-
-          <div class="card-footer">
-
-            <div class="pic">
-
-              <div class="pic-avatar">
-                BS
-              </div>
-
-              <div>
-
-                <label>
-                  PIC PROJECT
-                </label>
-
-                <strong>
-                  Amelia Dwi Kusuma
-                </strong>
-
-              </div>
-
-            </div>
-
-
-            <button
-              class="detail-btn"
-              onclick="openModal(
-                'Frigate',
-                'PRJ-2026-001',
-                'Amelia Dwi Kusuma',
-                '24 Months',
-                'Active',
-                '78%',
-                'Warship Yard',
-                'Program pembangunan dan integrasi kapal frigate untuk kebutuhan pertahanan maritim.'
-              )"
-            >
-              Detail
-              <i class="fa-solid fa-arrow-right"></i>
-            </button>
-
-          </div>
+            <p>
+                Supporting a wide range of ship repair, maintenance,
+                conversion, modernization, and engineering requirements.
+            </p>
 
         </div>
 
-      </article>
 
 
-      <!-- SCORPENE -->
-
-      <article
-        class="project-card"
-        data-name="scorpene"
-        data-pic="Andi Pratama"
-        data-status="progress"
-      >
-
-        <div class="card-line"></div>
-
-        <div class="card-content">
-
-          <div class="project-top">
-
-            <div>
-
-              <div class="project-code">
-                PRJ-2026-002
-              </div>
-
-              <h3 class="project-name">
-                Scorpene
-              </h3>
-
-            </div>
-
-            <span class="status progress">
-              In Progress
-            </span>
-
-          </div>
+        <div class="capability-grid">
 
 
-          <p class="description">
-            Workshop dan engineering support untuk pembangunan
-            serta integrasi kapal selam kelas Scorpene.
-          </p>
+            <!-- CARD 1 -->
 
+            <div class="capability-card">
 
-          <div class="info-grid">
+                <div class="icon-box">
 
-            <div class="info">
+                    <i class="fas fa-cogs"></i>
 
-              <div class="info-icon">
-                <i class="fa-regular fa-calendar"></i>
-              </div>
+                </div>
 
-              <div>
+                <h3>
+                    Machinery
+                </h3>
 
-                <label>
-                  DURASI
-                </label>
-
-                <strong>
-                  30 Months
-                </strong>
-
-              </div>
+                <p>
+                    Machinery maintenance, repair and overhaul support
+                    for vessel systems and equipment.
+                </p>
 
             </div>
 
 
-            <div class="info">
 
-              <div class="info-icon">
-                <i class="fa-solid fa-industry"></i>
-              </div>
+            <!-- CARD 2 -->
 
-              <div>
+            <div class="capability-card">
 
-                <label>
-                  WORKSHOP
-                </label>
+                <div class="icon-box">
 
-                <strong>
-                  Submarine Facility
-                </strong>
+                    <i class="fas fa-bolt"></i>
 
-              </div>
+                </div>
 
-            </div>
+                <h3>
+                    Electrical
+                </h3>
 
-          </div>
-
-
-          <div class="progress">
-
-            <div class="progress-header">
-
-              <span>
-                Project Progress
-              </span>
-
-              <strong>
-                61%
-              </strong>
-
-            </div>
-
-            <div class="progress-track">
-
-              <div
-                class="progress-bar"
-                style="width:61%"
-              ></div>
-
-            </div>
-
-          </div>
-
-
-          <div class="card-footer">
-
-            <div class="pic">
-
-              <div class="pic-avatar">
-                AP
-              </div>
-
-              <div>
-
-                <label>
-                  PIC PROJECT
-                </label>
-
-                <strong>
-                  Andi Pratama
-                </strong>
-
-              </div>
+                <p>
+                    Electrical maintenance and repair activities
+                    supporting vessel electrical systems.
+                </p>
 
             </div>
 
 
-            <button
-              class="detail-btn"
-              onclick="openModal(
-                'Scorpene',
-                'PRJ-2026-002',
-                'Andi Pratama',
-                '30 Months',
-                'In Progress',
-                '61%',
-                'Submarine Facility',
-                'Workshop dan engineering support untuk pembangunan serta integrasi kapal selam kelas Scorpene.'
-              )"
-            >
-              Detail
-              <i class="fa-solid fa-arrow-right"></i>
-            </button>
 
-          </div>
+            <!-- CARD 3 -->
+
+            <div class="capability-card">
+
+                <div class="icon-box">
+
+                    <i class="fas fa-project-diagram"></i>
+
+                </div>
+
+                <h3>
+                    Piping
+                </h3>
+
+                <p>
+                    Pipe workshop capabilities supporting fabrication,
+                    maintenance and vessel repair requirements.
+                </p>
+
+            </div>
+
+
+
+            <!-- CARD 4 -->
+
+            <div class="capability-card">
+
+                <div class="icon-box">
+
+                    <i class="fas fa-tools"></i>
+
+                </div>
+
+                <h3>
+                    Outfitting
+                </h3>
+
+                <p>
+                    Workshop support for ship outfitting and related
+                    vessel repair activities.
+                </p>
+
+            </div>
+
+
+
+            <!-- CARD 5 -->
+
+            <div class="capability-card">
+
+                <div class="icon-box">
+
+                    <i class="fas fa-hammer"></i>
+
+                </div>
+
+                <h3>
+                    Fabrication
+                </h3>
+
+                <p>
+                    Fabrication support through dedicated workshop
+                    facilities for ship repair and maintenance.
+                </p>
+
+            </div>
+
+
+
+            <!-- CARD 6 -->
+
+            <div class="capability-card">
+
+                <div class="icon-box">
+
+                    <i class="fas fa-drafting-compass"></i>
+
+                </div>
+
+                <h3>
+                    Engineering Service
+                </h3>
+
+                <p>
+                    Engineering support for repair, maintenance,
+                    modification and vessel-related technical requirements.
+                </p>
+
+            </div>
+
 
         </div>
-
-      </article>
-
-
-      <!-- AL MARIYAH -->
-
-      <article
-        class="project-card"
-        data-name="al mariyah"
-        data-pic="Rizky Hidayat"
-        data-status="active"
-      >
-
-        <div class="card-line"></div>
-
-        <div class="card-content">
-
-          <div class="project-top">
-
-            <div>
-
-              <div class="project-code">
-                PRJ-2026-003
-              </div>
-
-              <h3 class="project-name">
-                AL Mariyah
-              </h3>
-
-            </div>
-
-            <span class="status active">
-              Active
-            </span>
-
-          </div>
-
-
-          <p class="description">
-            Program maintenance, refurbishment, dan technical
-            support untuk armada AL Mariyah.
-          </p>
-
-
-          <div class="info-grid">
-
-            <div class="info">
-
-              <div class="info-icon">
-                <i class="fa-regular fa-calendar"></i>
-              </div>
-
-              <div>
-
-                <label>
-                  DURASI
-                </label>
-
-                <strong>
-                  18 Months
-                </strong>
-
-              </div>
-
-            </div>
-
-
-            <div class="info">
-
-              <div class="info-icon">
-                <i class="fa-solid fa-industry"></i>
-              </div>
-
-              <div>
-
-                <label>
-                  WORKSHOP
-                </label>
-
-                <strong>
-                  Maintenance Yard
-                </strong>
-
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <div class="progress">
-
-            <div class="progress-header">
-
-              <span>
-                Project Progress
-              </span>
-
-              <strong>
-                84%
-              </strong>
-
-            </div>
-
-            <div class="progress-track">
-
-              <div
-                class="progress-bar"
-                style="width:84%"
-              ></div>
-
-            </div>
-
-          </div>
-
-
-          <div class="card-footer">
-
-            <div class="pic">
-
-              <div class="pic-avatar">
-                RH
-              </div>
-
-              <div>
-
-                <label>
-                  PIC PROJECT
-                </label>
-
-                <strong>
-                  Rizky Hidayat
-                </strong>
-
-              </div>
-
-            </div>
-
-
-            <button
-              class="detail-btn"
-              onclick="openModal(
-                'AL Mariyah',
-                'PRJ-2026-003',
-                'Rizky Hidayat',
-                '18 Months',
-                'Active',
-                '84%',
-                'Maintenance Yard',
-                'Program maintenance, refurbishment, dan technical support untuk armada AL Mariyah.'
-              )"
-            >
-              Detail
-              <i class="fa-solid fa-arrow-right"></i>
-            </button>
-
-          </div>
-
-        </div>
-
-      </article>
-
-
-      <!-- FAST PATROL VESSEL -->
-
-      <article
-        class="project-card"
-        data-name="fast patrol vessel"
-        data-pic="Fajar Nugroho"
-        data-status="progress"
-      >
-
-        <div class="card-line"></div>
-
-        <div class="card-content">
-
-          <div class="project-top">
-
-            <div>
-
-              <div class="project-code">
-                PRJ-2026-004
-              </div>
-
-              <h3 class="project-name">
-                Fast Patrol Vessel
-              </h3>
-
-            </div>
-
-            <span class="status progress">
-              In Progress
-            </span>
-
-          </div>
-
-
-          <p class="description">
-            Pengembangan dan produksi kapal patroli cepat
-            untuk operasi keamanan wilayah perairan.
-          </p>
-
-
-          <div class="info-grid">
-
-            <div class="info">
-
-              <div class="info-icon">
-                <i class="fa-regular fa-calendar"></i>
-              </div>
-
-              <div>
-
-                <label>
-                  DURASI
-                </label>
-
-                <strong>
-                  14 Months
-                </strong>
-
-              </div>
-
-            </div>
-
-
-            <div class="info">
-
-              <div class="info-icon">
-                <i class="fa-solid fa-industry"></i>
-              </div>
-
-              <div>
-
-                <label>
-                  WORKSHOP
-                </label>
-
-                <strong>
-                  Production Hall A
-                </strong>
-
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <div class="progress">
-
-            <div class="progress-header">
-
-              <span>
-                Project Progress
-              </span>
-
-              <strong>
-                46%
-              </strong>
-
-            </div>
-
-            <div class="progress-track">
-
-              <div
-                class="progress-bar"
-                style="width:46%"
-              ></div>
-
-            </div>
-
-          </div>
-
-
-          <div class="card-footer">
-
-            <div class="pic">
-
-              <div class="pic-avatar">
-                FN
-              </div>
-
-              <div>
-
-                <label>
-                  PIC PROJECT
-                </label>
-
-                <strong>
-                  Fajar Nugroho
-                </strong>
-
-              </div>
-
-            </div>
-
-
-            <button
-              class="detail-btn"
-              onclick="openModal(
-                'Fast Patrol Vessel',
-                'PRJ-2026-004',
-                'Fajar Nugroho',
-                '14 Months',
-                'In Progress',
-                '46%',
-                'Production Hall A',
-                'Pengembangan dan produksi kapal patroli cepat untuk operasi keamanan wilayah perairan.'
-              )"
-            >
-              Detail
-              <i class="fa-solid fa-arrow-right"></i>
-            </button>
-
-          </div>
-
-        </div>
-
-      </article>
-
-
-      <!-- LST -->
-
-      <article
-        class="project-card"
-        data-name="landing ship tank"
-        data-pic="Dimas Wijaya"
-        data-status="pending"
-      >
-
-        <div class="card-line"></div>
-
-        <div class="card-content">
-
-          <div class="project-top">
-
-            <div>
-
-              <div class="project-code">
-                PRJ-2026-005
-              </div>
-
-              <h3 class="project-name">
-                Landing Ship Tank
-              </h3>
-
-            </div>
-
-            <span class="status pending">
-              Pending Review
-            </span>
-
-          </div>
-
-
-          <p class="description">
-            Modernisasi sistem dan structural improvement
-            untuk kapal Landing Ship Tank.
-          </p>
-
-
-          <div class="info-grid">
-
-            <div class="info">
-
-              <div class="info-icon">
-                <i class="fa-regular fa-calendar"></i>
-              </div>
-
-              <div>
-
-                <label>
-                  DURASI
-                </label>
-
-                <strong>
-                  20 Months
-                </strong>
-
-              </div>
-
-            </div>
-
-
-            <div class="info">
-
-              <div class="info-icon">
-                <i class="fa-solid fa-industry"></i>
-              </div>
-
-              <div>
-
-                <label>
-                  WORKSHOP
-                </label>
-
-                <strong>
-                  Production Hall B
-                </strong>
-
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <div class="progress">
-
-            <div class="progress-header">
-
-              <span>
-                Project Progress
-              </span>
-
-              <strong>
-                32%
-              </strong>
-
-            </div>
-
-            <div class="progress-track">
-
-              <div
-                class="progress-bar"
-                style="width:32%"
-              ></div>
-
-            </div>
-
-          </div>
-
-
-          <div class="card-footer">
-
-            <div class="pic">
-
-              <div class="pic-avatar">
-                DW
-              </div>
-
-              <div>
-
-                <label>
-                  PIC PROJECT
-                </label>
-
-                <strong>
-                  Dimas Wijaya
-                </strong>
-
-              </div>
-
-            </div>
-
-
-            <button
-              class="detail-btn"
-              onclick="openModal(
-                'Landing Ship Tank',
-                'PRJ-2026-005',
-                'Dimas Wijaya',
-                '20 Months',
-                'Pending Review',
-                '32%',
-                'Production Hall B',
-                'Modernisasi sistem dan structural improvement untuk kapal Landing Ship Tank.'
-              )"
-            >
-              Detail
-              <i class="fa-solid fa-arrow-right"></i>
-            </button>
-
-          </div>
-
-        </div>
-
-      </article>
-
-
-      <!-- CORVETTE -->
-
-      <article
-        class="project-card"
-        data-name="corvette"
-        data-pic="Agus Setiawan"
-        data-status="active"
-      >
-
-        <div class="card-line"></div>
-
-        <div class="card-content">
-
-          <div class="project-top">
-
-            <div>
-
-              <div class="project-code">
-                PRJ-2026-006
-              </div>
-
-              <h3 class="project-name">
-                Corvette
-              </h3>
-
-            </div>
-
-            <span class="status active">
-              Active
-            </span>
-
-          </div>
-
-
-          <p class="description">
-            Engineering, fabrication, dan system integration
-            untuk project kapal corvette.
-          </p>
-
-
-          <div class="info-grid">
-
-            <div class="info">
-
-              <div class="info-icon">
-                <i class="fa-regular fa-calendar"></i>
-              </div>
-
-              <div>
-
-                <label>
-                  DURASI
-                </label>
-
-                <strong>
-                  22 Months
-                </strong>
-
-              </div>
-
-            </div>
-
-
-            <div class="info">
-
-              <div class="info-icon">
-                <i class="fa-solid fa-industry"></i>
-              </div>
-
-              <div>
-
-                <label>
-                  WORKSHOP
-                </label>
-
-                <strong>
-                  Warship Yard
-                </strong>
-
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <div class="progress">
-
-            <div class="progress-header">
-
-              <span>
-                Project Progress
-              </span>
-
-              <strong>
-                69%
-              </strong>
-
-            </div>
-
-            <div class="progress-track">
-
-              <div
-                class="progress-bar"
-                style="width:69%"
-              ></div>
-
-            </div>
-
-          </div>
-
-
-          <div class="card-footer">
-
-            <div class="pic">
-
-              <div class="pic-avatar">
-                AS
-              </div>
-
-              <div>
-
-                <label>
-                  PIC PROJECT
-                </label>
-
-                <strong>
-                  Agus Setiawan
-                </strong>
-
-              </div>
-
-            </div>
-
-
-            <button
-              class="detail-btn"
-              onclick="openModal(
-                'Corvette',
-                'PRJ-2026-006',
-                'Agus Setiawan',
-                '22 Months',
-                'Active',
-                '69%',
-                'Warship Yard',
-                'Engineering, fabrication, dan system integration untuk project kapal corvette.'
-              )"
-            >
-              Detail
-              <i class="fa-solid fa-arrow-right"></i>
-            </button>
-
-          </div>
-
-        </div>
-
-      </article>
 
     </section>
 
 
-    <!-- EMPTY -->
 
-    <div
-      class="empty"
-      id="empty"
-    >
+    <!-- =========================================
+         WORKSHOP FACILITIES
+    ========================================== -->
 
-      <i class="fa-solid fa-folder-open"></i>
-
-      <h3>
-        Project tidak ditemukan
-      </h3>
-
-      <p>
-        Coba gunakan kata kunci atau filter status yang berbeda.
-      </p>
-
-    </div>
-
-  </main>
+    <section class="facilities">
 
 
-  <!-- ==========================================
-       DETAIL MODAL
-  ========================================== -->
+        <div class="section-heading">
 
-  <div
-    class="modal-overlay"
-    id="modal"
-    onclick="closeOutside(event)"
-  >
+            <div class="eyebrow">
+                Workshop Facilities
+            </div>
 
-    <div class="modal">
+            <h2>
+                Our Workshop Facilities
+            </h2>
 
-      <div class="modal-header">
-
-        <div>
-
-          <small id="modalCode">
-            PROJECT DETAIL
-          </small>
-
-          <h3 id="modalTitle">
-            Frigate
-          </h3>
+            <p>
+                Dedicated workshop areas supporting specialized
+                ship repair, maintenance and production activities.
+            </p>
 
         </div>
 
-        <button
-          class="close"
-          onclick="closeModal()"
-        >
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-
-      </div>
 
 
-      <div class="modal-body">
-
-        <p
-          class="modal-description"
-          id="modalDescription"
-        ></p>
+        <div class="facility-grid">
 
 
-        <div class="modal-grid">
+            <div class="facility-card">
 
-          <div class="modal-info">
+                <i class="fas fa-tools"></i>
 
-            <label>
-              PROJECT CODE
-            </label>
+                <h3>
+                    Outfitting Workshop
+                </h3>
 
-            <strong id="modalProjectCode">
-              -
-            </strong>
+                <p>
+                    Outfitting and related ship works.
+                </p>
 
-          </div>
-
-
-          <div class="modal-info">
-
-            <label>
-              STATUS
-            </label>
-
-            <strong id="modalStatus">
-              -
-            </strong>
-
-          </div>
+            </div>
 
 
-          <div class="modal-info">
 
-            <label>
-              PIC PROJECT
-            </label>
+            <div class="facility-card">
 
-            <strong id="modalPIC">
-              -
-            </strong>
+                <i class="fas fa-tree"></i>
 
-          </div>
+                <h3>
+                    Woodworking
+                </h3>
 
+                <p>
+                    Woodworking activities and support.
+                </p>
 
-          <div class="modal-info">
-
-            <label>
-              DURASI
-            </label>
-
-            <strong id="modalDuration">
-              -
-            </strong>
-
-          </div>
+            </div>
 
 
-          <div class="modal-info">
 
-            <label>
-              WORKSHOP
-            </label>
+            <div class="facility-card">
 
-            <strong id="modalWorkshop">
-              -
-            </strong>
+                <i class="fas fa-bolt"></i>
 
-          </div>
+                <h3>
+                    Electrical Workshop
+                </h3>
+
+                <p>
+                    Electrical repair and maintenance works.
+                </p>
+
+            </div>
 
 
-          <div class="modal-info">
 
-            <label>
-              PROGRESS
-            </label>
+            <div class="facility-card">
 
-            <strong id="modalProgress">
-              -
-            </strong>
+                <i class="fas fa-layer-group"></i>
 
-          </div>
+                <h3>
+                    Thin Plate Workshop
+                </h3>
+
+                <p>
+                    Thin plate fabrication and related works.
+                </p>
+
+            </div>
+
+
+
+            <div class="facility-card">
+
+                <i class="fas fa-stream"></i>
+
+                <h3>
+                    Pipe Workshop
+                </h3>
+
+                <p>
+                    Pipe fabrication and support activities.
+                </p>
+
+            </div>
+
+
+
+            <div class="facility-card">
+
+                <i class="fas fa-boxes"></i>
+
+                <h3>
+                    Palletizing
+                </h3>
+
+                <p>
+                    Palletizing and material handling support.
+                </p>
+
+            </div>
+
+
+
+            <div class="facility-card">
+
+                <i class="fas fa-shield-alt"></i>
+
+                <h3>
+                    Galvanizing
+                </h3>
+
+                <p>
+                    Galvanizing and surface protection works.
+                </p>
+
+            </div>
+
+
+
+            <div class="facility-card">
+
+                <i class="fas fa-spray-can"></i>
+
+                <h3>
+                    Block Blasting
+                </h3>
+
+                <p>
+                    Surface preparation and blasting activities.
+                </p>
+
+            </div>
+
+
+
+            <div class="facility-card">
+
+                <i class="fas fa-cogs"></i>
+
+                <h3>
+                    Machinery Workshop
+                </h3>
+
+                <p>
+                    Machinery maintenance and repair support.
+                </p>
+
+            </div>
+
+
+
+            <div class="facility-card">
+
+                <i class="fas fa-microchip"></i>
+
+                <h3>
+                    Electronic &amp; Weapon Workshop
+                </h3>
+
+                <p>
+                    Electronic and weapon system support.
+                </p>
+
+            </div>
+
 
         </div>
 
-      </div>
+    </section>
 
 
-      <div class="modal-footer">
 
-        <button
-          class="close-button"
-          onclick="closeModal()"
-        >
-          Tutup
-        </button>
+    <!-- =========================================
+         SERVICES
+    ========================================== -->
 
-      </div>
+    <section class="services">
 
-    </div>
 
-  </div>
+        <div class="section-heading">
 
+            <div class="eyebrow">
+                Services
+            </div>
 
-  <!-- ==========================================
-       JAVASCRIPT
-  ========================================== -->
+            <h2>
+                What Can We Do For Your Vessel?
+            </h2>
 
-  <script>
+            <p>
+                PT PAL provides repair and maintenance services
+                for vessel requirements, from survey and repair
+                to conversion and engineering.
+            </p>
 
-    function filterProjects() {
+        </div>
 
-      const search =
-        document
-          .getElementById("search")
-          .value
-          .toLowerCase()
-          .trim();
 
-      const status =
-        document
-          .getElementById("status")
-          .value;
 
-      const cards =
-        document.querySelectorAll(".project-card");
+        <div class="services-grid">
 
-      let count = 0;
 
+            <div class="service-card">
 
-      cards.forEach(card => {
+                <div class="service-number">
+                    01
+                </div>
 
-        const name =
-          card.dataset.name.toLowerCase();
+                <h3>
+                    Annual Survey
+                </h3>
 
-        const pic =
-          card.dataset.pic.toLowerCase();
+                <p>
+                    Support for annual survey and vessel
+                    maintenance requirements.
+                </p>
 
-        const cardStatus =
-          card.dataset.status;
+            </div>
 
 
-        const matchSearch =
-          name.includes(search) ||
-          pic.includes(search);
 
-        const matchStatus =
-          status === "all" ||
-          cardStatus === status;
+            <div class="service-card">
 
+                <div class="service-number">
+                    02
+                </div>
 
-        if (
-          matchSearch &&
-          matchStatus
-        ) {
+                <h3>
+                    Special Survey
+                </h3>
 
-          card.style.display = "";
+                <p>
+                    Support for special survey requirements
+                    and associated works.
+                </p>
 
-          count++;
+            </div>
 
-        } else {
 
-          card.style.display = "none";
 
-        }
+            <div class="service-card">
 
-      });
+                <div class="service-number">
+                    03
+                </div>
 
+                <h3>
+                    Floating Repair
+                </h3>
 
-      document.getElementById(
-        "showing"
-      ).textContent =
-        `Menampilkan ${count} project`;
+                <p>
+                    Repair and maintenance support using
+                    floating facilities.
+                </p>
 
+            </div>
 
-      document.getElementById(
-        "totalProjects"
-      ).textContent =
-        String(count).padStart(2, "0");
 
 
-      document.getElementById(
-        "empty"
-      ).style.display =
-        count === 0 ? "block" : "none";
+            <div class="service-card">
 
-    }
+                <div class="service-number">
+                    04
+                </div>
 
+                <h3>
+                    Docking Repair
+                </h3>
 
-    /* ========================================
-       MODAL
-    ======================================== */
+                <p>
+                    Vessel repair and maintenance performed
+                    in docking facilities.
+                </p>
 
-    function openModal(
-      title,
-      code,
-      pic,
-      duration,
-      status,
-      progress,
-      workshop,
-      description
-    ) {
+            </div>
 
-      document.getElementById(
-        "modalTitle"
-      ).textContent = title;
 
 
-      document.getElementById(
-        "modalCode"
-      ).textContent = code;
+            <div class="service-card">
 
+                <div class="service-number">
+                    05
+                </div>
 
-      document.getElementById(
-        "modalDescription"
-      ).textContent = description;
+                <h3>
+                    Maintenance
+                </h3>
 
+                <p>
+                    Intermediate and depot-level maintenance
+                    support.
+                </p>
 
-      document.getElementById(
-        "modalProjectCode"
-      ).textContent = code;
+            </div>
 
 
-      document.getElementById(
-        "modalPIC"
-      ).textContent = pic;
 
+            <div class="service-card">
 
-      document.getElementById(
-        "modalDuration"
-      ).textContent = duration;
+                <div class="service-number">
+                    06
+                </div>
 
+                <h3>
+                    Ship Conversion
+                </h3>
 
-      document.getElementById(
-        "modalStatus"
-      ).textContent = status;
+                <p>
+                    Conversion and modernization support
+                    for vessel requirements.
+                </p>
 
+            </div>
 
-      document.getElementById(
-        "modalProgress"
-      ).textContent = progress;
 
 
-      document.getElementById(
-        "modalWorkshop"
-      ).textContent = workshop;
+            <div class="service-card">
 
+                <div class="service-number">
+                    07
+                </div>
 
-      document
-        .getElementById("modal")
-        .classList.add("show");
+                <h3>
+                    Modification / Alteration
+                </h3>
 
+                <p>
+                    Technical modification and alteration
+                    services for vessels.
+                </p>
 
-      document.body.style.overflow = "hidden";
+            </div>
 
-    }
 
 
-    function closeModal() {
+            <div class="service-card">
 
-      document
-        .getElementById("modal")
-        .classList.remove("show");
+                <div class="service-number">
+                    08
+                </div>
 
-      document.body.style.overflow = "";
+                <h3>
+                    Engineering Service
+                </h3>
 
-    }
+                <p>
+                    Engineering support for repair and
+                    maintenance requirements.
+                </p>
 
+            </div>
 
-    function closeOutside(event) {
 
-      if (
-        event.target ===
-        document.getElementById("modal")
-      ) {
+        </div>
 
-        closeModal();
+    </section>
 
-      }
 
-    }
 
+    <!-- =========================================
+         BOOKING CTA
+    ========================================== -->
 
-    document.addEventListener(
-      "keydown",
-      function(event) {
+    <section class="booking-section">
 
-        if (event.key === "Escape") {
-          closeModal();
-        }
 
-      }
-    );
+        <div class="booking-box">
 
-  </script>
+
+            <div class="booking-text">
+
+                <div class="booking-label">
+                    Workshop Booking
+                </div>
+
+                <h2>
+                    Ready to Start Your Project?
+                </h2>
+
+                <p>
+                    Tell us about your vessel and project requirements.
+                    Submit your project information and let our team
+                    review the appropriate facility and capability
+                    for your request.
+                </p>
+
+            </div>
+
+
+            <div class="booking-action">
+
+                <a href="workshop-booking.html"
+                   class="btn btn-primary">
+
+                    <i class="fas fa-calendar-plus"></i>
+
+                    Book a Workshop
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
+
+    <footer>
+
+
+        <div class="footer-main">
+
+
+            <div class="footer-brand">
+
+                <h3>
+                    DIGIDOCC
+                </h3>
+
+                <p>
+                    Digital platform concept for supporting
+                    facility information, scheduling and
+                    workshop booking processes at PT PAL Indonesia.
+                </p>
+
+            </div>
+
+
+
+            <div class="footer-column">
+
+                <h4>
+                    Navigation
+                </h4>
+
+                <a href="homepage.html">
+                    Dashboard
+                </a>
+
+                <a href="display.html">
+                    Schedule
+                </a>
+
+                <a href="login.html">
+                    Docking Space Checker
+                </a>
+
+                <a href="dockingfacilities.html">
+                    Docking Facilities
+                </a>
+
+                <a href="workshop.html">
+                    Workshop
+                </a>
+
+            </div>
+
+
+
+            <div class="footer-column">
+
+                <h4>
+                    Connect
+                </h4>
+
+                <div class="socials">
+
+                    <a href="#"
+                       aria-label="Instagram">
+
+                        <i class="fab fa-instagram"></i>
+
+                    </a>
+
+
+                    <a href="#"
+                       aria-label="LinkedIn">
+
+                        <i class="fab fa-linkedin-in"></i>
+
+                    </a>
+
+
+                    <a href="#"
+                       aria-label="YouTube">
+
+                        <i class="fab fa-youtube"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 DIGIDOCC · PT PAL INDONESIA
+            </span>
+
+            <span>
+                Workshop &amp; Ship Repair Services
+            </span>
+
+        </div>
+
+
+    </footer>
+
 
 </body>
 </html>
