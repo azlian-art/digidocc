@@ -1,7 +1,64 @@
 const dockLength = 128; // meters
 const dockWidth = 20; // meters
+const DOCK_ID = 3;
+const LOCAL_SHIPS_KEY = 'ships_sby';
+const API_BASE = './api';
 let totalLengthUsed = 0; // Track total length used by ships
 let currentMonth = new Date(); // Track the currently displayed month
+
+async function apiRequest(endpoint, options = {}, fallbackValue = null) {
+    try {
+        const response = await fetch(`${API_BASE}${endpoint}`, {
+            headers: { 'Content-Type': 'application/json', ...(options.headers || {}) },
+            ...options
+        });
+        const text = await response.text();
+        const payload = text ? JSON.parse(text) : {};
+        if (!response.ok) throw new Error(payload.message || 'Request failed');
+        return payload;
+    } catch (error) {
+        if (fallbackValue !== null) return fallbackValue;
+        return { success: false, message: error.message };
+    }
+}
+
+function getShipsFromStorage() {
+    return JSON.parse(localStorage.getItem(LOCAL_SHIPS_KEY)) || [];
+}
+
+function saveShipsToStorage(ships) {
+    localStorage.setItem(LOCAL_SHIPS_KEY, JSON.stringify(ships));
+    return ships;
+}
+
+async function syncShipsFromServer() {
+    const response = await apiRequest('/ships.php', { method: 'GET' }, { success: true, data: [] });
+    if (!response || !response.success || !Array.isArray(response.data)) return getShipsFromStorage();
+
+    const dockShips = response.data
+        .filter(ship => Number(ship.dock_id) === DOCK_ID)
+        .map(ship => ({
+            shipName: ship.ship_name,
+            loa: Number(ship.loa),
+            beam: Number(ship.beam),
+            draft: Number(ship.draft),
+            gt: Number(ship.gt),
+            dwt: Number(ship.dwt),
+            date: ship.schedule_date || ship.stay_start,
+            stayStart: ship.stay_start,
+            stayEnd: ship.stay_end
+        }));
+
+    if (dockShips.length > 0) {
+        saveShipsToStorage(dockShips);
+        return dockShips;
+    }
+    return getShipsFromStorage();
+}
+
+window.addEventListener('DOMContentLoaded', async function () {
+    await syncShipsFromServer();
+});
 
 document.getElementById('dockingSpaceChecker').addEventListener('click', function(event) {
     event.preventDefault(); // Prevent default link behavior
@@ -18,7 +75,7 @@ document.querySelectorAll('#dockDropdown a').forEach(link => {
     });
 });
 
-document.getElementById('dockingForm').addEventListener('submit', function(event) {
+document.getElementById('dockingForm').addEventListener('submit', async function(event) {
     event.preventDefault();
 
     const shipName = document.getElementById('shipName').value;
@@ -30,51 +87,59 @@ document.getElementById('dockingForm').addEventListener('submit', function(event
     const date = document.getElementById('date').value;
     const stayStart = new Date(document.getElementById('stayStart').value);
     const stayEnd = new Date(document.getElementById('stayEnd').value);
-    const editingIndex = document.getElementById('editingShipIndex').value; // Get the editing index
+    const editingIndex = document.getElementById('editingShipIndex').value;
 
-    // Check if the ship fits in the docking space
     if (canDock(loa, b, stayStart, stayEnd)) {
-        const ships = JSON.parse(localStorage.getItem('ships_sby')) || [];
+        const ships = getShipsFromStorage();
+        const shipDetails = {
+            shipName: shipName,
+            loa: loa,
+            beam: b,
+            draft: t,
+            gt: gt,
+            dwt: dwt,
+            date: date,
+            stayStart: stayStart.toISOString(),
+            stayEnd: stayEnd.toISOString()
+        };
 
         if (editingIndex !== "") {
-            // Update existing ship
-            ships[editingIndex] = {
-                shipName: shipName,
-                loa: loa,
-                beam: b,
-                draft: t,
-                gt: gt,
-                dwt: dwt,
-                date: date,
-                stayStart: stayStart.toISOString(),
-                stayEnd: stayEnd.toISOString()
-            };
-            document.getElementById('editingShipIndex').value = ""; // Clear the editing index
+            ships[editingIndex] = shipDetails;
+            document.getElementById('editingShipIndex').value = "";
         } else {
-            // Add new ship
-            ships.push({
-                shipName: shipName,
-                loa: loa,
-                beam: b,
-                draft: t,
-                gt: gt,
-                dwt: dwt,
-                date: date,
-                stayStart: stayStart.toISOString(),
-                stayEnd: stayEnd.toISOString()
-            });
+            ships.push(shipDetails);
         }
 
-        localStorage.setItem('ships_sby', JSON.stringify(ships)); // Save to local storage
+        const saveResponse = await apiRequest('/ships.php', {
+            method: 'POST',
+            body: JSON.stringify({
+                dock_id: DOCK_ID,
+                ship_name: shipName,
+                loa: loa,
+                beam: b,
+                draft: t,
+                gt: gt,
+                dwt: dwt,
+                stay_start: stayStart.toISOString(),
+                stay_end: stayEnd.toISOString(),
+                schedule_date: date
+            })
+        }, { success: true, message: 'Saved locally' });
 
-        // Display the result and ship list
+        saveShipsToStorage(ships);
         displayResult(ships);
         displayShipList(ships);
-        drawGanttChart(ships); // Draw the Gantt chart
-        drawRemainingSpaceChart(ships); // Draw the remaining space chart
-        populateCalendarSchedule(); // Populate the calendar schedule
+        drawGanttChart(ships);
+        drawRemainingSpaceChart(ships);
+        populateCalendarSchedule();
+
+        if (saveResponse && saveResponse.success === false) {
+            document.getElementById('result').innerHTML = `
+                <h3>Saved Locally</h3>
+                <p>Database is unavailable, but data was kept in browser storage.</p>
+            `;
+        }
     } else {
-        // Display a message if the ship does not fit
         document.getElementById('result').innerHTML = `
             <h3>Docking Space Not Available</h3>
             <p>Ship cannot dock due to size constraints or overlapping schedule.</p>
@@ -86,7 +151,7 @@ document.getElementById('dockingForm').addEventListener('submit', function(event
 
 // Function to check if the ship can dock
 function canDock(loa, b, stayStart, stayEnd) {
-    const ships = JSON.parse(localStorage.getItem('ships_sby')) || [];
+    const ships = getShipsFromStorage();
     let totalLengthUsedOnDay = 0;
 
     // Calculate total length used on the specific day
@@ -106,7 +171,7 @@ function canDock(loa, b, stayStart, stayEnd) {
 
 // Function to calculate total length used for a specific date
 function calculateTotalLengthUsedForDate(date) {
-    const ships = JSON.parse(localStorage.getItem('ships_sby')) || [];
+    const ships = getShipsFromStorage();
     let totalLength = 0;
 
     ships.forEach(ship => {

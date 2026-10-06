@@ -78,12 +78,12 @@
 
     // Retrieve ship data from local storage
     var dokSemarangData = JSON.parse(localStorage.getItem('ships_smg')) || [];
-    var dokIrianData = JSON.parse(localStorage.getItem('ships')) || [];
+    var dokBlugaData = JSON.parse(localStorage.getItem('ships')) || [];
     var dokSurabayaData = JSON.parse(localStorage.getItem('ships_sby')) || [];
 
     // Update statuses for each dock
     updateShipStatus(dokSemarangData);
-    updateShipStatus(dokIrianData);
+    updateShipStatus(dokBlugaData);
     updateShipStatus(dokSurabayaData);
 
     // Dok Semarang coordinates
@@ -121,8 +121,8 @@
     L.marker([-7.1975, 112.7373]).addTo(map)
       .bindPopup('<b>Dok Semarang</b>');
 
-    // Dok Irian coordinates
-    var dokIrianCoordinates = [
+    // Dok Bluga coordinates
+    var dokBlugaCoordinates = [
       [-7.20309431425055, 112.73931821544818],
       [-7.203035803063672, 112.73956501307482],
       [-7.2049241148286995, 112.73970987171008],
@@ -130,31 +130,31 @@
       [-7.20309431425055, 112.73931821544818]
     ];
 
-    var dokIrianPolygon = L.polygon(dokIrianCoordinates, {
+    var dokBlugaPolygon = L.polygon(dokBlugaCoordinates, {
       color: 'transparent',
       fillColor: 'lightblue',
       fillOpacity: 0.5
     }).addTo(map);
 
-    dokIrianPolygon.options.originalFillColor = dokIrianPolygon.options.fillColor;
+    dokBlugaPolygon.options.originalFillColor = dokBlugaPolygon.options.fillColor;
 
-    dokIrianPolygon.on('mouseover', function () {
-      highlightPolygon(dokIrianPolygon, 'orange');
+    dokBlugaPolygon.on('mouseover', function () {
+      highlightPolygon(dokBlugaPolygon, 'orange');
     });
-    dokIrianPolygon.on('mouseout', function () {
-      resetPolygon(dokIrianPolygon);
+    dokBlugaPolygon.on('mouseout', function () {
+      resetPolygon(dokBlugaPolygon);
     });
 
-    dokIrianPolygon.on('click', function (e) {
+    dokBlugaPolygon.on('click', function (e) {
       L.popup()
         .setLatLng(e.latlng)
-        .setContent(generatePopupContent('Ship Data at Dok Irian', dokIrianData))
+        .setContent(generatePopupContent('Ship Data at Dok Bluga', dokBlugaData))
         .openOn(map);
     });
 
-    // Marker for Dok Irian
+    // Marker for Dok Bluga
     L.marker([-7.2035, 112.7394]).addTo(map)
-      .bindPopup('<b>Dok Irian</b>');
+      .bindPopup('<b>Dok Bluga</b>');
 
     // Dok Surabaya coordinates
     var dokSurabayaCoordinates = [
