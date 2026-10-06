@@ -21,6 +21,7 @@
     >
 
     <style>
+
         /* =========================================
            RESET
         ========================================= */
@@ -97,7 +98,9 @@
             gap: 30px;
         }
 
-        /* Logo */
+        /* =========================================
+           LOGO
+        ========================================= */
 
         .brand {
             display: flex;
@@ -134,7 +137,9 @@
             font-size: 20px;
         }
 
-        /* Navigation */
+        /* =========================================
+           NAVIGATION
+        ========================================= */
 
         .nav-menu {
             display: flex;
@@ -194,6 +199,8 @@
         .nav-menu .active::after {
             transform: scaleX(1);
         }
+
+        /* ACCESS SYSTEM BUTTON */
 
         .nav-menu .login-link {
             margin-left: 8px;
@@ -374,7 +381,6 @@
         .info-strip {
             position: relative;
             z-index: 5;
-
             margin-top: -48px;
         }
 
@@ -428,69 +434,18 @@
 
         .info-item h3 {
             color: var(--navy);
-
             font-size: 14px;
             font-weight: 700;
         }
 
         .info-item p {
             margin-top: 2px;
-
             color: var(--muted);
-
             font-size: 12px;
         }
 
         /* =========================================
-           SECTION
-        ========================================= */
-
-        .section {
-            max-width: 1200px;
-            margin: auto;
-            padding: 105px 30px;
-        }
-
-        .section-heading {
-            text-align: center;
-            max-width: 750px;
-            margin: auto;
-        }
-
-        .section-tag {
-            display: inline-block;
-
-            margin-bottom: 10px;
-
-            color: var(--blue);
-
-            font-size: 12px;
-            font-weight: 700;
-
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-        }
-
-        .section-heading h2 {
-            color: var(--navy);
-
-            font-size: clamp(28px, 4vw, 40px);
-            line-height: 1.2;
-
-            font-weight: 900;
-        }
-
-        .section-heading p {
-            margin-top: 16px;
-
-            color: var(--muted);
-
-            font-size: 15px;
-            line-height: 1.8;
-        }
-
-        /* =========================================
-           ABOUT DIGITAL DOCKING
+           ABOUT SECTION
         ========================================= */
 
         .about-section {
@@ -614,6 +569,54 @@
 
         .about-list i {
             color: var(--blue);
+        }
+
+        /* =========================================
+           GENERAL SECTION
+        ========================================= */
+
+        .section {
+            max-width: 1200px;
+            margin: auto;
+            padding: 105px 30px;
+        }
+
+        .section-heading {
+            text-align: center;
+            max-width: 750px;
+            margin: auto;
+        }
+
+        .section-tag {
+            display: inline-block;
+
+            margin-bottom: 10px;
+
+            color: var(--blue);
+
+            font-size: 12px;
+            font-weight: 700;
+
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .section-heading h2 {
+            color: var(--navy);
+
+            font-size: clamp(28px, 4vw, 40px);
+            line-height: 1.2;
+
+            font-weight: 900;
+        }
+
+        .section-heading p {
+            margin-top: 16px;
+
+            color: var(--muted);
+
+            font-size: 15px;
+            line-height: 1.8;
         }
 
         /* =========================================
@@ -777,9 +780,7 @@
 
         .footer-brand img {
             width: 145px;
-
             margin-bottom: 18px;
-
             filter: brightness(0) invert(1);
         }
 
@@ -864,7 +865,7 @@
         }
 
         /* =========================================
-           MOBILE MENU BUTTON
+           MOBILE MENU
         ========================================= */
 
         .mobile-menu {
@@ -998,9 +999,7 @@
 
             .info-container {
                 margin: 0;
-
                 grid-template-columns: 1fr;
-
                 border-radius: 12px;
             }
 
@@ -1019,9 +1018,7 @@
 
             .about-grid {
                 padding: 70px 20px;
-
                 grid-template-columns: 1fr;
-
                 gap: 45px;
             }
 
@@ -1040,13 +1037,11 @@
 
             .features {
                 grid-template-columns: 1fr;
-
                 margin-top: 35px;
             }
 
             .cta {
                 margin: 0 20px 60px;
-
                 padding: 40px 25px;
             }
 
@@ -1056,20 +1051,20 @@
 
             .footer-main {
                 grid-template-columns: 1fr;
-
                 gap: 30px;
-
                 padding: 45px 25px 35px;
             }
 
             .footer-bottom {
                 flex-direction: column;
-
                 align-items: flex-start;
-
                 padding: 20px 25px;
             }
         }
+
+        /* =========================================
+           RESPONSIVE - SMALL MOBILE
+        ========================================= */
 
         @media (max-width: 400px) {
 
@@ -1085,6 +1080,7 @@
                 min-height: 250px;
             }
         }
+
     </style>
 </head>
 
@@ -1095,9 +1091,13 @@
     ========================================== -->
 
     <header>
+
         <div class="navbar">
 
+            <!-- BRAND -->
+
             <a href="homepage.html" class="brand">
+
                 <img
                     src="img/pal logo.png"
                     alt="Logo PT PAL Indonesia"
@@ -1110,9 +1110,14 @@
                     <i class="fa-solid fa-ship"></i>
                     Digital Docking
                 </span>
+
             </a>
 
+
+            <!-- NAVIGATION -->
+
             <nav>
+
                 <ul class="nav-menu">
 
                     <li>
@@ -1128,34 +1133,39 @@
                     </li>
 
                     <li>
-                        <a href="productandservice.html">
-                            Product & Service
-                        </a>
-                    </li>
-
-                    <li>
                         <a href="login.html" class="login-link">
                             <i class="fa-solid fa-right-to-bracket"></i>
-                            Docking Space Checker
+                            Access System
                         </a>
                     </li>
 
                 </ul>
+
             </nav>
 
+
+            <!-- MOBILE MENU -->
+
             <button class="mobile-menu" aria-label="Menu">
+
                 <i class="fa-solid fa-bars"></i>
+
             </button>
 
         </div>
+
     </header>
 
 
     <!-- =========================================
-         HERO
+         MAIN
     ========================================== -->
 
     <main>
+
+        <!-- =========================================
+             HERO
+        ========================================== -->
 
         <section class="hero">
 
@@ -1218,6 +1228,7 @@
 
                 </div>
 
+
                 <div class="info-item">
 
                     <div class="info-icon">
@@ -1230,6 +1241,7 @@
                     </div>
 
                 </div>
+
 
                 <div class="info-item">
 
@@ -1262,8 +1274,13 @@
                     <div class="about-image-box"></div>
 
                     <div class="about-badge">
+
                         <strong>DIGIDOCK</strong>
-                        <span>Digital Docking System</span>
+
+                        <span>
+                            Digital Docking System
+                        </span>
+
                     </div>
 
                 </div>
@@ -1430,8 +1447,11 @@
                 </p>
 
                 <a href="login.html" class="btn">
-                    Open Docking Space Checker
+
+                    Open Digital Docking System
+
                     <i class="fa-solid fa-arrow-right"></i>
+
                 </a>
 
             </div>
@@ -1449,6 +1469,9 @@
 
         <div class="footer-main">
 
+
+            <!-- FOOTER BRAND -->
+
             <div class="footer-brand">
 
                 <img
@@ -1465,46 +1488,49 @@
             </div>
 
 
+            <!-- NAVIGATION -->
+
             <div class="footer-column">
 
-                <h3>Navigation</h3>
+                <h3>
+                    Navigation
+                </h3>
 
                 <ul>
+
                     <li>
-                        <a href="homepage.html">Home</a>
+                        <a href="homepage.html">
+                            Home
+                        </a>
                     </li>
 
                     <li>
-                        <a href="aboutus.html">About Us</a>
-                    </li>
-
-                    <li>
-                        <a href="productandservice.html">
-                            Product & Service
+                        <a href="aboutus.html">
+                            About Us
                         </a>
                     </li>
 
                     <li>
                         <a href="login.html">
-                            Docking Space Checker
+                            Access System
                         </a>
                     </li>
-                    <li>
-                        <a href="workshop.html">
-                            workshop
-                        </a>
-                    </li>
-                </ul>
 
+                </ul>
 
             </div>
 
 
+            <!-- DIGITAL DOCKING -->
+
             <div class="footer-column">
 
-                <h3>Digital Docking</h3>
+                <h3>
+                    Digital Docking
+                </h3>
 
                 <ul>
+
                     <li>
                         <a href="#about">
                             About DIGIDOCK
@@ -1522,12 +1548,15 @@
                             Access System
                         </a>
                     </li>
+
                 </ul>
 
             </div>
 
         </div>
 
+
+        <!-- FOOTER BOTTOM -->
 
         <div class="footer-bottom">
 
