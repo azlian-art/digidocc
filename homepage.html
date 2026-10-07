@@ -1,269 +1,1588 @@
+<!DOCTYPE html>
+<html lang="id">
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>
-        PT PAL INDONESIA
-    </title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PT PAL Indonesia | Digital Docking</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
     <style>
-        body {
-            font-family: 'Roboto', sans-serif;
+
+        /* =========================================
+           RESET
+        ========================================= */
+
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Roboto", sans-serif;
+            color: #14213d;
+            background: #ffffff;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* =========================================
+           COLOR
+        ========================================= */
+
+        :root {
+            --navy: #0b1f3a;
+            --navy-dark: #07152a;
+            --blue: #075aaa;
+            --blue-light: #eaf5ff;
+            --blue-soft: #f4f9ff;
+            --white: #ffffff;
+            --text: #26364d;
+            --muted: #6d7c90;
+            --border: #dce7f2;
+        }
+
+        /* =========================================
+           HEADER
+        ========================================= */
+
         header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            width: 100%;
+            background: rgba(255, 255, 255, 0.97);
+            border-bottom: 1px solid #e5edf5;
+
+            box-shadow: 0 3px 20px rgba(11, 31, 58, 0.06);
+        }
+
+        .navbar {
+            max-width: 1400px;
+            margin: auto;
+
+            min-height: 82px;
+            padding: 0 35px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        /* =========================================
+           LOGO
+        ========================================= */
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            flex-shrink: 0;
+        }
+
+        .brand-logo {
+            width: 145px;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .brand-divider {
+            width: 1px;
+            height: 38px;
+            background: #d6e0ea;
+        }
+
+        .brand-system {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+
+            color: var(--navy);
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+
+        .brand-system i {
+            color: var(--blue);
+            font-size: 20px;
+        }
+
+        /* =========================================
+           NAVIGATION
+        ========================================= */
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            position: relative;
+
+            display: inline-flex;
+            align-items: center;
+
+            padding: 10px 15px;
+
+            color: #26364d;
+            font-size: 14px;
+            font-weight: 500;
+
+            border-radius: 8px;
+
+            transition: all 0.25s ease;
+        }
+
+        .nav-menu a::after {
+            content: "";
+            position: absolute;
+
+            left: 15px;
+            right: 15px;
+            bottom: 4px;
+
+            height: 2px;
+            background: var(--blue);
+
+            transform: scaleX(0);
+            transform-origin: center;
+
+            transition: transform 0.25s ease;
+        }
+
+        .nav-menu a:hover {
+            color: var(--blue);
+            background: var(--blue-soft);
+        }
+
+        .nav-menu a:hover::after {
+            transform: scaleX(1);
+        }
+
+        .nav-menu .active {
+            color: var(--blue);
+            font-weight: 700;
+        }
+
+        .nav-menu .active::after {
+            transform: scaleX(1);
+        }
+
+        /* ACCESS SYSTEM BUTTON */
+
+        .nav-menu .login-link {
+            margin-left: 8px;
+
+            background: var(--navy);
+            color: white;
+
+            padding: 11px 18px;
+
+            border-radius: 8px;
+        }
+
+        .nav-menu .login-link::after {
+            display: none;
+        }
+
+        .nav-menu .login-link:hover {
+            background: var(--blue);
+            color: white;
+        }
+
+        /* =========================================
+           HERO
+        ========================================= */
+
+        .hero {
+            position: relative;
+            min-height: 590px;
+
+            display: flex;
+            align-items: center;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(5, 25, 50, 0.94) 0%,
+                    rgba(8, 35, 68, 0.84) 42%,
+                    rgba(8, 35, 68, 0.38) 75%,
+                    rgba(8, 35, 68, 0.18) 100%
+                ),
+                url("https://www.pal.co.id/wp-content/uploads/2021/02/1584352969vY1-PIP-PAL-960x410.jpg")
+                center center / cover no-repeat;
+
+            color: white;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+
+            width: 500px;
+            height: 500px;
+
+            right: -180px;
+            top: -200px;
+
+            border-radius: 50%;
+
+            background: rgba(79, 173, 255, 0.13);
+            filter: blur(2px);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+
+            width: 100%;
+            max-width: 1400px;
+
+            margin: auto;
+            padding: 80px 55px;
+        }
+
+        .hero-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+
+            padding: 8px 14px;
+
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+
+            border-radius: 30px;
+
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+
+            backdrop-filter: blur(8px);
+        }
+
+        .hero-label i {
+            color: #67baff;
+        }
+
+        .hero h1 {
+            max-width: 760px;
+
+            margin-top: 22px;
+
+            font-size: clamp(38px, 5vw, 68px);
+            line-height: 1.08;
+            font-weight: 900;
+            letter-spacing: -1.5px;
+        }
+
+        .hero h1 span {
+            color: #63b9ff;
+        }
+
+        .hero-description {
+            max-width: 670px;
+
+            margin-top: 23px;
+
+            color: #e3edf7;
+
+            font-size: 17px;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 13px;
+
+            margin-top: 32px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+
+            padding: 13px 22px;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            transition: all 0.25s ease;
+        }
+
+        .btn-primary {
+            background: #1687dc;
+            color: white;
+
+            box-shadow: 0 8px 20px rgba(22, 135, 220, 0.25);
+        }
+
+        .btn-primary:hover {
+            background: #0874c4;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.07);
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: var(--navy);
+        }
+
+        /* =========================================
+           INFO STRIP
+        ========================================= */
+
+        .info-strip {
+            position: relative;
+            z-index: 5;
+            margin-top: -48px;
+        }
+
+        .info-container {
+            max-width: 1240px;
+            margin: auto;
+
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+
+            background: white;
+
+            border-radius: 14px;
+
+            box-shadow: 0 12px 35px rgba(11, 31, 58, 0.12);
+
+            overflow: hidden;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 17px;
+
+            padding: 27px 30px;
+
+            border-right: 1px solid var(--border);
+        }
+
+        .info-item:last-child {
+            border-right: none;
+        }
+
+        .info-icon {
+            width: 48px;
+            height: 48px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            flex-shrink: 0;
+
+            background: var(--blue-light);
+            color: var(--blue);
+
+            border-radius: 10px;
+
+            font-size: 19px;
+        }
+
+        .info-item h3 {
+            color: var(--navy);
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .info-item p {
+            margin-top: 2px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        /* =========================================
+           ABOUT SECTION
+        ========================================= */
+
+        .about-section {
+            background: var(--blue-soft);
+        }
+
+        .about-grid {
+            max-width: 1200px;
+            margin: auto;
+
+            padding: 100px 30px;
+
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+            gap: 75px;
+
+            align-items: center;
+        }
+
+        .about-image {
+            position: relative;
+        }
+
+        .about-image-box {
+            position: relative;
+
+            min-height: 370px;
+
+            border-radius: 18px;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(11, 31, 58, 0.85),
+                    rgba(7, 91, 170, 0.45)
+                ),
+                url("https://www.pal.co.id/wp-content/uploads/2021/02/1584352969vY1-PIP-PAL-960x410.jpg")
+                center / cover;
+
+            box-shadow: 0 20px 45px rgba(11, 31, 58, 0.16);
+        }
+
+        .about-badge {
+            position: absolute;
+
+            right: -20px;
+            bottom: 25px;
+
+            padding: 18px 22px;
+
+            background: white;
+
+            border-radius: 12px;
+
+            box-shadow: 0 12px 30px rgba(11, 31, 58, 0.15);
+        }
+
+        .about-badge strong {
+            display: block;
+
+            color: var(--navy);
+
+            font-size: 22px;
+            font-weight: 900;
+        }
+
+        .about-badge span {
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .about-content .section-tag {
+            margin-bottom: 10px;
+        }
+
+        .about-content h2 {
+            color: var(--navy);
+
+            font-size: clamp(28px, 4vw, 42px);
+            line-height: 1.2;
+
+            font-weight: 900;
+        }
+
+        .about-content h2 span {
+            color: var(--blue);
+        }
+
+        .about-content > p {
+            margin-top: 20px;
+
+            color: var(--muted);
+
+            font-size: 15px;
+            line-height: 1.9;
+        }
+
+        .about-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 14px;
+
+            margin-top: 27px;
+
+            list-style: none;
+        }
+
+        .about-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            color: #33465e;
+
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .about-list i {
+            color: var(--blue);
+        }
+
+        /* =========================================
+           GENERAL SECTION
+        ========================================= */
+
+        .section {
+            max-width: 1200px;
+            margin: auto;
+            padding: 105px 30px;
+        }
+
+        .section-heading {
+            text-align: center;
+            max-width: 750px;
+            margin: auto;
+        }
+
+        .section-tag {
+            display: inline-block;
+
+            margin-bottom: 10px;
+
+            color: var(--blue);
+
+            font-size: 12px;
+            font-weight: 700;
+
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .section-heading h2 {
+            color: var(--navy);
+
+            font-size: clamp(28px, 4vw, 40px);
+            line-height: 1.2;
+
+            font-weight: 900;
+        }
+
+        .section-heading p {
+            margin-top: 16px;
+
+            color: var(--muted);
+
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        /* =========================================
+           FEATURES
+        ========================================= */
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 22px;
+
+            margin-top: 55px;
+        }
+
+        .feature-card {
+            padding: 30px;
+
+            background: white;
+
+            border: 1px solid var(--border);
+            border-radius: 14px;
+
+            box-shadow: 0 6px 20px rgba(11, 31, 58, 0.04);
+
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-6px);
+
+            border-color: #b9dbf7;
+
+            box-shadow: 0 15px 35px rgba(11, 31, 58, 0.1);
+        }
+
+        .feature-icon {
+            width: 53px;
+            height: 53px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 20px;
+
+            border-radius: 12px;
+
+            background: var(--blue-light);
+            color: var(--blue);
+
+            font-size: 20px;
+        }
+
+        .feature-card h3 {
+            color: var(--navy);
+
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .feature-card p {
+            margin-top: 10px;
+
+            color: var(--muted);
+
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        /* =========================================
+           CTA
+        ========================================= */
+
+        .cta {
+            max-width: 1200px;
+            margin: 0 auto 90px;
+
+            padding: 55px 65px;
+
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    110deg,
+                    var(--navy-dark),
+                    #0c3970
+                );
+
+            color: white;
+
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::after {
+            content: "";
+
+            position: absolute;
+
+            width: 320px;
+            height: 320px;
+
+            right: -100px;
+            top: -140px;
+
+            border-radius: 50%;
+
+            border: 45px solid rgba(96, 187, 255, 0.12);
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
+
+            max-width: 720px;
+        }
+
+        .cta h2 {
+            font-size: 30px;
+            font-weight: 900;
+        }
+
+        .cta p {
+            margin-top: 10px;
+
+            color: #d8e8f7;
+
+            font-size: 14px;
+        }
+
+        .cta .btn {
+            margin-top: 23px;
+            background: white;
+            color: var(--navy);
+        }
+
+        .cta .btn:hover {
+            background: #e8f5ff;
+        }
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+
+        footer {
+            background: var(--navy-dark);
+            color: white;
+        }
+
+        .footer-main {
+            max-width: 1200px;
+            margin: auto;
+
+            padding: 55px 30px 40px;
+
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            gap: 60px;
+        }
+
+        .footer-brand img {
+            width: 145px;
+            margin-bottom: 18px;
+            filter: brightness(0) invert(1);
+        }
+
+        .footer-brand p {
+            max-width: 400px;
+
+            color: #aebed1;
+
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 18px;
+
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column a {
+            color: #aebed1;
+            font-size: 13px;
+
+            transition: color 0.2s ease;
+        }
+
+        .footer-column a:hover {
+            color: #65baff;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.09);
+
+            max-width: 1200px;
+            margin: auto;
+
+            padding: 20px 30px;
+
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px;
-            background-color: #fff;
-            border-bottom: 1px solid #ddd;
+            gap: 20px;
+
+            color: #8fa3ba;
+
+            font-size: 11px;
         }
-        header h1 {
-            margin: 0;
-            font-size: 24px;
+
+        .footer-social {
+            display: flex;
+            gap: 8px;
         }
-        header img {
-            height: 50px; /* Atur tinggi logo sesuai kebutuhan */
-        }
-        .collaboration-images {
+
+        .footer-social a {
+            width: 32px;
+            height: 32px;
+
             display: flex;
             align-items: center;
-            margin-left: 25px; /* Jarak antara logo dan gambar kolaborasi */
+            justify-content: center;
+
+            background: rgba(255,255,255,0.07);
+
+            border-radius: 7px;
+
+            color: #c4d3e2;
+
+            transition: all 0.2s ease;
         }
-        .collaboration-images img {
-            height: 50px; /* Atur tinggi gambar kolaborasi sesuai kebutuhan */
-            margin-right: 5px; /* Jarak antara gambar */
-        }
-        .collaboration-images .separator {
-            font-size: 15px; /* Ukuran font untuk "X" */
-            margin: 0 5px; /* Jarak di sekitar "X" */
-        }
-        nav ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-        }
-        nav ul li {
-            margin-left: 20px;
-        }
-        nav ul li a {
-            text-decoration: none;
-            color: #000;
-            font-weight: 700;
-        }
-        .hero {
-            position: relative;
-            text-align: center;
+
+        .footer-social a:hover {
+            background: var(--blue);
             color: white;
         }
-        .hero img {
-            width: 100%;
-            height: auto;
-        }
-        .hero .text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 36px;
-            font-weight: 700;
-        }
-        .hero .arrows {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 24px;
-            color: white;
-        }
-        .hero .arrows.left {
-            left: 10px;
-        }
-        .hero .arrows.right {
-            right: 10px;
-        }
-        .arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 24px;
-            color: white;
-            cursor: pointer;
-            z-index: 10;
-        }
-        .arrow.left {
-            left: 10px;
-        }
-        .arrow.right {
-            right: 10px;
-        }
-        .content {
-            padding: 40px 20px;
-            text-align: center;
-        }
-        .content h2 {
-            font-size: 28px;
-            margin-bottom: 20px;
-        }
-        .content p {
-            font-size: 16px;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-        .content .quote {
+
+        /* =========================================
+           MOBILE MENU
+        ========================================= */
+
+        .mobile-menu {
+            display: none;
+
+            width: 42px;
+            height: 42px;
+
+            border: 1px solid var(--border);
+            border-radius: 8px;
+
+            background: white;
+            color: var(--navy);
+
             font-size: 18px;
-            font-style: italic;
-            margin: 20px 0;
+
+            cursor: pointer;
         }
-        .content .author {
-            font-size: 16px;
-            font-weight: 700;
-        }
-        .testimonial {
-            background-color: #211f1f;
-            padding: 40px 20px;
-            text-align: center;
-        }
-        .testimonial h3 {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-        .testimonial p {
-            font-size: 16px;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-        .testimonial .button {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #000;
-            color: #fff;
-            text-decoration: none;
-            font-weight: 700;
-            margin: 100px auto; /* Menggeser tombol ke tengah */
-        }
-        .testimonial .icon {
-            font-size: 24px;
-            color: #000;
-        }
-        @media (max-width: 600px) {
-            .hero .text {
-                font-size: 24px;
+
+        /* =========================================
+           RESPONSIVE - TABLET
+        ========================================= */
+
+        @media (max-width: 1000px) {
+
+            .navbar {
+                padding: 0 22px;
             }
-            .content h2 {
-                font-size: 24px;
+
+            .brand-system,
+            .brand-divider {
+                display: none;
             }
-            .testimonial h3 {
-                font-size: 20px;
+
+            .nav-menu {
+                gap: 0;
+            }
+
+            .nav-menu a {
+                padding: 9px 10px;
+                font-size: 12px;
+            }
+
+            .nav-menu .login-link {
+                padding: 10px 13px;
+            }
+
+            .hero {
+                min-height: 540px;
+            }
+
+            .hero-content {
+                padding: 70px 35px;
+            }
+
+            .info-container {
+                margin: 0 25px;
+            }
+
+            .about-grid {
+                gap: 45px;
+            }
+
+            .footer-main {
+                grid-template-columns: 1.4fr 1fr 1fr;
+                gap: 35px;
             }
         }
-        footer {
-    background-color: #0f1f3d;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
-}
 
-footer .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+        /* =========================================
+           RESPONSIVE - MOBILE
+        ========================================= */
 
-footer nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-}
+        @media (max-width: 760px) {
 
-footer nav ul li {
-    margin-left: 20px;
-}
+            header {
+                position: relative;
+            }
 
-footer nav ul li a {
-    text-decoration: none;
-    color: #fff;
-}
+            .navbar {
+                min-height: 72px;
+                padding: 0 18px;
+            }
+
+            .brand-logo {
+                width: 125px;
+            }
+
+            .mobile-menu {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .hero {
+                min-height: 560px;
+            }
+
+            .hero-content {
+                padding: 60px 22px;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .hero-description {
+                font-size: 14px;
+                line-height: 1.7;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: stretch;
+                max-width: 280px;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .info-strip {
+                margin-top: 0;
+                padding: 20px 18px;
+                background: var(--blue-soft);
+            }
+
+            .info-container {
+                margin: 0;
+                grid-template-columns: 1fr;
+                border-radius: 12px;
+            }
+
+            .info-item {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .info-item:last-child {
+                border-bottom: none;
+            }
+
+            .section {
+                padding: 70px 20px;
+            }
+
+            .about-grid {
+                padding: 70px 20px;
+                grid-template-columns: 1fr;
+                gap: 45px;
+            }
+
+            .about-image-box {
+                min-height: 300px;
+            }
+
+            .about-badge {
+                right: 15px;
+                bottom: 15px;
+            }
+
+            .about-list {
+                grid-template-columns: 1fr;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+                margin-top: 35px;
+            }
+
+            .cta {
+                margin: 0 20px 60px;
+                padding: 40px 25px;
+            }
+
+            .cta h2 {
+                font-size: 25px;
+            }
+
+            .footer-main {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 45px 25px 35px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 20px 25px;
+            }
+        }
+
+        /* =========================================
+           RESPONSIVE - SMALL MOBILE
+        ========================================= */
+
+        @media (max-width: 400px) {
+
+            .hero h1 {
+                font-size: 34px;
+            }
+
+            .hero {
+                min-height: 520px;
+            }
+
+            .about-image-box {
+                min-height: 250px;
+            }
+        }
+
     </style>
 </head>
+
 <body>
-<header>
-    <h1>
-        <img src="img/pal logo.png" alt="Logo PT PAL INDONESIA"/>
-    </h1>
-    <div class="collaboration-images">
-        <img src="img/LOGO CII.png" alt="Gambar Kolaborasi 1"/>
-    </div>
-    <nav>
-        <ul>
-            <li>
-                <a href="homepage.html">
-                    Home
-                </a>
-            </li>
-            <li>
-                <a href="aboutus.html">
-                    About Us
-                </a>
-            </li>
-            <li>
-                <a href="productandservice.html">
-                    Product and Service
-                </a>
-            </li>
-            <li>
-                <a href="login.html">
-                    Docking Space Checker
-                </a>
-            </li>
-            <li>
-                <a href="workshop.html">
-                    Workshop
-                </a>
-            </li>
-        </ul>
 
-    </nav>
-</header>
+    <!-- =========================================
+         HEADER
+    ========================================== -->
+
+    <header>
+
+        <div class="navbar">
+
+            <!-- BRAND -->
+
+            <a href="homepage.html" class="brand">
+
+                <img
+                    src="img/pal logo.png"
+                    alt="Logo PT PAL Indonesia"
+                    class="brand-logo"
+                >
+
+                <span class="brand-divider"></span>
+
+                <span class="brand-system">
+                    <i class="fa-solid fa-ship"></i>
+                    Digital Docking
+                </span>
+
+            </a>
+
+
+            <!-- NAVIGATION -->
+
+            <nav>
+
+                <ul class="nav-menu">
+
+                    <li>
+                        <a href="homepage.html" class="active">
+                            Home
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="aboutus.html">
+                            About Us
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="login.html" class="login-link">
+                            <i class="fa-solid fa-right-to-bracket"></i>
+                            Access System
+                        </a>
+                    </li>
+
+                </ul>
+
+            </nav>
+
+
+            <!-- MOBILE MENU -->
+
+            <button class="mobile-menu" aria-label="Menu">
+
+                <i class="fa-solid fa-bars"></i>
+
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================
+         MAIN
+    ========================================== -->
+
+    <main>
+
+        <!-- =========================================
+             HERO
+        ========================================== -->
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <span class="hero-label">
+                    <i class="fa-solid fa-circle-check"></i>
+                    PT PAL Indonesia
+                </span>
+
+                <h1>
+                    Digital Docking
+                    <br>
+                    <span>Management System</span>
+                </h1>
+
+                <p class="hero-description">
+                    Platform digital untuk mendukung pengelolaan,
+                    penjadwalan, dan monitoring dock space kapal secara
+                    terintegrasi, transparan, dan efisien di PT PAL Indonesia.
+                </p>
+
+                <div class="hero-buttons">
+
+                    <a href="login.html" class="btn btn-primary">
+                        Access System
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+
+                    <a href="#about" class="btn btn-outline">
+                        Learn More
+                        <i class="fa-solid fa-angle-down"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================
+             INFO STRIP
+        ========================================== -->
+
+        <section class="info-strip">
+
+            <div class="info-container">
+
+                <div class="info-item">
+
+                    <div class="info-icon">
+                        <i class="fa-solid fa-network-wired"></i>
+                    </div>
+
+                    <div>
+                        <h3>Integrated System</h3>
+                        <p>Terintegrasi antar proses dan divisi</p>
+                    </div>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <div class="info-icon">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+
+                    <div>
+                        <h3>Real-Time Monitoring</h3>
+                        <p>Informasi dapat dipantau secara real-time</p>
+                    </div>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <div class="info-icon">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+
+                    <div>
+                        <h3>Transparent & Reliable</h3>
+                        <p>Data terstruktur dan mudah ditelusuri</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================
+             ABOUT DIGITAL DOCKING
+        ========================================== -->
+
+        <section class="about-section" id="about">
+
+            <div class="about-grid">
+
+                <div class="about-image">
+
+                    <div class="about-image-box"></div>
+
+                    <div class="about-badge">
+
+                        <strong>DIGIDOCK</strong>
+
+                        <span>
+                            Digital Docking System
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="about-content">
+
+                    <span class="section-tag">
+                        About The System
+                    </span>
+
+                    <h2>
+                        Transformasi Digital
+                        <span>PT PAL Indonesia</span>
+                    </h2>
+
+                    <p>
+                        DIGIDOCK merupakan inisiatif digital yang bertujuan
+                        untuk mentransformasi sistem pengelolaan dan
+                        penjadwalan dock space kapal di PT PAL Indonesia.
+                    </p>
+
+                    <p>
+                        Sistem ini dirancang untuk meningkatkan efisiensi
+                        operasional melalui informasi yang terintegrasi,
+                        transparan, kolaboratif, dan dapat dipantau secara
+                        real-time.
+                    </p>
+
+                    <ul class="about-list">
+
+                        <li>
+                            <i class="fa-solid fa-check-circle"></i>
+                            Terintegrasi antar divisi
+                        </li>
+
+                        <li>
+                            <i class="fa-solid fa-check-circle"></i>
+                            Monitoring real-time
+                        </li>
+
+                        <li>
+                            <i class="fa-solid fa-check-circle"></i>
+                            Data lebih transparan
+                        </li>
+
+                        <li>
+                            <i class="fa-solid fa-check-circle"></i>
+                            Proses lebih efisien
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================
+             FEATURES
+        ========================================== -->
+
+        <section class="section">
+
+            <div class="section-heading">
+
+                <span class="section-tag">
+                    System Overview
+                </span>
+
+                <h2>
+                    Built for Better Dock Management
+                </h2>
+
+                <p>
+                    DIGIDOCK membantu menciptakan proses pengelolaan
+                    dock space yang lebih terstruktur dan mendukung
+                    pengambilan keputusan berbasis data.
+                </p>
+
+            </div>
+
+
+            <div class="features">
+
+                <article class="feature-card">
+
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-calendar-days"></i>
+                    </div>
+
+                    <h3>
+                        Smart Scheduling
+                    </h3>
+
+                    <p>
+                        Mendukung pengelolaan jadwal docking secara
+                        terstruktur sehingga penggunaan dock space
+                        dapat direncanakan dengan lebih baik.
+                    </p>
+
+                </article>
+
+
+                <article class="feature-card">
+
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-eye"></i>
+                    </div>
+
+                    <h3>
+                        Real-Time Visibility
+                    </h3>
+
+                    <p>
+                        Memberikan informasi yang lebih mudah dipantau
+                        sehingga kondisi dan status operasional dapat
+                        diketahui secara cepat.
+                    </p>
+
+                </article>
+
+
+                <article class="feature-card">
+
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+
+                    <h3>
+                        Collaborative
+                    </h3>
+
+                    <p>
+                        Mendukung kolaborasi antar pihak dan divisi
+                        dengan informasi yang tersentralisasi dan
+                        mudah diakses.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================
+             CTA
+        ========================================== -->
+
+        <section class="cta">
+
+            <div class="cta-content">
+
+                <h2>
+                    Ready to manage your docking space?
+                </h2>
+
+                <p>
+                    Akses sistem Digital Docking untuk melihat dan
+                    mengelola informasi docking space PT PAL Indonesia.
+                </p>
+
+                <a href="login.html" class="btn">
+
+                    Open Digital Docking System
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
+
+    <footer>
+
+        <div class="footer-main">
+
+
+            <!-- FOOTER BRAND -->
+
+            <div class="footer-brand">
+
+                <img
+                    src="img/pal logo.png"
+                    alt="PT PAL Indonesia"
+                >
+
+                <p>
+                    Digital Docking merupakan bagian dari transformasi
+                    digital untuk mendukung pengelolaan dock space kapal
+                    yang terintegrasi, transparan, dan efisien.
+                </p>
+
+            </div>
+
+
+            <!-- NAVIGATION -->
+
+            <div class="footer-column">
+
+                <h3>
+                    Navigation
+                </h3>
+
+                <ul>
+
+                    <li>
+                        <a href="homepage.html">
+                            Home
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="aboutus.html">
+                            About Us
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="login.html">
+                            Access System
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <!-- DIGITAL DOCKING -->
+
+            <div class="footer-column">
+
+                <h3>
+                    Digital Docking
+                </h3>
+
+                <ul>
+
+                    <li>
+                        <a href="#about">
+                            About DIGIDOCK
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#about">
+                            System Overview
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="login.html">
+                            Access System
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+
+        <!-- FOOTER BOTTOM -->
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 PT PAL Indonesia. All Rights Reserved.
+            </span>
+
+            <div class="footer-social">
+
+                <a href="#" aria-label="Website">
+                    <i class="fa-solid fa-globe"></i>
+                </a>
+
+                <a href="#" aria-label="Email">
+                    <i class="fa-solid fa-envelope"></i>
+                </a>
+
+                <a href="#" aria-label="Contact">
+                    <i class="fa-solid fa-phone"></i>
+                </a>
+
+            </div>
+
+        </div>
+
+    </footer>
+
 </body>
-    <div class="hero">
-        <img alt="Monochrome photography of a bicycle" height="100" src="https://www.pal.co.id/wp-content/uploads/2021/02/1584352969vY1-PIP-PAL-960x410.jpg" alt="Logo PT PAL INDONESIA" width="200"/>
-    </div>
-    <div class="content" id="content">
-        <h2>
-            WELCOME TO DIGITAL DOCKING
-            <br/>
-             PT PAL INDONESIA
-        </h2>
-        <br><br>
-        <img alt="PT PAL INDONESIA" height="50" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/PT-PAL.svg/2560px-PT-PAL.svg.png" alt="Logo PT PAL INDONESIA" width="200"/>
-        <br><br>
-        <p>
-            DIGIDOCK adalah singkatan dari proyek dan tim kerja yang bertujuan untuk mentransformasi sistem penjadwalan dock space kapal di PT PAL Indonesia dari sistem manual menjadi sistem digital yang: Terintegrasi, Transparan,
-
-Kolaboratif antar divisi,
-
-Dan berbasis real-time monitoring.
-
-.
-        </p>
-    </div>
-<html>
-</html>
-<footer>
-    <div class="container">
-        <p> PT PAL INDONESIA</p>
-        <nav>
-            <ul>
-                <li><a href="#">Privacy Policy</a></li>
-                <li><a href="#">Terms & Conditions</a></li>
-            </ul>
-        </nav>
-    </div>
-</footer>
-</html>
 </html>

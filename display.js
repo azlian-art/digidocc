@@ -1,87 +1,356 @@
-// Function to render the timeline from localStorage for a specific dock
+// =====================================================
+// DIGIDOCC - DOCK SPACE MANAGEMENT
+// Schedule / Timeline Controller
+// =====================================================
+
+
+// =====================================================
+// 1. FORMAT DATE
+// =====================================================
+
+function formatDate(date) {
+    return date.toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+    });
+}
+
+
+// =====================================================
+// 2. GET DATA FROM LOCAL STORAGE
+// =====================================================
+
+function getStorageData(key) {
+
+    try {
+
+        const data = JSON.parse(localStorage.getItem(key));
+
+        if (!Array.isArray(data)) {
+            return [];
+        }
+
+        return data;
+
+    } catch (error) {
+
+        console.error(`Error reading localStorage key: ${key}`, error);
+
+        return [];
+    }
+}
+
+
+// =====================================================
+// 3. RENDER TIMELINE
+// =====================================================
+
 function renderTimeline(timelineContainerId, localStorageKey) {
-    const ships = JSON.parse(localStorage.getItem(localStorageKey)) || []; // Retrieve ships from localStorage
-    const timelineContainer = document.getElementById(timelineContainerId);
+
+    const timelineContainer =
+        document.getElementById(timelineContainerId);
 
     if (!timelineContainer) {
-        console.error(`Timeline container with ID ${timelineContainerId} not found.`);
+
+        console.error(
+            `Timeline container with ID "${timelineContainerId}" not found.`
+        );
+
         return;
     }
+
+
+    // Get ship data
+    const ships = getStorageData(localStorageKey);
+
+
+    // Clear previous content
+    timelineContainer.innerHTML = "";
+
+
+    // =================================================
+    // IF NO DATA
+    // =================================================
 
     if (ships.length === 0) {
-        timelineContainer.innerHTML = '<p>No ship data available.</p>';
+
+        timelineContainer.innerHTML = `
+            <div class="empty-schedule">
+                No schedule data available.
+            </div>
+        `;
+
         return;
     }
 
-    let lastPosition = 0; // Track the last position to avoid overlap
-    const interval = 15; // Interval between each event
 
-    // Group ships by their stayStart and stayEnd dates
-    const groupedShips = {};
-    ships.forEach(ship => {
-        const stayStart = new Date(ship.stayStart).toLocaleDateString();
-        const stayEnd = new Date(ship.stayEnd).toLocaleDateString();
-        const key = `${stayStart}-${stayEnd}`;
+    // =================================================
+    // TIMELINE LINE
+    // =================================================
 
-        if (!groupedShips[key]) {
-            groupedShips[key] = [];
-        }
-        groupedShips[key].push(ship);
+    const line = document.createElement("div");
+
+    line.className = "line";
+
+    timelineContainer.appendChild(line);
+
+
+    // =================================================
+    // SORT SHIPS BY START DATE
+    // =================================================
+
+    ships.sort((a, b) => {
+
+        return new Date(a.stayStart) - new Date(b.stayStart);
+
     });
 
-    // Render the grouped ships
-    for (const key in groupedShips) {
-        const shipGroup = groupedShips[key];
-        const stayStart = new Date(shipGroup[0].stayStart);
-        const stayEnd = new Date(shipGroup[0].stayEnd);
-        const stayStartPosition = lastPosition; // Calculate position based on interval
 
-        // Create event for stayStart (arrival)
-        const startEventDiv = document.createElement('div');
-        startEventDiv.className = 'event';
-        startEventDiv.style.left = `${stayStartPosition}%`;
-        startEventDiv.innerHTML = `
-            <div class="start-date">${stayStart.toLocaleDateString()}</div>
-            <div class="arrow up-arrow"><i class="fas fa-arrow-up"></i></div>
-            <div class="ship-list">
-                <ul>
-                    ${shipGroup.map(ship => `<li>${ship.shipName} (${ship.loa} m)</li>`).join('')}
-                </ul>
+    // =================================================
+    // CREATE EVENTS
+    // =================================================
+
+    ships.forEach((ship, index) => {
+
+        const stayStart = new Date(ship.stayStart);
+
+        const stayEnd = new Date(ship.stayEnd);
+
+
+        // Skip invalid dates
+        if (
+            isNaN(stayStart.getTime()) ||
+            isNaN(stayEnd.getTime())
+        ) {
+
+            console.warn(
+                "Invalid schedule date:",
+                ship
+            );
+
+            return;
+        }
+
+
+        // =================================================
+        // CALCULATE POSITION
+        // =================================================
+
+        /*
+            The position is calculated based on the order
+            of the ship in the schedule.
+
+            This keeps the current prototype stable while
+            allowing the timeline to be upgraded later
+            into a true calendar-based timeline.
+        */
+
+        const totalShips = ships.length;
+
+        let position;
+
+        if (totalShips === 1) {
+
+            position = 45;
+
+        } else {
+
+            position =
+                5 +
+                (index / (totalShips - 1)) * 80;
+
+        }
+
+
+        // =================================================
+        // CREATE START EVENT
+        // =================================================
+
+        const startEvent = document.createElement("div");
+
+        startEvent.className = "event";
+
+        startEvent.style.left = `${position}%`;
+
+
+        // =================================================
+        // SHIP INFORMATION
+        // =================================================
+
+        const shipName =
+            ship.shipName || "Unknown Vessel";
+
+        const loa =
+            ship.loa
+                ? `${ship.loa} m`
+                : "-";
+
+
+        startEvent.innerHTML = `
+
+            <div class="start-date">
+                ${formatDate(stayStart)}
             </div>
+
+            <div class="arrow up-arrow">
+                <i class="fas fa-arrow-up"></i>
+            </div>
+
+            <div class="ship-list">
+
+                <ul>
+
+                    <li>
+                        <strong>${shipName}</strong>
+                        (${loa})
+                    </li>
+
+                </ul>
+
+            </div>
+
         `;
-        timelineContainer.appendChild(startEventDiv);
 
-        // Create event for stayEnd (departure)
-const endEventDiv = document.createElement('div');
-endEventDiv.className = 'event';
-const stayEndPosition = stayStartPosition + interval; // Position for departure
-endEventDiv.style.left = `${stayEndPosition}%`;
-endEventDiv.innerHTML = `
-    <div class="arrow down-arrow"><i class="fas fa-arrow-down"></i></div>
-    <div class="date">${stayEnd.toLocaleDateString()}</div> <!-- Adjust top value as needed -->
-`;
-timelineContainer.appendChild(endEventDiv);
 
-        // Update lastPosition to the current position plus the interval
-        lastPosition = stayEndPosition + interval;
+        timelineContainer.appendChild(startEvent);
+
+
+        // =================================================
+        // CREATE END EVENT
+        // =================================================
+
+        const endEvent = document.createElement("div");
+
+        endEvent.className = "event";
+
+
+        /*
+            Departure is placed slightly to the right
+            of arrival.
+        */
+
+        let endPosition = position + 8;
+
+
+        // Prevent event from going beyond timeline
+        if (endPosition > 90) {
+
+            endPosition = 90;
+
+        }
+
+
+        endEvent.style.left = `${endPosition}%`;
+
+
+        endEvent.innerHTML = `
+
+            <div class="arrow down-arrow">
+                <i class="fas fa-arrow-down"></i>
+            </div>
+
+            <div class="date">
+                ${formatDate(stayEnd)}
+            </div>
+
+        `;
+
+
+        timelineContainer.appendChild(endEvent);
+
+    });
+}
+
+
+// =====================================================
+// 4. RENDER ALL DOCKS
+// =====================================================
+
+renderTimeline(
+    "timelineContainerIrian",
+    "ships"
+);
+
+renderTimeline(
+    "timelineContainerSurabaya",
+    "ships_sby"
+);
+
+renderTimeline(
+    "timelineContainerRepair",
+    "ships_floating"
+);
+
+
+// =====================================================
+// 5. CHECK WORKSHOP BOOKING
+// =====================================================
+
+function checkWorkshopBooking() {
+
+    const requestId =
+        localStorage.getItem("bookingRequestId");
+
+    const status =
+        localStorage.getItem("bookingStatus");
+
+    const companyName =
+        localStorage.getItem("companyName");
+
+    const vesselName =
+        localStorage.getItem("vesselName");
+
+    const facility =
+        localStorage.getItem("facility");
+
+    const startDate =
+        localStorage.getItem("startDate");
+
+    const duration =
+        localStorage.getItem("duration");
+
+
+    // If there is no booking request,
+    // nothing needs to be displayed.
+
+    if (!requestId) {
+
+        console.log(
+            "No workshop booking request found."
+        );
+
+        return;
     }
+
+
+    console.log(
+        "Workshop Booking Found:",
+        {
+            requestId,
+            status,
+            companyName,
+            vesselName,
+            facility,
+            startDate,
+            duration
+        }
+    );
+
 }
 
-// Call the function to render the timeline for each dock
-renderTimeline('timelineContainerBluga', 'ships'); // For Dock Bluga
-renderTimeline('timelineContainerSurabaya', 'ships_sby'); // For Dock Surabaya
-renderTimeline('timelineContainerRepair', 'ships_floating'); // For Floating Repair
 
-// Function to print the page
-function printPage() {
-    window.print();
+// Run booking check
+checkWorkshopBooking();
+
+
+// =====================================================
+// 6. PRINT PAGE
+// =====================================================
+const printButton = document.getElementById("printButton");
+
+if (printButton) {
+    printButton.addEventListener("click", function () {
+        window.print();
+    });
 }
-
-// Add event listener to the print button
-document.getElementById('printButton').addEventListener('click', printPage);
-
-
-// Print functionality
-document.getElementById('printButton').addEventListener('click', function() {
-    window.print();
-});

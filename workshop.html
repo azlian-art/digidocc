@@ -1,0 +1,2047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Workshop | PT PAL Indonesia</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <style>
+
+        /* =========================================
+           GLOBAL
+        ========================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #222;
+            background: #ffffff;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+
+        /* =========================================
+           HEADER
+        ========================================= */
+
+        header {
+            width: 100%;
+            min-height: 82px;
+            padding: 12px 5%;
+            background: #ffffff;
+            border-bottom: 1px solid #e5e5e5;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            position: relative;
+            z-index: 1000;
+        }
+
+        .brand-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-area img {
+            height: 54px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .brand-area .separator {
+            color: #bdbdbd;
+            font-size: 24px;
+        }
+
+        .brand-area .cii-logo {
+            height: 47px;
+        }
+
+
+        /* =========================================
+           NAVIGATION
+        ========================================= */
+
+        nav ul {
+            list-style: none;
+
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        nav ul li {
+            position: relative;
+        }
+
+        nav ul li > a {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            padding: 10px 13px;
+
+            color: #111111;
+            font-size: 14px;
+            font-weight: 600;
+
+            border-radius: 6px;
+
+            transition: 0.25s ease;
+        }
+
+        nav ul li > a:hover,
+        nav ul li > a.active {
+            color: #0A2F6B;
+            background: #eef4fb;
+        }
+
+
+        /* =========================================
+           DROPDOWN
+        ========================================= */
+
+        .dropdown > a i {
+            font-size: 10px;
+            transition: 0.25s ease;
+        }
+
+        .dropdown:hover > a i {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+
+            top: calc(100% + 8px);
+            right: 0;
+
+            min-width: 220px;
+
+            background: #ffffff;
+
+            border: 1px solid #e3e7ed;
+            border-radius: 8px;
+
+            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+
+            padding: 8px;
+
+            opacity: 0;
+            visibility: hidden;
+
+            transform: translateY(-8px);
+
+            transition: 0.25s ease;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu li {
+            width: 100%;
+        }
+
+        .dropdown-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            padding: 11px 13px;
+
+            color: #333333;
+            font-size: 13px;
+            font-weight: 500;
+
+            border-radius: 6px;
+
+            transition: 0.2s ease;
+        }
+
+        .dropdown-menu li a i {
+            width: 18px;
+            color: #0A2F6B;
+        }
+
+        .dropdown-menu li a:hover {
+            background: #eef4fb;
+            color: #0A2F6B;
+        }
+
+
+        /* =========================================
+           HERO
+        ========================================= */
+
+        .hero {
+            height: 480px;
+
+            position: relative;
+            overflow: hidden;
+
+            background: #0A2F6B;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+            object-position: center;
+
+            opacity: 0.72;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(5, 27, 61, 0.95) 0%,
+                    rgba(5, 27, 61, 0.75) 45%,
+                    rgba(5, 27, 61, 0.20) 100%
+                );
+        }
+
+        .hero-content {
+            position: absolute;
+
+            left: 7%;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            max-width: 650px;
+
+            color: #ffffff;
+        }
+
+        .hero-label {
+            display: inline-block;
+
+            padding: 7px 13px;
+
+            margin-bottom: 17px;
+
+            border-left: 3px solid #d7ad48;
+
+            background: rgba(255,255,255,0.10);
+
+            font-size: 11px;
+            font-weight: 700;
+
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-size: 46px;
+            line-height: 1.15;
+
+            margin-bottom: 17px;
+
+            font-weight: 800;
+        }
+
+        .hero p {
+            max-width: 610px;
+
+            margin-bottom: 28px;
+
+            color: rgba(255,255,255,0.88);
+
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+
+        /* =========================================
+           BUTTON
+        ========================================= */
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+
+            padding: 12px 20px;
+
+            border-radius: 6px;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            transition: 0.25s ease;
+        }
+
+        .btn-primary {
+            background: #d7ad48;
+            color: #0A2F6B;
+        }
+
+        .btn-primary:hover {
+            background: #e7c56f;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            border: 1px solid rgba(255,255,255,0.7);
+            color: #ffffff;
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: #ffffff;
+            color: #0A2F6B;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+
+        /* =========================================
+           QUICK FACTS
+        ========================================= */
+
+        .facts-section {
+            background: #ffffff;
+
+            padding: 0 7%;
+        }
+
+        .facts-wrapper {
+            max-width: 1180px;
+
+            margin: -42px auto 0;
+
+            position: relative;
+            z-index: 10;
+
+            background: #ffffff;
+
+            border-radius: 8px;
+
+            box-shadow:
+                0 12px 35px rgba(10,47,107,0.10);
+
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+
+            overflow: hidden;
+        }
+
+        .fact {
+            padding: 27px 20px;
+
+            text-align: center;
+
+            border-right: 1px solid #e6eaf0;
+        }
+
+        .fact:last-child {
+            border-right: none;
+        }
+
+        .fact i {
+            color: #0A2F6B;
+
+            font-size: 22px;
+
+            margin-bottom: 7px;
+        }
+
+        .fact strong {
+            display: block;
+
+            color: #0A2F6B;
+
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .fact span {
+            display: block;
+
+            margin-top: 2px;
+
+            color: #6c7684;
+
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+
+        /* =========================================
+           SECTION
+        ========================================= */
+
+        section {
+            padding: 75px 7%;
+        }
+
+        .section-heading {
+            text-align: center;
+
+            margin-bottom: 42px;
+        }
+
+        .section-heading .eyebrow {
+            color: #0A2F6B;
+
+            font-size: 11px;
+            font-weight: 800;
+
+            letter-spacing: 1.7px;
+            text-transform: uppercase;
+
+            margin-bottom: 7px;
+        }
+
+        .section-heading h2 {
+            color: #17253a;
+
+            font-size: 30px;
+            font-weight: 800;
+
+            margin-bottom: 9px;
+        }
+
+        .section-heading p {
+            max-width: 720px;
+
+            margin: auto;
+
+            color: #6d7785;
+
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+
+        /* =========================================
+           CAPABILITIES
+        ========================================= */
+
+        .capabilities {
+            padding-top: 78px;
+
+            background: #ffffff;
+        }
+
+        .capability-grid {
+            max-width: 1180px;
+
+            margin: auto;
+
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 19px;
+        }
+
+        .capability-card {
+            position: relative;
+
+            padding: 26px;
+
+            background: #f8fafc;
+
+            border: 1px solid #e3e8ef;
+            border-radius: 8px;
+
+            overflow: hidden;
+
+            transition: 0.25s ease;
+        }
+
+        .capability-card::before {
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            top: 0;
+
+            width: 4px;
+            height: 100%;
+
+            background: #0A2F6B;
+
+            transform: scaleY(0);
+            transform-origin: bottom;
+
+            transition: 0.25s ease;
+        }
+
+        .capability-card:hover {
+            background: #ffffff;
+
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 12px 28px rgba(10,47,107,0.09);
+        }
+
+        .capability-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .icon-box {
+            width: 47px;
+            height: 47px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 16px;
+
+            border-radius: 7px;
+
+            background: #eaf1f9;
+
+            color: #0A2F6B;
+
+            font-size: 18px;
+        }
+
+        .capability-card h3 {
+            color: #17253a;
+
+            font-size: 16px;
+            font-weight: 700;
+
+            margin-bottom: 7px;
+        }
+
+        .capability-card p {
+            color: #6c7786;
+
+            font-size: 12px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =========================================
+           WORKSHOP FACILITIES
+        ========================================= */
+
+        .facilities {
+            background: #f4f7fb;
+        }
+
+        .facility-grid {
+            max-width: 1180px;
+
+            margin: auto;
+
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+
+            gap: 15px;
+        }
+
+        .facility-card {
+            min-height: 165px;
+
+            padding: 22px 16px;
+
+            background: #ffffff;
+
+            border: 1px solid #e2e7ee;
+            border-radius: 8px;
+
+            text-align: center;
+
+            display: flex;
+            flex-direction: column;
+
+            align-items: center;
+            justify-content: center;
+
+            transition: 0.25s ease;
+        }
+
+        .facility-card:hover {
+            transform: translateY(-4px);
+
+            border-color: #b9cbe1;
+
+            box-shadow:
+                0 10px 24px rgba(10,47,107,0.08);
+        }
+
+        .facility-card i {
+            color: #0A2F6B;
+
+            font-size: 24px;
+
+            margin-bottom: 13px;
+        }
+
+        .facility-card h3 {
+            color: #18263a;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            margin-bottom: 5px;
+        }
+
+        .facility-card p {
+            color: #788291;
+
+            font-size: 11px;
+
+            line-height: 1.55;
+        }
+
+
+        /* =========================================
+           SERVICES
+        ========================================= */
+
+        .services {
+            background: #ffffff;
+        }
+
+        .services-grid {
+            max-width: 1180px;
+
+            margin: auto;
+
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+
+            gap: 17px;
+        }
+
+        .service-card {
+            padding: 23px;
+
+            background: #ffffff;
+
+            border: 1px solid #e1e6ed;
+            border-radius: 8px;
+
+            transition: 0.25s ease;
+        }
+
+        .service-card:hover {
+            border-color: #bfcee0;
+
+            box-shadow:
+                0 10px 24px rgba(10,47,107,0.08);
+
+            transform: translateY(-3px);
+        }
+
+        .service-number {
+            color: #d7ad48;
+
+            font-size: 11px;
+            font-weight: 800;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 8px;
+        }
+
+        .service-card h3 {
+            color: #17253a;
+
+            font-size: 15px;
+            font-weight: 700;
+
+            margin-bottom: 6px;
+        }
+
+        .service-card p {
+            color: #717c8b;
+
+            font-size: 11.5px;
+
+            line-height: 1.65;
+        }
+
+
+        /* =========================================
+           BOOKING CTA
+        ========================================= */
+
+        .booking-section {
+            padding: 0 7% 78px;
+
+            background: #ffffff;
+        }
+
+        .booking-box {
+            max-width: 1180px;
+
+            min-height: 265px;
+
+            margin: auto;
+
+            padding: 52px 58px;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    105deg,
+                    rgba(5,28,62,0.98),
+                    rgba(10,47,107,0.92)
+                );
+
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 30px;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+        .booking-box::after {
+            content: "";
+
+            position: absolute;
+
+            width: 290px;
+            height: 290px;
+
+            right: -110px;
+            top: -125px;
+
+            border: 1px solid rgba(215,173,72,0.35);
+
+            border-radius: 50%;
+
+            box-shadow:
+                0 0 0 35px rgba(215,173,72,0.04);
+        }
+
+        .booking-text {
+            position: relative;
+            z-index: 2;
+
+            max-width: 700px;
+
+            color: #ffffff;
+        }
+
+        .booking-label {
+            color: #d7ad48;
+
+            font-size: 11px;
+            font-weight: 800;
+
+            letter-spacing: 1.5px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 8px;
+        }
+
+        .booking-text h2 {
+            font-size: 29px;
+            font-weight: 800;
+
+            margin-bottom: 9px;
+        }
+
+        .booking-text p {
+            color: rgba(255,255,255,0.80);
+
+            font-size: 13px;
+
+            line-height: 1.75;
+        }
+
+        .booking-action {
+            position: relative;
+            z-index: 2;
+
+            flex-shrink: 0;
+        }
+
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+
+        footer {
+            padding: 45px 7% 24px;
+
+            background: #0A2F6B;
+
+            color: #ffffff;
+        }
+
+        .footer-main {
+            max-width: 1180px;
+
+            margin: auto;
+
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+
+            gap: 50px;
+
+            padding-bottom: 30px;
+
+            border-bottom:
+                1px solid rgba(255,255,255,0.15);
+        }
+
+        .footer-brand h3 {
+            font-size: 20px;
+
+            margin-bottom: 7px;
+        }
+
+        .footer-brand p {
+            max-width: 380px;
+
+            color: rgba(255,255,255,0.68);
+
+            font-size: 12px;
+
+            line-height: 1.75;
+        }
+
+        .footer-column h4 {
+            color: #d7ad48;
+
+            font-size: 11px;
+            font-weight: 700;
+
+            letter-spacing: 1px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 14px;
+        }
+
+        .footer-column a {
+            display: block;
+
+            color: rgba(255,255,255,0.74);
+
+            font-size: 12px;
+
+            margin-bottom: 8px;
+
+            transition: 0.2s ease;
+        }
+
+        .footer-column a:hover {
+            color: #ffffff;
+
+            padding-left: 4px;
+        }
+
+        .socials {
+            display: flex;
+            gap: 9px;
+        }
+
+        .socials a {
+            width: 34px;
+            height: 34px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid rgba(255,255,255,0.25);
+
+            border-radius: 50%;
+
+            margin: 0;
+        }
+
+        .socials a:hover {
+            padding-left: 0;
+
+            color: #0A2F6B;
+
+            background: #ffffff;
+        }
+
+        .footer-bottom {
+            max-width: 1180px;
+
+            margin: 20px auto 0;
+
+            display: flex;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            color: rgba(255,255,255,0.55);
+
+            font-size: 10px;
+        }
+
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 1100px) {
+
+            nav ul li > a {
+                padding: 9px 8px;
+                font-size: 12px;
+            }
+
+            .facility-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+
+        @media (max-width: 800px) {
+
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+
+                gap: 10px;
+            }
+
+            nav {
+                width: 100%;
+
+                overflow-x: auto;
+            }
+
+            nav ul {
+                width: max-content;
+            }
+
+            .hero {
+                height: 520px;
+            }
+
+            .hero-content {
+                left: 6%;
+                right: 6%;
+            }
+
+            .hero h1 {
+                font-size: 37px;
+            }
+
+            .facts-wrapper {
+                grid-template-columns: repeat(2, 1fr);
+
+                margin-left: 6%;
+                margin-right: 6%;
+            }
+
+            .fact:nth-child(2) {
+                border-right: none;
+            }
+
+            .fact:nth-child(-n+2) {
+                border-bottom: 1px solid #e6eaf0;
+            }
+
+            .capability-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .booking-box {
+                padding: 42px 35px;
+
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+            .footer-main {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+
+        @media (max-width: 560px) {
+
+            section {
+                padding: 55px 5%;
+            }
+
+            .hero {
+                height: 560px;
+            }
+
+            .hero h1 {
+                font-size: 31px;
+            }
+
+            .hero p {
+                font-size: 13px;
+            }
+
+            .facts-wrapper {
+                grid-template-columns: 1fr;
+
+                margin-left: 5%;
+                margin-right: 5%;
+            }
+
+            .fact {
+                border-right: none;
+                border-bottom: 1px solid #e6eaf0;
+            }
+
+            .fact:last-child {
+                border-bottom: none;
+            }
+
+            .capability-grid,
+            .facility-grid,
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-heading h2 {
+                font-size: 26px;
+            }
+
+            .booking-section {
+                padding-left: 5%;
+                padding-right: 5%;
+            }
+
+            .booking-box {
+                padding: 35px 25px;
+            }
+
+            .booking-text h2 {
+                font-size: 24px;
+            }
+
+            .footer-main {
+                grid-template-columns: 1fr;
+
+                gap: 30px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- =========================================
+         HEADER
+    ========================================== -->
+
+    <header>
+
+        <div class="brand-area">
+
+            <img src="img/logo.png"
+                 alt="PT PAL Indonesia Logo">
+
+            <span class="separator">|</span>
+
+            <img src="img/LOGO CII.png"
+                 class="cii-logo"
+                 alt="CII Logo">
+
+        </div>
+
+
+        <nav>
+
+            <ul>
+
+                <li>
+                    <a href="homepage.html">
+                        Dashboard
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="display.html">
+                        Schedule
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="login.html">
+                        Docking Space Checker
+                    </a>
+                </li>
+
+
+                <!-- FACILITIES DROPDOWN -->
+
+                <li class="dropdown">
+
+                    <a href="#" class="active">
+
+                        Facilities
+
+                        <i class="fas fa-chevron-down"></i>
+
+                    </a>
+
+
+                    <ul class="dropdown-menu">
+
+                        <li>
+
+                            <a href="dockingfacilities.html">
+
+                                <i class="fas fa-ship"></i>
+
+                                Docking Facilities
+
+                            </a>
+
+                        </li>
+
+
+                        <li>
+
+                            <a href="workshop.html">
+
+                                <i class="fas fa-tools"></i>
+
+                                Workshop
+
+                            </a>
+
+                        </li>
+
+                    </ul>
+
+                </li>
+
+            </ul>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- =========================================
+         HERO
+    ========================================== -->
+
+    <section class="hero">
+
+        <img
+            class="hero-image"
+            src="https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?auto=format&fit=crop&w=2000&q=85"
+            alt="Shipyard Workshop"
+        >
+
+
+        <div class="hero-overlay"></div>
+
+
+        <div class="hero-content">
+
+            <span class="hero-label">
+                PT PAL Indonesia · Workshop Services
+            </span>
+
+
+            <h1>
+                Workshop &amp;<br>
+                Ship Repair Services
+            </h1>
+
+
+            <p>
+                Integrated workshop facilities and ship repair capabilities
+                supporting vessel maintenance, repair, conversion,
+                modernization, and engineering requirements.
+            </p>
+
+
+            <div class="hero-buttons">
+
+                <a href="#capabilities"
+                   class="btn btn-outline">
+
+                    <i class="fas fa-layer-group"></i>
+
+                    Explore Capabilities
+
+                </a>
+
+
+                <a href="workshop-booking.html"
+                   class="btn btn-primary">
+
+                    <i class="fas fa-calendar-check"></i>
+
+                    Book a Workshop
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================================
+         QUICK FACTS
+    ========================================== -->
+
+    <section class="facts-section">
+
+        <div class="facts-wrapper">
+
+
+            <div class="fact">
+
+                <i class="fas fa-ship"></i>
+
+                <strong>
+                    894,000 DWT
+                </strong>
+
+                <span>
+                    Annual Docking Capacity
+                </span>
+
+            </div>
+
+
+            <div class="fact">
+
+                <i class="fas fa-industry"></i>
+
+                <strong>
+                    50,000 DWT
+                </strong>
+
+                <span>
+                    Dry Dock Capacity
+                </span>
+
+            </div>
+
+
+            <div class="fact">
+
+                <i class="fas fa-ship"></i>
+
+                <strong>
+                    20,000 DWT
+                </strong>
+
+                <span>
+                    Dry Dock Capacity
+                </span>
+
+            </div>
+
+
+            <div class="fact">
+
+                <i class="fas fa-arrows-alt-v"></i>
+
+                <strong>
+                    1,500 TLC
+                </strong>
+
+                <span>
+                    Ship Lift Capacity
+                </span>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================================
+         CAPABILITIES
+    ========================================== -->
+
+    <section class="capabilities"
+             id="capabilities">
+
+
+        <div class="section-heading">
+
+            <div class="eyebrow">
+                Our Capabilities
+            </div>
+
+            <h2>
+                Integrated Workshop Capabilities
+            </h2>
+
+            <p>
+                Supporting a wide range of ship repair, maintenance,
+                conversion, modernization, and engineering requirements.
+            </p>
+
+        </div>
+
+
+
+        <div class="capability-grid">
+
+
+            <!-- CARD 1 -->
+
+            <div class="capability-card">
+
+                <div class="icon-box">
+
+                    <i class="fas fa-cogs"></i>
+
+                </div>
+
+                <h3>
+                    Machinery
+                </h3>
+
+                <p>
+                    Machinery maintenance, repair and overhaul support
+                    for vessel systems and equipment.
+                </p>
+
+            </div>
+
+
+
+            <!-- CARD 2 -->
+
+            <div class="capability-card">
+
+                <div class="icon-box">
+
+                    <i class="fas fa-bolt"></i>
+
+                </div>
+
+                <h3>
+                    Electrical
+                </h3>
+
+                <p>
+                    Electrical maintenance and repair activities
+                    supporting vessel electrical systems.
+                </p>
+
+            </div>
+
+
+
+            <!-- CARD 3 -->
+
+            <div class="capability-card">
+
+                <div class="icon-box">
+
+                    <i class="fas fa-project-diagram"></i>
+
+                </div>
+
+                <h3>
+                    Piping
+                </h3>
+
+                <p>
+                    Pipe workshop capabilities supporting fabrication,
+                    maintenance and vessel repair requirements.
+                </p>
+
+            </div>
+
+
+
+            <!-- CARD 4 -->
+
+            <div class="capability-card">
+
+                <div class="icon-box">
+
+                    <i class="fas fa-tools"></i>
+
+                </div>
+
+                <h3>
+                    Outfitting
+                </h3>
+
+                <p>
+                    Workshop support for ship outfitting and related
+                    vessel repair activities.
+                </p>
+
+            </div>
+
+
+
+            <!-- CARD 5 -->
+
+            <div class="capability-card">
+
+                <div class="icon-box">
+
+                    <i class="fas fa-hammer"></i>
+
+                </div>
+
+                <h3>
+                    Fabrication
+                </h3>
+
+                <p>
+                    Fabrication support through dedicated workshop
+                    facilities for ship repair and maintenance.
+                </p>
+
+            </div>
+
+
+
+            <!-- CARD 6 -->
+
+            <div class="capability-card">
+
+                <div class="icon-box">
+
+                    <i class="fas fa-drafting-compass"></i>
+
+                </div>
+
+                <h3>
+                    Engineering Service
+                </h3>
+
+                <p>
+                    Engineering support for repair, maintenance,
+                    modification and vessel-related technical requirements.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================================
+         WORKSHOP FACILITIES
+    ========================================== -->
+
+    <section class="facilities">
+
+
+        <div class="section-heading">
+
+            <div class="eyebrow">
+                Workshop Facilities
+            </div>
+
+            <h2>
+                Our Workshop Facilities
+            </h2>
+
+            <p>
+                Dedicated workshop areas supporting specialized
+                ship repair, maintenance and production activities.
+            </p>
+
+        </div>
+
+
+
+        <div class="facility-grid">
+
+
+            <div class="facility-card">
+
+                <i class="fas fa-tools"></i>
+
+                <h3>
+                    Outfitting Workshop
+                </h3>
+
+                <p>
+                    Outfitting and related ship works.
+                </p>
+
+            </div>
+
+
+
+            <div class="facility-card">
+
+                <i class="fas fa-tree"></i>
+
+                <h3>
+                    Woodworking
+                </h3>
+
+                <p>
+                    Woodworking activities and support.
+                </p>
+
+            </div>
+
+
+
+            <div class="facility-card">
+
+                <i class="fas fa-bolt"></i>
+
+                <h3>
+                    Electrical Workshop
+                </h3>
+
+                <p>
+                    Electrical repair and maintenance works.
+                </p>
+
+            </div>
+
+
+
+            <div class="facility-card">
+
+                <i class="fas fa-layer-group"></i>
+
+                <h3>
+                    Thin Plate Workshop
+                </h3>
+
+                <p>
+                    Thin plate fabrication and related works.
+                </p>
+
+            </div>
+
+
+
+            <div class="facility-card">
+
+                <i class="fas fa-stream"></i>
+
+                <h3>
+                    Pipe Workshop
+                </h3>
+
+                <p>
+                    Pipe fabrication and support activities.
+                </p>
+
+            </div>
+
+
+
+            <div class="facility-card">
+
+                <i class="fas fa-boxes"></i>
+
+                <h3>
+                    Palletizing
+                </h3>
+
+                <p>
+                    Palletizing and material handling support.
+                </p>
+
+            </div>
+
+
+
+            <div class="facility-card">
+
+                <i class="fas fa-shield-alt"></i>
+
+                <h3>
+                    Galvanizing
+                </h3>
+
+                <p>
+                    Galvanizing and surface protection works.
+                </p>
+
+            </div>
+
+
+
+            <div class="facility-card">
+
+                <i class="fas fa-spray-can"></i>
+
+                <h3>
+                    Block Blasting
+                </h3>
+
+                <p>
+                    Surface preparation and blasting activities.
+                </p>
+
+            </div>
+
+
+
+            <div class="facility-card">
+
+                <i class="fas fa-cogs"></i>
+
+                <h3>
+                    Machinery Workshop
+                </h3>
+
+                <p>
+                    Machinery maintenance and repair support.
+                </p>
+
+            </div>
+
+
+
+            <div class="facility-card">
+
+                <i class="fas fa-microchip"></i>
+
+                <h3>
+                    Electronic &amp; Weapon Workshop
+                </h3>
+
+                <p>
+                    Electronic and weapon system support.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================================
+         SERVICES
+    ========================================== -->
+
+    <section class="services">
+
+
+        <div class="section-heading">
+
+            <div class="eyebrow">
+                Services
+            </div>
+
+            <h2>
+                What Can We Do For Your Vessel?
+            </h2>
+
+            <p>
+                PT PAL provides repair and maintenance services
+                for vessel requirements, from survey and repair
+                to conversion and engineering.
+            </p>
+
+        </div>
+
+
+
+        <div class="services-grid">
+
+
+            <div class="service-card">
+
+                <div class="service-number">
+                    01
+                </div>
+
+                <h3>
+                    Annual Survey
+                </h3>
+
+                <p>
+                    Support for annual survey and vessel
+                    maintenance requirements.
+                </p>
+
+            </div>
+
+
+
+            <div class="service-card">
+
+                <div class="service-number">
+                    02
+                </div>
+
+                <h3>
+                    Special Survey
+                </h3>
+
+                <p>
+                    Support for special survey requirements
+                    and associated works.
+                </p>
+
+            </div>
+
+
+
+            <div class="service-card">
+
+                <div class="service-number">
+                    03
+                </div>
+
+                <h3>
+                    Floating Repair
+                </h3>
+
+                <p>
+                    Repair and maintenance support using
+                    floating facilities.
+                </p>
+
+            </div>
+
+
+
+            <div class="service-card">
+
+                <div class="service-number">
+                    04
+                </div>
+
+                <h3>
+                    Docking Repair
+                </h3>
+
+                <p>
+                    Vessel repair and maintenance performed
+                    in docking facilities.
+                </p>
+
+            </div>
+
+
+
+            <div class="service-card">
+
+                <div class="service-number">
+                    05
+                </div>
+
+                <h3>
+                    Maintenance
+                </h3>
+
+                <p>
+                    Intermediate and depot-level maintenance
+                    support.
+                </p>
+
+            </div>
+
+
+
+            <div class="service-card">
+
+                <div class="service-number">
+                    06
+                </div>
+
+                <h3>
+                    Ship Conversion
+                </h3>
+
+                <p>
+                    Conversion and modernization support
+                    for vessel requirements.
+                </p>
+
+            </div>
+
+
+
+            <div class="service-card">
+
+                <div class="service-number">
+                    07
+                </div>
+
+                <h3>
+                    Modification / Alteration
+                </h3>
+
+                <p>
+                    Technical modification and alteration
+                    services for vessels.
+                </p>
+
+            </div>
+
+
+
+            <div class="service-card">
+
+                <div class="service-number">
+                    08
+                </div>
+
+                <h3>
+                    Engineering Service
+                </h3>
+
+                <p>
+                    Engineering support for repair and
+                    maintenance requirements.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================================
+         BOOKING CTA
+    ========================================== -->
+
+    <section class="booking-section">
+
+
+        <div class="booking-box">
+
+
+            <div class="booking-text">
+
+                <div class="booking-label">
+                    Workshop Booking
+                </div>
+
+                <h2>
+                    Ready to Start Your Project?
+                </h2>
+
+                <p>
+                    Tell us about your vessel and project requirements.
+                    Submit your project information and let our team
+                    review the appropriate facility and capability
+                    for your request.
+                </p>
+
+            </div>
+
+
+            <div class="booking-action">
+
+                <a href="workshop-booking.html"
+                   class="btn btn-primary">
+
+                    <i class="fas fa-calendar-plus"></i>
+
+                    Book a Workshop
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
+
+    <footer>
+
+
+        <div class="footer-main">
+
+
+            <div class="footer-brand">
+
+                <h3>
+                    DIGIDOCC
+                </h3>
+
+                <p>
+                    Digital platform concept for supporting
+                    facility information, scheduling and
+                    workshop booking processes at PT PAL Indonesia.
+                </p>
+
+            </div>
+
+
+
+            <div class="footer-column">
+
+                <h4>
+                    Navigation
+                </h4>
+
+                <a href="homepage.html">
+                    Dashboard
+                </a>
+
+                <a href="display.html">
+                    Schedule
+                </a>
+
+                <a href="login.html">
+                    Docking Space Checker
+                </a>
+
+                <a href="dockingfacilities.html">
+                    Docking Facilities
+                </a>
+
+                <a href="workshop.html">
+                    Workshop
+                </a>
+
+            </div>
+
+
+
+            <div class="footer-column">
+
+                <h4>
+                    Connect
+                </h4>
+
+                <div class="socials">
+
+                    <a href="#"
+                       aria-label="Instagram">
+
+                        <i class="fab fa-instagram"></i>
+
+                    </a>
+
+
+                    <a href="#"
+                       aria-label="LinkedIn">
+
+                        <i class="fab fa-linkedin-in"></i>
+
+                    </a>
+
+
+                    <a href="#"
+                       aria-label="YouTube">
+
+                        <i class="fab fa-youtube"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 DIGIDOCC · PT PAL INDONESIA
+            </span>
+
+            <span>
+                Workshop &amp; Ship Repair Services
+            </span>
+
+        </div>
+
+
+    </footer>
+
+
+</body>
+</html>

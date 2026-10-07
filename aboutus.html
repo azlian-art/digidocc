@@ -1,344 +1,270 @@
+<!DOCTYPE html>
+<html lang="id">
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>
-        PT PAL INDONESIA
-    </title>
+    <title>About Us - DIGIDOCC</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet"/>
     <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root{
+            --navy:#0f1f3d;
+            --navy-2:#1d3760;
+            --blue:#0b5aa8;
+            --sky:#e8f1fc;
+            --bg:#f3f8fe;
+            --text:#5b6b82;
+            --line:#e1e9f4;
         }
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            background-color: #fff;
-            border-bottom: 1px solid #ddd;
-        }
-        header h1 {
-            margin: 0;
-            font-size: 24px;
-        }
-        header img {
-            height: 60px; /* Atur tinggi logo sesuai kebutuhan */
-        }
-        .collaboration-images {
-            display: flex;
-            align-items: center;
-            margin-left: 20px; /* Jarak antara logo dan gambar kolaborasi */
-        }
-        .collaboration-images img {
-            height: 50px; /* Atur tinggi gambar kolaborasi sesuai kebutuhan */
-            margin-right: 5px; /* Jarak antara gambar */
-        }
-        .collaboration-images .separator {
-            font-size: 15px; /* Ukuran font untuk "X" */
-            margin: 0 5px; /* Jarak di sekitar "X" */
-        }
-        nav ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-        }
-        nav ul li {
-            margin-left: 20px;
-        }
-        nav ul li a {
-            text-decoration: none;
-            color: #000;
-            font-weight: 800;
-        }
-        .hero {
-            position: relative;
-            text-align: justify;
-            color: white;
-        }
-        .hero img {
-            width: 100%;
-            height: auto;
-        }
-        .hero .text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 36px;
-            font-weight: 700;
-        }
-        .hero .arrows {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 24px;
-            color: white;
-        }
-        .hero .arrows.left {
-            left: 10px;
-        }
-        .hero .arrows.right {
-            right: 10px;
-        }
-        .arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 24px;
-            color: white;
-            cursor: pointer;
-            z-index: 10;
-        }
-        .arrow.left {
-            left: 10px;
-        }
-        .arrow.right {
-            right: 10px;
-        }
-        .content {
-            padding: 40px 20px;
-            text-align: justify;
-        }
-        .content h2 {
-            font-size: 28px;
-            margin-bottom: 20px;
-        }
-        .content p {
-            font-size: 16px;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-        .content .quote {
-            font-size: 18px;
-            font-style: italic;
-            margin: 20px 0;
-        }
-        .content .author {
-            font-size: 16px;
-            font-weight: 700;
-        }
-        .testimonial {
-            background-color: #f9f9f9;
-            padding: 40px 20px;
-            text-align: justify;
-        }
-        .testimonial h3 {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-        .testimonial p {
-            font-size: 16px;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-        .testimonial .button {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #000;
-            color: #fff;
-            text-decoration: none;
-            font-weight: 700;
-            margin: 100px auto; /* Menggeser tombol ke tengah */
-        }
-        .testimonial .icon {
-            font-size: 24px;
-            color: #000;
-        }
-        @media (max-width: 600px) {
-            .hero .text {
-                font-size: 24px;
-            }
-            .content h2 {
-                font-size: 24px;
-            }
-            .testimonial h3 {
-                font-size: 20px;
-            }
-        }
-        footer {
-    background-color: #0f1f3d;
-    color: #fff;
-    padding: 20px;
-    text-align: justify;
-}
-footer .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+        *{box-sizing:border-box}
+        body{margin:0;font-family:'Roboto',sans-serif;color:var(--navy);background:#fff}
 
-footer nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-}
+        /* ===== HEADER (gaya homepage) ===== */
+        .site-header{
+            position:sticky;top:0;z-index:20;background:#fff;box-shadow:0 2px 14px rgba(15,31,61,.07);
+            display:flex;align-items:center;justify-content:space-between;gap:20px;padding:14px 56px;
+        }
+        .brand{display:flex;align-items:center;gap:18px}
+        .brand .logo{height:46px;display:block}
+        .brand .sep{width:1px;height:40px;background:var(--line)}
+        .brand .sys{display:flex;align-items:center;gap:10px}
+        .brand .sys i{font-size:22px;color:var(--blue)}
+        .brand .sys b{display:block;font-size:17px;line-height:1.2}
+        .brand .sys small{display:block;font-size:11px;color:var(--text)}
+        .main-nav{display:flex;align-items:center;gap:34px}
+        .main-nav a{text-decoration:none;color:var(--navy);font-weight:500;font-size:16px;padding:8px 0;border-bottom:2px solid transparent}
+        .main-nav a.active{color:var(--blue);border-color:var(--blue)}
+        .main-nav a.cta{background:var(--navy);color:#fff;border-radius:12px;padding:14px 22px;font-weight:700;display:inline-flex;align-items:center;gap:8px}
 
-footer nav ul li {
-    margin-left: 20px;
-}
+        /* ===== HERO ===== */
+        .ab-hero{
+            background:linear-gradient(100deg,#13284a 0%,var(--navy-2) 50%,#7e93b0 100%);color:#fff;
+            padding:84px 56px 150px;
+        }
+        .ab-hero-in{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:48px;align-items:center}
+        .label{font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--blue)}
+        .ab-hero .label{color:#8fc1f2}
+        .ab-hero h1{font-size:clamp(46px,7vw,84px);font-weight:700;line-height:1.02;margin:14px 0 16px;letter-spacing:-.01em}
+        .ab-hero p{margin:0;font-size:20px;line-height:1.6;color:#dbe6f5;max-width:520px}
+        .pill{
+            display:inline-flex;align-items:center;gap:10px;margin-top:30px;padding:9px 18px;border-radius:999px;
+            border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.08);font-size:14px;font-weight:500
+        }
+        .legend{
+            background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);border-radius:28px;
+            padding:26px;display:grid;gap:14px;backdrop-filter:blur(6px)
+        }
+        .legend-row{display:flex;align-items:center;gap:16px}
+        .legend-row .ic{
+            width:54px;height:54px;border-radius:14px;background:rgba(255,255,255,.16);
+            display:flex;align-items:center;justify-content:center;font-size:22px;flex:none
+        }
+        .legend-row b{display:block;font-size:17px}
+        .legend-row small{display:block;font-size:13.5px;color:#cfdcef}
 
-footer nav ul li a {
-    text-decoration: none;
-    color: #fff;
-}
+        /* ===== MAKNA LOGO ===== */
+        .ab-main{background:var(--bg);padding:0 56px 96px}
+        .ab-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:56px;align-items:start}
+        .ab-visual{
+            position:sticky;top:100px;margin-top:-70px;min-height:540px;border-radius:26px;overflow:hidden;
+            background:linear-gradient(150deg,#2a4a78 0%,#5c7ea8 55%,#8fb0d6 100%);
+            box-shadow:0 24px 50px rgba(15,31,61,.22);display:flex;align-items:center;justify-content:center;color:#fff
+        }
+        .ab-visual::before,.ab-visual::after{content:"";position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,.22)}
+        .ab-visual::before{width:300px;height:300px}
+        .ab-visual::after{width:440px;height:440px}
+        .ab-visual > i{font-size:120px;position:relative;z-index:1;filter:drop-shadow(0 8px 18px rgba(15,31,61,.3))}
+        .ab-float{
+            position:absolute;right:22px;bottom:26px;z-index:2;background:#fff;color:var(--navy);
+            border-radius:16px;padding:18px 22px;box-shadow:0 16px 36px rgba(15,31,61,.22);max-width:230px
+        }
+        .ab-float b{display:block;font-size:22px;font-weight:700}
+        .ab-float small{display:block;margin-top:4px;font-size:12.5px;line-height:1.45;color:var(--text)}
+
+        .ab-content{padding-top:110px}
+        .ab-content h2{font-size:clamp(30px,3.6vw,42px);font-weight:700;line-height:1.15;margin:12px 0 28px}
+        .ab-item{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px 28px;margin-bottom:20px;box-shadow:0 10px 28px rgba(15,31,61,.06)}
+        .ab-item-head{display:flex;align-items:center;gap:16px;margin-bottom:20px}
+        .ab-ic{width:56px;height:56px;border-radius:14px;background:var(--sky);color:var(--blue);display:flex;align-items:center;justify-content:center;font-size:23px;flex:none}
+        .ab-item h3{margin:0;font-size:21px;font-weight:700;line-height:1.3}
+        .ab-cols{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+        .ab-cols .label{font-size:12px;margin-bottom:6px;display:block}
+        .ab-cols p{margin:0;font-size:15.5px;line-height:1.7;color:var(--text)}
+
+        /* ===== ALUR ===== */
+        .ab-flow{background:#fff;padding:88px 56px 96px}
+        .ab-flow-in{max-width:1100px;margin:0 auto}
+        .ab-flow-head{text-align:center;margin-bottom:44px}
+        .ab-flow-head h2{font-size:clamp(28px,3.6vw,40px);font-weight:700;margin:12px 0 0;line-height:1.2}
+        .ab-steps{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:18px;align-items:stretch}
+        .ab-step{background:var(--bg);border:1px solid var(--line);border-radius:18px;padding:30px 24px;text-align:center}
+        .ab-step .ab-ic{margin:0 auto 16px;background:#fff}
+        .ab-step h4{margin:0 0 8px;font-size:19px;font-weight:700}
+        .ab-step p{margin:0;font-size:15px;line-height:1.65;color:var(--text)}
+        .ab-step.last{background:linear-gradient(150deg,var(--navy),var(--navy-2));border-color:var(--navy);color:#fff}
+        .ab-step.last .ab-ic{background:rgba(255,255,255,.14);color:#fff}
+        .ab-step.last p{color:#cfdcef}
+        .ab-arrow{align-self:center;color:var(--blue);font-size:20px}
+
+        /* ===== FOOTER ASLI (tidak diubah) ===== */
+        footer{background-color:#0f1f3d;color:#fff;padding:20px;text-align:justify}
+        footer .collaboration-images{display:flex;align-items:center;justify-content:space-between}
+        footer .collaboration-images img{height:50px;margin-right:5px}
+        footer nav ul{list-style:none;margin:0;padding:0;display:flex}
+        footer nav ul li{margin-left:20px}
+        footer nav ul li a{text-decoration:none;color:#fff}
+
+        @media (max-width:1000px){
+            .site-header{padding:12px 20px;flex-wrap:wrap}
+            .brand .sys small{display:none}
+            .main-nav{gap:16px}
+            .main-nav a.cta{padding:11px 16px}
+            .ab-hero{padding:56px 20px 110px}
+            .ab-hero-in{grid-template-columns:1fr}
+            .ab-main{padding:0 20px 64px}
+            .ab-grid{grid-template-columns:1fr;gap:28px}
+            .ab-visual{position:relative;top:0;margin-top:-56px;min-height:300px}
+            .ab-visual > i{font-size:84px}
+            .ab-visual::before{width:200px;height:200px}
+            .ab-visual::after{width:290px;height:290px}
+            .ab-content{padding-top:0}
+            .ab-cols{grid-template-columns:1fr;gap:18px}
+            .ab-flow{padding:64px 20px 72px}
+            .ab-steps{grid-template-columns:1fr;max-width:520px;margin:0 auto}
+            .ab-arrow{transform:rotate(90deg);justify-self:center}
+        }
     </style>
 </head>
 <body>
-<header>
-    <h1>
-        
-    </h1>
-    <div class="collaboration-images">
-        <img src ="img/LOGO CII.png"/>
-        <img src="img\logo.png" alt="Gambar Kolaborasi 1"/>
+
+<header class="site-header">
+    <div class="brand">
+        <img class="logo" src="img/logo.png" alt="Logo PT PAL INDONESIA"/>
+        <span class="sep"></span>
+        <div class="sys">
+            <i class="fas fa-ship"></i>
+            <div><b>Digital Docking</b><small>Coordination &amp; Collaboration</small></div>
+        </div>
     </div>
-    <nav>
-        <ul>
-            <li>
-                <a href="homepage.html">
-                    Home
-                </a>
-            </li>
-            <li>
-                <a href="aboutus.html">
-                    About Us
-                </a>
-            </li>
-            <li>
-                <a href="productandservice.html">
-                    Product and Service
-                </a>
-            </li>
-            <li>
-                <a href="login.html">
-                    Docking Space Checker
-                </a>
-            </li>
-        </ul>
+    <nav class="main-nav">
+        <a href="homepage.html">Home</a>
+        <a href="aboutus.html" class="active">About Us</a>
+        <a href="login.html" class="cta"><i class="fas fa-sign-in-alt"></i>Access System</a>
     </nav>
 </header>
-</<html>
-    <head>
-     <title>
-      Product and Service
-     </title>
-     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&amp;family=Roboto&amp;display=swap" rel="stylesheet"/>
-     <style>
-      body {
-               font-family: 'Roboto', sans-serif;
-               margin: 0;
-               padding: 0;
-               background-color: #e1e1e1;
-               color: #333;
-           }
-           .container {
-               width: 90%;
-               max-width: 1200px;
-               margin: 0 auto;
-               padding: 20px;
-           }
-           .header {
-               text-align: center;
-               margin-bottom: 40px;
-           }
-           .header h1 {
-               font-family: 'Playfair Display', serif;
-               font-size: 36px;
-               font-weight: 700;
-               margin: 0;
-           }
-           .header hr {
-               width: 50px;
-               border: 2px solid #000;
-               margin: 10px auto 0;
-           }
-           .product-section {
-               display: flex;
-               flex-wrap: wrap;
-               justify-content: space-between;
-           }
-           .product {
-               width: 30%;
-               text-align: justify;
-               margin-bottom: 40px;
-           }
-           .product img {
-               max-width: 100%;
-               height: auto;
-           }
-           .product h2 {
-               font-family: 'Playfair Display', serif;
-               font-size: 20px;
-               font-weight: 700;
-               margin: 20px 0 10px;
-           }
-           .product p {
-               font-size: 14px;
-               line-height: 1.6;
-           }
-           @media (max-width: 768px) {
-               .product {
-                   width: 100%;
-                   margin-bottom: 20px;
-               }
-           }
-     </style>
-    </head>
-    <body>
-     <div class="container" id="Product and Service">
-      <div class="header">
+
+<section class="ab-hero">
+    <div class="ab-hero-in">
+        <div>
+            <div class="label">Tentang Logo</div>
             <h1>DIGIDOCC</h1>
-        <h2>DIGITAL DOCKING COORDINATION & COLLABORATION</h2>
-        <h3>Makna Logo DIGIDOCC</h3>
-         
-        <h4>Ikon Kapal di Atas Chip Digital</h4>
-            <ul>
-                <li>Makna: Integrasi antara sistem maritim (kapal dan aktivitas dock) dengan teknologi digital (chip menggambarkan sistem digitalisasi).
-                    </li>
-                <li>Interpretasi: Mewakili upaya PT PAL Indonesia dalam mentransformasi proses docking tradisional menjadi sistem berbasis digital.
-                    </li>
-            </ul>
-        <h4>Bentuk Chip/Microchip</h4>
-            <ul>
-                <li> Makna: Simbolisasi dari sistem digital, otomatisasi, dan keterhubungan data antar divisi.
-                    </li>
-                <li>Interpretasi: Menunjukkan bahwa pengelolaan jadwal docking sudah memasuki era Smart Shipyard Management.
-                    </li>
-            </ul>
-        <h4>Gelombang Laut di Bawah Kapal</h4>
-            <ul>
-                <li>
-                Makna: Representasi lingkungan maritim, core business PT PAL Indonesia.
-                   </li>
-                <li>Interpretasi: Tetap berpijak pada identitas sebagai perusahaan galangan kapal namun dengan pendekatan modern.
-                     </li>
-            </ul>
+            <p>Digital Docking Coordination &amp; Collaboration</p>
+            <span class="pill"><i class="fas fa-anchor"></i>PT PAL Indonesia</span>
         </div>
-       </div>
-      </div>
-     </div>
-    </body>
-   </html>
-    </p>
-</div>
-</body>
+        <div class="legend" aria-label="Elemen pembentuk logo">
+            <div class="legend-row">
+                <div class="ic"><i class="fas fa-ship"></i></div>
+                <div><b>Kapal</b><small>Sistem maritim dan aktivitas dock</small></div>
+            </div>
+            <div class="legend-row">
+                <div class="ic"><i class="fas fa-microchip"></i></div>
+                <div><b>Chip</b><small>Sistem digital dan keterhubungan data</small></div>
+            </div>
+            <div class="legend-row">
+                <div class="ic"><i class="fas fa-water"></i></div>
+                <div><b>Gelombang Laut</b><small>Lingkungan maritim sebagai core business</small></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ab-main">
+    <div class="ab-grid">
+        <div class="ab-visual" aria-hidden="true">
+            <i class="fas fa-ship"></i>
+            <div class="ab-float"><b>DIGIDOCC</b><small>Digital Docking Coordination &amp; Collaboration</small></div>
+        </div>
+
+        <div class="ab-content">
+            <div class="label">Makna Logo</div>
+            <h2>Makna Logo DIGIDOCC</h2>
+
+            <article class="ab-item">
+                <div class="ab-item-head">
+                    <div class="ab-ic"><i class="fas fa-ship"></i></div>
+                    <h3>Ikon Kapal di Atas Chip Digital</h3>
+                </div>
+                <div class="ab-cols">
+                    <div><span class="label">Makna</span><p>Integrasi antara sistem maritim, yaitu kapal dan aktivitas dock, dengan teknologi digital yang direpresentasikan melalui bentuk chip.</p></div>
+                    <div><span class="label">Interpretasi</span><p>Mewakili upaya PT PAL Indonesia dalam mentransformasi proses docking tradisional menjadi sistem berbasis digital.</p></div>
+                </div>
+            </article>
+
+            <article class="ab-item">
+                <div class="ab-item-head">
+                    <div class="ab-ic"><i class="fas fa-microchip"></i></div>
+                    <h3>Bentuk Chip / Microchip</h3>
+                </div>
+                <div class="ab-cols">
+                    <div><span class="label">Makna</span><p>Simbolisasi dari sistem digital, otomatisasi, dan keterhubungan data antar divisi.</p></div>
+                    <div><span class="label">Interpretasi</span><p>Menunjukkan bahwa pengelolaan jadwal docking telah diarahkan menuju konsep Smart Shipyard Management.</p></div>
+                </div>
+            </article>
+
+            <article class="ab-item">
+                <div class="ab-item-head">
+                    <div class="ab-ic"><i class="fas fa-water"></i></div>
+                    <h3>Gelombang Laut di Bawah Kapal</h3>
+                </div>
+                <div class="ab-cols">
+                    <div><span class="label">Makna</span><p>Representasi lingkungan maritim yang menjadi bagian dari core business PT PAL Indonesia.</p></div>
+                    <div><span class="label">Interpretasi</span><p>Tetap mempertahankan identitas sebagai perusahaan galangan kapal dengan pendekatan yang lebih modern dan digital.</p></div>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+<section class="ab-flow">
+    <div class="ab-flow-in">
+        <div class="ab-flow-head">
+            <div class="label">Arah Transformasi</div>
+            <h2>Dari Docking Tradisional ke Smart Shipyard</h2>
+        </div>
+        <div class="ab-steps">
+            <div class="ab-step">
+                <div class="ab-ic"><i class="fas fa-anchor"></i></div>
+                <h4>Docking Tradisional</h4>
+                <p>Proses docking konvensional sebagai bisnis inti galangan kapal.</p>
+            </div>
+            <div class="ab-arrow" aria-hidden="true"><i class="fas fa-arrow-right"></i></div>
+            <div class="ab-step">
+                <div class="ab-ic"><i class="fas fa-network-wired"></i></div>
+                <h4>Sistem Digital</h4>
+                <p>Otomatisasi dan keterhubungan data antar divisi.</p>
+            </div>
+            <div class="ab-arrow" aria-hidden="true"><i class="fas fa-arrow-right"></i></div>
+            <div class="ab-step last">
+                <div class="ab-ic"><i class="fas fa-industry"></i></div>
+                <h4>Smart Shipyard Management</h4>
+                <p>Pengelolaan jadwal docking berbasis digital.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FOOTER ASLI (tidak diubah) ===== -->
 <footer>
     <div class="collaboration-images">
-       <img src ="img/LOGO CII.png"/>
+        <img src="img/LOGO CII.png"/>
         <nav>
             <ul>
                 <li><a href="#">Privacy Policy</a></li>
-                <li><a href="#">Terms & Conditions</a></li>
+                <li><a href="#">Terms &amp; Conditions</a></li>
             </ul>
         </nav>
     </div>
 </footer>
-</html>
+
+</body>
 </html>
