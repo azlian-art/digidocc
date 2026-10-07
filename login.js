@@ -1,20 +1,72 @@
 
-// Inisialisasi akun dari localStorage
+const API_BASE = window.location.protocol === 'file:' ? 'http://localhost/digidocc/api' : './api';
+
 let accounts = JSON.parse(localStorage.getItem('accounts')) || [];
 
-// Tambahkan akun admin jika belum ada
-const adminExists = accounts.some(acc => acc.username === 'admin' && acc.userType === 'admin');
-if (!adminExists) {
-    accounts.push({
-        username: 'admin',
-        password: 'admin123',
-        id: 'ADM',
-        userType: 'admin'
-    });
-    localStorage.setItem('accounts', JSON.stringify(accounts));
+function ensureLocalAdmin() {
+    const adminExists = accounts.some(acc => acc.username === 'admin' && acc.userType === 'admin');
+    if (!adminExists) {
+        accounts.push({
+            username: 'admin',
+            password: 'admin123',
+            id: 'ADM',
+            userType: 'admin'
+        });
+        localStorage.setItem('accounts', JSON.stringify(accounts));
+    }
 }
 
-// Toggle Login / Sign Up
+async function apiRequest(endpoint, options = {}, fallbackValue = null) {
+    try {
+        const response = await fetch(`${API_BASE}${endpoint}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                ...(options.headers || {})
+            },
+            ...options
+        });
+
+        const text = await response.text();
+        const payload = text ? JSON.parse(text) : {};
+
+        if (!response.ok) {
+            throw new Error(payload.message || 'Request failed');
+        }
+
+        return payload;
+    } catch (error) {
+        if (fallbackValue !== null) {
+            return fallbackValue;
+        }
+        throw error;
+    }
+}
+
+function localFallbackLogin(username, password, id, userType) {
+    const localAccounts = JSON.parse(localStorage.getItem('accounts')) || [];
+    const account = localAccounts.find(acc =>
+        acc.username === username &&
+        acc.password === password &&
+        acc.id === id &&
+        acc.userType === userType
+    );
+
+    return account || null;
+}
+
+function localFallbackRegister(username, password, id, userType) {
+    const localAccounts = JSON.parse(localStorage.getItem('accounts')) || [];
+    const duplicate = localAccounts.some(acc => acc.username === username || acc.id === id);
+    if (duplicate) return { success: false, message: 'Username or ID already registered!' };
+
+    const newAccount = { username, password, id, userType };
+    localAccounts.push(newAccount);
+    localStorage.setItem('accounts', JSON.stringify(localAccounts));
+    return { success: true, message: 'Account created successfully!', account: newAccount };
+}
+
+ensureLocalAdmin();
+
 document.getElementById('toggle-link').addEventListener('click', function (e) {
     e.preventDefault();
     const loginForm = document.getElementById('login-form');
@@ -35,8 +87,7 @@ document.getElementById('toggle-link').addEventListener('click', function (e) {
     }
 });
 
-// Login
-document.getElementById('login-form').addEventListener('submit', function (e) {
+document.getElementById('login-form').addEventListener('submit', async function (e) {
     e.preventDefault();
 
     let username = document.getElementById('login-username').value.trim();
@@ -44,7 +95,6 @@ document.getElementById('login-form').addEventListener('submit', function (e) {
     let id = document.getElementById('login-id').value.trim().toUpperCase();
     let userType = document.getElementById('user-type-login').value;
 
-    // Deteksi admin
     const isAdminLogin = (
         userType === 'employee' &&
         username.toLowerCase() === 'admin' &&
@@ -59,17 +109,20 @@ document.getElementById('login-form').addEventListener('submit', function (e) {
     document.getElementById('loading').style.display = 'block';
     document.getElementById('feedback-message').textContent = '';
 
-    setTimeout(() => {
+    try {
+        const response = await apiRequest('/login.php', {
+            method: 'POST',
+            body: JSON.stringify({
+                username,
+                password,
+                id_number: id,
+                user_type: userType
+            })
+        }, null);
+
         document.getElementById('loading').style.display = 'none';
 
-        const account = accounts.find(acc =>
-            acc.username === username &&
-            acc.password === password &&
-            acc.id === id &&
-            acc.userType === userType
-        );
-
-        if (account) {
+        if (response && response.success) {
             document.getElementById('feedback-message').textContent = 'Login successful!';
             document.getElementById('feedback-message').style.color = 'green';
 
@@ -82,15 +135,36 @@ document.getElementById('login-form').addEventListener('submit', function (e) {
                     window.location.href = 'menu.html';
                 }
             }, 1000);
-        } else {
-            document.getElementById('feedback-message').textContent = 'Invalid credentials. Please try again.';
-            document.getElementById('feedback-message').style.color = 'red';
+            return;
         }
-    }, 1000);
+
+        throw new Error(response && response.message ? response.message : 'Invalid credentials');
+    } catch (error) {
+        document.getElementById('loading').style.display = 'none';
+        const fallbackAccount = localFallbackLogin(username, password, id, userType);
+
+        if (fallbackAccount) {
+            document.getElementById('feedback-message').textContent = 'Login successful!';
+            document.getElementById('feedback-message').style.color = 'green';
+
+            setTimeout(() => {
+                if (userType === 'admin') {
+                    tampilkanPanelAdmin();
+                } else if (userType === 'employee') {
+                    window.location.href = 'dashboard.html';
+                } else if (userType === 'customer') {
+                    window.location.href = 'menu.html';
+                }
+            }, 1000);
+            return;
+        }
+
+        document.getElementById('feedback-message').textContent = error.message || 'Invalid credentials. Please try again.';
+        document.getElementById('feedback-message').style.color = 'red';
+    }
 });
 
-// Sign Up
-document.getElementById('sign-up-form').addEventListener('submit', function (e) {
+document.getElementById('sign-up-form').addEventListener('submit', async function (e) {
     e.preventDefault();
 
     const username = document.getElementById('signup-username').value.trim();
@@ -107,27 +181,51 @@ document.getElementById('sign-up-form').addEventListener('submit', function (e) 
         return;
     }
 
-    const isDuplicate = accounts.some(acc => acc.username === username || acc.id === id);
-    if (isDuplicate) {
-        document.getElementById('feedback-message').textContent = 'Username or ID already registered!';
+    document.getElementById('loading').style.display = 'block';
+    document.getElementById('feedback-message').textContent = '';
+
+    try {
+        const response = await apiRequest('/register.php', {
+            method: 'POST',
+            body: JSON.stringify({
+                username,
+                password,
+                id_number: id,
+                user_type: userType
+            })
+        }, null);
+
+        document.getElementById('loading').style.display = 'none';
+
+        if (response && response.success) {
+            document.getElementById('feedback-message').textContent = 'Account created successfully!';
+            document.getElementById('feedback-message').style.color = 'green';
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 1500);
+            return;
+        }
+
+        throw new Error(response && response.message ? response.message : 'Registration failed');
+    } catch (error) {
+        document.getElementById('loading').style.display = 'none';
+        const fallbackResult = localFallbackRegister(username, password, id, userType);
+
+        if (fallbackResult.success) {
+            document.getElementById('feedback-message').textContent = 'Account created successfully!';
+            document.getElementById('feedback-message').style.color = 'green';
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 1500);
+            return;
+        }
+
+        document.getElementById('feedback-message').textContent = fallbackResult.message || error.message || 'Registration failed';
         document.getElementById('feedback-message').style.color = 'red';
-        return;
     }
-
-    const newAccount = { username, password, id, userType };
-    accounts.push(newAccount);
-    localStorage.setItem('accounts', JSON.stringify(accounts));
-
-    document.getElementById('feedback-message').textContent = 'Account created successfully!';
-    document.getElementById('feedback-message').style.color = 'green';
-
-    setTimeout(() => {
-        window.location.href = 'login.html';
-    }, 1500);
 });
 
-// Panel Admin
-function tampilkanPanelAdmin() {
+async function tampilkanPanelAdmin() {
     const adminPanelHTML = `
         <h2>📋 Admin Panel: Daftar Akun</h2>
         <table border="1" cellpadding="5" cellspacing="0">
@@ -149,20 +247,44 @@ function tampilkanPanelAdmin() {
     document.body.innerHTML = adminPanelHTML;
 
     const tbody = document.getElementById('admin-table-body');
-    const akun = JSON.parse(localStorage.getItem('accounts')) || [];
+    try {
+        const result = await apiRequest('/users.php', { method: 'GET' }, {
+            success: true,
+            data: JSON.parse(localStorage.getItem('accounts')) || []
+        });
 
-    akun.forEach((acc, index) => {
-        const row = document.createElement('tr');
-        const isAdmin = acc.username === 'admin' && acc.userType === 'admin';
-        row.innerHTML = `
-            <td>${acc.username}</td>
-            <td>${acc.id}</td>
-            <td>${acc.password}</td>
-            <td>${acc.userType}</td>
-            <td>${isAdmin ? '🛡️' : '<button onclick="hapusAkun(' + index + ')">Hapus</button>'}</td>
-        `;
-        tbody.appendChild(row);
-    });
+        const akun = (result && result.data) ? result.data : [];
+
+        akun.forEach((acc, index) => {
+            const row = document.createElement('tr');
+            const isAdmin = (acc.username || '').toLowerCase() === 'admin' && (acc.userType || acc.user_type || '') === 'admin';
+            const visibleId = acc.id || acc.id_number || '';
+            const visiblePass = acc.password || '***';
+            const visibleType = acc.userType || acc.user_type || 'employee';
+            row.innerHTML = `
+                <td>${acc.username}</td>
+                <td>${visibleId}</td>
+                <td>${visiblePass}</td>
+                <td>${visibleType}</td>
+                <td>${isAdmin ? '🛡️' : '<button onclick="hapusAkun(' + index + ')">Hapus</button>'}</td>
+            `;
+            tbody.appendChild(row);
+        });
+    } catch (error) {
+        const akun = JSON.parse(localStorage.getItem('accounts')) || [];
+        akun.forEach((acc, index) => {
+            const row = document.createElement('tr');
+            const isAdmin = acc.username === 'admin' && acc.userType === 'admin';
+            row.innerHTML = `
+                <td>${acc.username}</td>
+                <td>${acc.id}</td>
+                <td>${acc.password}</td>
+                <td>${acc.userType}</td>
+                <td>${isAdmin ? '🛡️' : '<button onclick="hapusAkun(' + index + ')">Hapus</button>'}</td>
+            `;
+            tbody.appendChild(row);
+        });
+    }
 }
 
 function hapusAkun(index) {
