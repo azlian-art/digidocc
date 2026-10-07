@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Interactive Map with Dok Semarang, Dok Bluga, and Dok Surabaya Ship Data</title>
+  <title>Interactive Map with Dok ORCA, Dok Bluga, and Dok Surabaya Ship Data</title>
 
   <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -48,7 +48,7 @@
 
   <script>
     // Inisialisasi peta
-    var map = L.map('map').setView([-7.197, 112.737], 16); // Lokasi default dekat Dok Semarang
+    var map = L.map('map').setView([-7.197, 112.737], 16); // Lokasi default dekat Dok ORCA
 
     // Tambahkan tile layer dari OpenStreetMap
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -83,8 +83,8 @@
       return popupContent;
     }
 
-    // Data untuk Dok Semarang
-    var dokSemarangData = [
+    // Data untuk Dok ORCA
+    var dokOrcaData = [
       { name: 'Kapal A', type: 'Kargo', status: 'Dalam Perbaikan' },
       { name: 'Kapal B', type: 'Penumpang', status: 'Siap Berlayar' },
       { name: 'Kapal C', type: 'Tanker', status: 'Sedang Bongkar Muat' }
@@ -104,8 +104,8 @@
       { name: 'Kapal O', type: 'Tanker', status: 'Sedang Bongkar Muat' }
     ];
 
-    // Dok Semarang
-    var dokSemarangCoordinates = [
+    // Dok ORCA
+    var dokOrcaCoordinates = [
       [-7.1964058527520836, 112.73727942343834],
       [-7.196363298534857, 112.73753158476643],
       [-7.199427191973455, 112.73788031851797],
@@ -113,31 +113,31 @@
       [-7.1964058527520836, 112.73727942343834] // Tutup polygon ke titik awal
     ];
 
-    var dokSemarangPolygon = L.polygon(dokSemarangCoordinates, {
+    var dokOrcaPolygon = L.polygon(dokOrcaCoordinates, {
       color: 'transparent',
       fillColor: 'lightgreen',
       fillOpacity: 0.5
     }).addTo(map);
 
-    dokSemarangPolygon.options.originalFillColor = dokSemarangPolygon.options.fillColor;
+    dokOrcaPolygon.options.originalFillColor = dokOrcaPolygon.options.fillColor;
 
-    dokSemarangPolygon.on('mouseover', function () {
-      highlightPolygon(dokSemarangPolygon, 'yellow');
+    dokOrcaPolygon.on('mouseover', function () {
+      highlightPolygon(dokOrcaPolygon, 'yellow');
     });
-    dokSemarangPolygon.on('mouseout', function () {
-      resetPolygon(dokSemarangPolygon);
+    dokOrcaPolygon.on('mouseout', function () {
+      resetPolygon(dokOrcaPolygon);
     });
 
-    dokSemarangPolygon.on('click', function (e) {
+    dokOrcaPolygon.on('click', function (e) {
       L.popup()
         .setLatLng(e.latlng)
-        .setContent(generatePopupContent('Data Kapal di Dok Semarang', dokSemarangData))
+        .setContent(generatePopupContent('Data Kapal di Dok ORCA', dokOrcaData))
         .openOn(map);
     });
 
-    // Marker untuk Dok Semarang
+    // Marker untuk Dok ORCA
     L.marker([-7.197, 112.737]).addTo(map)
-      .bindPopup('<b>Dok Semarang</b>')
+      .bindPopup('<b>Dok ORCA</b>')
       .openPopup();
 
     // Dok Bluga - Koordinat yang diperbarui
