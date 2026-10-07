@@ -1,4 +1,6 @@
-
+/* =====================================================
+   RESET
+===================================================== */
 
 * {
     margin: 0;
@@ -6,70 +8,398 @@
     box-sizing: border-box;
 }
 
+html,
 body {
-    font-family: Poppins, sans-serif;
-    background: url('img/DJI_0710.jpg') no-repeat center center/cover;
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f5f7fa;
+    color: #222;
+}
+
+
+/* =====================================================
+   NAVBAR
+===================================================== */
+
+.navbar {
+    width: 100%;
+    height: 72px;
+
+    background-color: #0a2f6b;
+
     display: flex;
-    justify-content: center;
     align-items: center;
-    height: 100vh;
+    justify-content: space-between;
+
+    padding: 0 45px;
+
     position: relative;
+    z-index: 1000;
 }
 
-.container {
-    background-color: white;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    border-radius: 8px;
-    width: 80%;
-    max-width: 1200px;
-}
 
-h1, h2, h3 {
-    margin-bottom: 20px;
-    text-align: center;
-}
+/* LOGO */
 
-nav ul {
-    display: flex;
-    justify-content: space-around;
-    list-style-type: none;
-    margin-bottom: 30px;
-}
-
-nav ul li a {
-    text-decoration: none;
-    font-weight: bold;
-    color: #003366;
-}
-
-nav ul li a:hover {
-    text-decoration: underline;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-input, select {
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-button {
-    padding: 10px;
-    background-color: #003366;
+.navbar-brand {
     color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+
+    font-size: 24px;
+    font-weight: bold;
+
+    letter-spacing: 1px;
 }
 
-button:hover {
-    background-color: #0056b3;
-    transform: scale(1.05); /* Scale up on hover */
+
+/* NAVIGATION */
+
+.navbar-links {
+    display: flex;
+    align-items: center;
+
+    height: 100%;
+    gap: 5px;
+}
+
+.navbar-links > a,
+.dropdown-button {
+    height: 72px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 16px;
+
+    color: white;
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    white-space: nowrap;
+
+    transition: 0.2s ease;
+}
+
+.navbar-links > a:hover,
+.dropdown-button:hover {
+    background-color: #16447f;
+}
+
+
+/* =====================================================
+   DROPDOWN FACILITIES
+===================================================== */
+
+.dropdown {
+    position: relative;
+    height: 72px;
+
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-content {
+    display: none;
+
+    position: absolute;
+
+    top: 72px;
+    right: 0;
+
+    width: 210px;
+
+    background-color: white;
+
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+
+    border-radius: 0 0 6px 6px;
+
+    overflow: hidden;
+}
+
+.dropdown-content a {
+    display: block;
+
+    padding: 15px 18px;
+
+    color: #333;
+
+    text-decoration: none;
+
+    font-size: 14px;
+}
+
+.dropdown-content a:hover {
+    background-color: #f0f3f7;
+    color: #0a2f6b;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+
+/* =====================================================
+   LOGIN BUTTON
+===================================================== */
+
+.login-button {
+    border: 1px solid white;
+
+    border-radius: 5px;
+
+    height: 38px !important;
+
+    margin-left: 10px;
+
+    padding: 0 18px !important;
+
+    align-self: center;
+}
+
+.login-button:hover {
+    background-color: white !important;
+    color: #0a2f6b !important;
+}
+
+
+/* =====================================================
+   DASHBOARD
+===================================================== */
+
+.dashboard {
+    width: 100%;
+
+    padding: 50px 60px 70px;
+}
+
+
+/* HEADER */
+
+.dashboard-header {
+    text-align: center;
+
+    margin-bottom: 40px;
+}
+
+.dashboard-header h1 {
+    color: #0a2f6b;
+
+    font-size: 32px;
+
+    margin-bottom: 10px;
+}
+
+.dashboard-header p {
+    color: #777;
+
+    font-size: 15px;
+}
+
+
+/* =====================================================
+   EMPLOYEE FEATURES
+===================================================== */
+
+.employee-features {
+
+    width: 100%;
+
+    max-width: 1250px;
+
+    margin: 0 auto;
+
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 22px;
+}
+
+
+/* =====================================================
+   FEATURE CARD
+===================================================== */
+
+.feature-card {
+
+    min-height: 210px;
+
+    background-color: white;
+
+    border: 1px solid #e0e4e8;
+
+    border-radius: 10px;
+
+    padding: 30px 22px;
+
+    text-decoration: none;
+
+    color: inherit;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.feature-card:hover {
+
+    transform: translateY(-5px);
+
+    border-color: #0a2f6b;
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+
+/* ICON */
+
+.feature-icon {
+
+    width: 65px;
+    height: 65px;
+
+    border-radius: 50%;
+
+    background-color: #0a2f6b;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 28px;
+
+    margin-bottom: 18px;
+}
+
+
+/* TEXT */
+
+.feature-text h2 {
+
+    color: #0a2f6b;
+
+    font-size: 17px;
+
+    margin-bottom: 10px;
+}
+
+.feature-text p {
+
+    color: #777;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 1050px) {
+
+    .navbar {
+        padding: 0 20px;
+    }
+
+    .navbar-links > a,
+    .dropdown-button {
+        padding: 0 9px;
+
+        font-size: 12px;
+    }
+
+    .employee-features {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 700px) {
+
+    .navbar {
+
+        height: auto;
+
+        flex-direction: column;
+
+        padding: 20px;
+
+        gap: 15px;
+    }
+
+    .navbar-links {
+
+        width: 100%;
+
+        height: auto;
+
+        flex-wrap: wrap;
+
+        justify-content: center;
+    }
+
+    .navbar-links > a,
+    .dropdown-button {
+
+        height: 45px;
+
+        padding: 0 10px;
+    }
+
+    .dropdown {
+
+        height: 45px;
+    }
+
+    .dropdown-content {
+
+        top: 45px;
+        right: 0;
+    }
+
+    .dashboard {
+
+        padding: 40px 20px;
+    }
+
+    .dashboard-header h1 {
+
+        font-size: 26px;
+    }
+
+    .employee-features {
+
+        grid-template-columns: 1fr;
+
+        gap: 18px;
+    }
+
 }

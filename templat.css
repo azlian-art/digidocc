@@ -1,0 +1,1042 @@
+/* =====================================================
+   SMARTRAIL WEBSITE DESIGN SYSTEM
+   Main Template CSS
+   Theme: Navy | Blue | Light Blue | White
+===================================================== */
+
+
+/* =====================================================
+   1. GOOGLE FONT
+===================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+
+/* =====================================================
+   2. RESET
+===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* =====================================================
+   3. COLOR VARIABLES
+===================================================== */
+
+:root {
+
+    /* PRIMARY COLORS */
+
+    --navy-dark: #031A38;
+    --navy: #062B5B;
+    --navy-light: #0A438C;
+
+    --blue: #176BCE;
+    --blue-light: #4DA3FF;
+    --sky-blue: #8ED3FF;
+
+    /* BACKGROUND */
+
+    --bg-light: #F4F8FC;
+    --bg-blue: #EAF4FC;
+
+    /* TEXT */
+
+    --text-dark: #183153;
+    --text-gray: #718096;
+    --text-light: #FFFFFF;
+
+    /* WHITE */
+
+    --white: #FFFFFF;
+
+    /* BORDER */
+
+    --border: #DCE9F5;
+
+    /* SHADOW */
+
+    --shadow-sm:
+        0 5px 15px rgba(6, 43, 91, 0.08);
+
+    --shadow-md:
+        0 12px 30px rgba(6, 43, 91, 0.12);
+
+    --shadow-lg:
+        0 25px 60px rgba(0, 0, 0, 0.25);
+
+    /* RADIUS */
+
+    --radius-sm: 10px;
+    --radius-md: 18px;
+    --radius-lg: 28px;
+
+    /* TRANSITION */
+
+    --transition:
+        all 0.3s ease;
+
+}
+
+
+/* =====================================================
+   4. BODY
+===================================================== */
+
+body {
+
+    font-family: 'Poppins', sans-serif;
+
+    min-height: 100vh;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            rgba(3, 26, 56, 0.88),
+            rgba(6, 43, 91, 0.75),
+            rgba(23, 107, 206, 0.45)
+        ),
+
+        url('img/DJI_0710.jpg')
+        center center / cover
+        fixed
+        no-repeat;
+
+    color: var(--text-dark);
+
+    position: relative;
+
+}
+
+
+/* OVERLAY EFFECT */
+
+body::before {
+
+    content: "";
+
+    position: fixed;
+
+    inset: 0;
+
+    background:
+
+        radial-gradient(
+            circle at top left,
+            rgba(142, 211, 255, 0.15),
+            transparent 35%
+        ),
+
+        radial-gradient(
+            circle at bottom right,
+            rgba(23, 107, 206, 0.2),
+            transparent 35%
+        );
+
+    pointer-events: none;
+
+    z-index: -1;
+
+}
+
+
+/* =====================================================
+   5. MAIN PAGE WRAPPER
+===================================================== */
+
+.page-wrapper {
+
+    min-height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 40px 20px;
+
+}
+
+
+/* =====================================================
+   6. MAIN POPUP CONTAINER
+===================================================== */
+
+.popup-container {
+
+    width: 100%;
+
+    max-width: 1200px;
+
+    background:
+
+        rgba(255, 255, 255, 0.96);
+
+    border-radius:
+        var(--radius-lg);
+
+    border:
+
+        1px solid
+        rgba(255, 255, 255, 0.7);
+
+    backdrop-filter:
+        blur(20px);
+
+    overflow: hidden;
+
+    box-shadow:
+        var(--shadow-lg);
+
+    animation:
+        popupEnter 0.6s ease;
+
+}
+
+
+/* =====================================================
+   7. HEADER
+===================================================== */
+
+.page-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding:
+
+        25px
+        40px;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            var(--navy-dark),
+            var(--navy),
+            var(--blue)
+        );
+
+    color: var(--white);
+
+}
+
+
+/* BRAND */
+
+.brand {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+}
+
+
+.brand-icon {
+
+    width: 52px;
+    height: 52px;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 16px;
+
+    background:
+
+        rgba(255,255,255,0.15);
+
+    border:
+
+        1px solid
+        rgba(255,255,255,0.2);
+
+    font-size: 24px;
+
+}
+
+
+.brand-text h1 {
+
+    font-size: 1.4rem;
+
+    font-weight: 700;
+
+}
+
+
+.brand-text p {
+
+    font-size: 0.75rem;
+
+    opacity: 0.75;
+
+}
+
+
+/* =====================================================
+   8. NAVIGATION
+===================================================== */
+
+.navbar {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+
+.nav-link {
+
+    text-decoration: none;
+
+    color: var(--white);
+
+    font-size: 0.85rem;
+
+    font-weight: 500;
+
+    padding:
+
+        10px
+        15px;
+
+    border-radius:
+        var(--radius-sm);
+
+    transition:
+        var(--transition);
+
+}
+
+
+.nav-link:hover {
+
+    background:
+
+        rgba(255,255,255,0.15);
+
+}
+
+
+/* =====================================================
+   9. PAGE CONTENT
+===================================================== */
+
+.page-content {
+
+    padding:
+
+        40px;
+
+}
+
+
+/* =====================================================
+   10. PAGE TITLE
+===================================================== */
+
+.page-title {
+
+    margin-bottom: 30px;
+
+}
+
+
+.page-title h2 {
+
+    color:
+        var(--navy);
+
+    font-size: 1.8rem;
+
+    margin-bottom: 8px;
+
+}
+
+
+.page-title p {
+
+    color:
+        var(--text-gray);
+
+    font-size: 0.9rem;
+
+}
+
+
+/* =====================================================
+   11. SECTION
+===================================================== */
+
+.section {
+
+    margin-bottom: 30px;
+
+}
+
+
+.section-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 20px;
+
+}
+
+
+.section-title h3 {
+
+    font-size: 1.1rem;
+
+    color:
+        var(--navy);
+
+}
+
+
+/* =====================================================
+   12. CARD
+===================================================== */
+
+.card {
+
+    background:
+
+        linear-gradient(
+            145deg,
+            #FFFFFF,
+            #F5FAFF
+        );
+
+    border:
+
+        1px solid
+        var(--border);
+
+    border-radius:
+        var(--radius-md);
+
+    padding:
+
+        25px;
+
+    box-shadow:
+        var(--shadow-sm);
+
+    transition:
+        var(--transition);
+
+}
+
+
+.card:hover {
+
+    transform:
+        translateY(-5px);
+
+    box-shadow:
+        var(--shadow-md);
+
+    border-color:
+        var(--blue-light);
+
+}
+
+
+/* =====================================================
+   13. CARD GRID
+===================================================== */
+
+.card-grid {
+
+    display: grid;
+
+    grid-template-columns:
+
+        repeat(
+            auto-fit,
+            minmax(240px, 1fr)
+        );
+
+    gap: 20px;
+
+}
+
+
+/* =====================================================
+   14. BUTTON
+===================================================== */
+
+.btn {
+
+    display: inline-flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding:
+
+        12px
+        20px;
+
+    border: none;
+
+    border-radius:
+        var(--radius-sm);
+
+    font-family:
+        inherit;
+
+    font-size:
+        0.9rem;
+
+    font-weight:
+        600;
+
+    cursor:
+        pointer;
+
+    text-decoration:
+        none;
+
+    transition:
+        var(--transition);
+
+}
+
+
+/* PRIMARY BUTTON */
+
+.btn-primary {
+
+    color:
+        var(--white);
+
+    background:
+
+        linear-gradient(
+            135deg,
+            var(--navy),
+            var(--blue)
+        );
+
+    box-shadow:
+
+        0 8px 18px
+        rgba(23,107,206,0.2);
+
+}
+
+
+.btn-primary:hover {
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+
+        0 12px 25px
+        rgba(23,107,206,0.3);
+
+}
+
+
+/* SECONDARY BUTTON */
+
+.btn-secondary {
+
+    color:
+        var(--navy);
+
+    background:
+        var(--bg-blue);
+
+    border:
+
+        1px solid
+        var(--border);
+
+}
+
+
+.btn-secondary:hover {
+
+    background:
+        var(--blue-light);
+
+    color:
+        var(--white);
+
+}
+
+
+/* DANGER BUTTON */
+
+.btn-danger {
+
+    color:
+        var(--white);
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #C62828,
+            #E53935
+        );
+
+}
+
+
+/* =====================================================
+   15. FORM
+===================================================== */
+
+.form-group {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+
+    margin-bottom: 18px;
+
+}
+
+
+.form-group label {
+
+    color:
+        var(--navy);
+
+    font-size:
+        0.85rem;
+
+    font-weight:
+        600;
+
+}
+
+
+.form-control {
+
+    width: 100%;
+
+    padding:
+
+        13px
+        15px;
+
+    font-family:
+        inherit;
+
+    border:
+
+        1px solid
+        var(--border);
+
+    border-radius:
+        var(--radius-sm);
+
+    background:
+        #F9FCFF;
+
+    outline:
+        none;
+
+    transition:
+        var(--transition);
+
+}
+
+
+.form-control:focus {
+
+    border-color:
+        var(--blue);
+
+    background:
+        var(--white);
+
+    box-shadow:
+
+        0 0 0 4px
+        rgba(23,107,206,0.1);
+
+}
+
+
+/* =====================================================
+   16. TABLE
+===================================================== */
+
+.table-container {
+
+    width: 100%;
+
+    overflow-x: auto;
+
+    border-radius:
+        var(--radius-md);
+
+    border:
+
+        1px solid
+        var(--border);
+
+}
+
+
+table {
+
+    width: 100%;
+
+    border-collapse:
+        collapse;
+
+}
+
+
+thead {
+
+    background:
+
+        linear-gradient(
+            135deg,
+            var(--navy),
+            var(--blue)
+        );
+
+    color:
+        var(--white);
+
+}
+
+
+th,
+td {
+
+    padding:
+
+        15px;
+
+    text-align:
+        left;
+
+    font-size:
+        0.85rem;
+
+}
+
+
+tbody tr {
+
+    border-bottom:
+
+        1px solid
+        var(--border);
+
+    transition:
+        var(--transition);
+
+}
+
+
+tbody tr:hover {
+
+    background:
+        var(--bg-blue);
+
+}
+
+
+/* =====================================================
+   17. BADGE
+===================================================== */
+
+.badge {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    padding:
+
+        6px
+        12px;
+
+    border-radius:
+        50px;
+
+    font-size:
+        0.7rem;
+
+    font-weight:
+        600;
+
+}
+
+
+.badge-primary {
+
+    color:
+        var(--blue);
+
+    background:
+        #E6F3FF;
+
+}
+
+
+.badge-success {
+
+    color:
+        #2E7D32;
+
+    background:
+        #E8F5E9;
+
+}
+
+
+.badge-danger {
+
+    color:
+        #C62828;
+
+    background:
+        #FFEBEE;
+
+}
+
+
+/* =====================================================
+   18. FOOTER
+===================================================== */
+
+.page-footer {
+
+    padding:
+
+        18px
+        40px;
+
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+    background:
+        var(--bg-light);
+
+    border-top:
+
+        1px solid
+        var(--border);
+
+    font-size:
+        0.75rem;
+
+    color:
+        var(--text-gray);
+
+}
+
+
+/* =====================================================
+   19. ANIMATION
+===================================================== */
+
+@keyframes popupEnter {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+
+            translateY(30px)
+            scale(0.98);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+
+/* =====================================================
+   20. RESPONSIVE TABLET
+===================================================== */
+
+@media (max-width: 768px) {
+
+    .page-wrapper {
+
+        padding:
+            20px;
+
+    }
+
+
+    .page-header {
+
+        flex-direction:
+            column;
+
+        gap:
+            20px;
+
+        text-align:
+            center;
+
+    }
+
+
+    .navbar {
+
+        flex-wrap:
+            wrap;
+
+        justify-content:
+            center;
+
+    }
+
+
+    .page-content {
+
+        padding:
+            30px
+            25px;
+
+    }
+
+
+    .page-footer {
+
+        flex-direction:
+            column;
+
+        gap:
+            8px;
+
+        text-align:
+            center;
+
+    }
+
+}
+
+
+/* =====================================================
+   21. RESPONSIVE MOBILE
+===================================================== */
+
+@media (max-width: 480px) {
+
+    .page-wrapper {
+
+        padding:
+            10px;
+
+    }
+
+
+    .popup-container {
+
+        border-radius:
+            18px;
+
+    }
+
+
+    .page-header {
+
+        padding:
+            20px;
+
+    }
+
+
+    .brand {
+
+        flex-direction:
+            column;
+
+    }
+
+
+    .page-content {
+
+        padding:
+            25px
+            18px;
+
+    }
+
+
+    .page-title h2 {
+
+        font-size:
+            1.4rem;
+
+    }
+
+
+    .card {
+
+        padding:
+            18px;
+
+    }
+
+
+    .btn {
+
+        width:
+            100%;
+
+    }
+
+}

@@ -1,0 +1,1923 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Docking Facilities | PT PAL Indonesia</title>
+
+    <!-- =========================
+         FONT
+    ========================== -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+
+    <!-- =========================
+         FONT AWESOME
+    ========================== -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+    <style>
+
+        /* =====================================================
+           GLOBAL
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+            font-family: 'Inter', sans-serif;
+
+            background: #f5f8fc;
+
+            color: #172b4d;
+
+            line-height: 1.6;
+        }
+
+
+        a {
+            text-decoration: none;
+
+            color: inherit;
+        }
+
+
+        img {
+            display: block;
+
+            width: 100%;
+        }
+
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        header {
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1000;
+
+            height: 82px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 7%;
+
+            background: rgba(255, 255, 255, 0.96);
+
+            border-bottom: 1px solid #e6edf5;
+
+            backdrop-filter: blur(10px);
+        }
+
+
+
+        /* =====================================================
+           LOGO
+        ===================================================== */
+
+        .logo-area {
+            display: flex;
+
+            align-items: center;
+
+            gap: 22px;
+        }
+
+
+        .logo-area img {
+            width: auto;
+
+            height: 42px;
+
+            object-fit: contain;
+        }
+
+
+        .logo-divider {
+            width: 1px;
+
+            height: 35px;
+
+            background: #dce5ef;
+        }
+
+
+        .cii-logo {
+            height: 48px !important;
+
+            width: auto !important;
+        }
+
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        nav ul {
+            display: flex;
+
+            align-items: center;
+
+            gap: 32px;
+
+            list-style: none;
+        }
+
+
+        nav ul li {
+            position: relative;
+        }
+
+
+        nav ul li a {
+            position: relative;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            color: #50627a;
+
+            transition: 0.3s ease;
+        }
+
+
+        nav ul li a:hover {
+            color: #2f80ed;
+        }
+
+
+        nav ul li a.active {
+            color: #0b1f3a;
+        }
+
+
+        nav ul li a.active::after {
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+
+            bottom: -9px;
+
+            width: 100%;
+
+            height: 2px;
+
+            background: #2f80ed;
+
+            border-radius: 5px;
+        }
+
+
+
+        /* =====================================================
+           FACILITIES DROPDOWN
+        ===================================================== */
+
+        .dropdown > a i {
+            font-size: 9px;
+
+            transition: transform 0.3s ease;
+        }
+
+
+        .dropdown:hover > a i {
+            transform: rotate(180deg);
+        }
+
+
+        .dropdown-menu {
+            position: absolute;
+
+            top: 30px;
+
+            right: 0;
+
+            min-width: 220px;
+
+            display: none;
+
+            padding: 8px;
+
+            background: #ffffff;
+
+            border: 1px solid #e5ebf2;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 12px 30px rgba(20, 50, 80, 0.12);
+
+            list-style: none;
+
+            z-index: 9999;
+        }
+
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+
+        .dropdown-menu li {
+            width: 100%;
+        }
+
+
+        .dropdown-menu li a {
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+
+            padding: 12px 14px;
+
+            color: #50627a;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            border-radius: 7px;
+
+            white-space: nowrap;
+        }
+
+
+        .dropdown-menu li a::after {
+            display: none !important;
+        }
+
+
+        .dropdown-menu li a:hover {
+            color: #2f80ed;
+
+            background: #f3f8fe;
+        }
+
+
+        .dropdown-menu li a i {
+            width: 18px;
+
+            color: #2f80ed;
+
+            font-size: 12px;
+        }
+
+
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero {
+            position: relative;
+
+            min-height: 390px;
+
+            display: flex;
+
+            align-items: center;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    105deg,
+                    #0b1f3a 0%,
+                    #123a68 55%,
+                    #1e5d96 100%
+                );
+        }
+
+
+        /* Decorative Circle */
+
+        .hero::before {
+            content: "";
+
+            position: absolute;
+
+            width: 500px;
+
+            height: 500px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.08);
+
+            border-radius: 50%;
+
+            right: -100px;
+
+            top: -150px;
+        }
+
+
+        .hero::after {
+            content: "";
+
+            position: absolute;
+
+            width: 300px;
+
+            height: 300px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.08);
+
+            border-radius: 50%;
+
+            right: 80px;
+
+            bottom: -180px;
+        }
+
+
+        .hero-content {
+            position: relative;
+
+            z-index: 2;
+
+            width: 86%;
+
+            max-width: 1200px;
+
+            margin: auto;
+        }
+
+
+        .hero-label {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            margin-bottom: 18px;
+
+            color: #8ecbff;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1.5px;
+        }
+
+
+        .hero-label i {
+            font-size: 11px;
+        }
+
+
+        .hero h1 {
+            max-width: 700px;
+
+            margin-bottom: 15px;
+
+            color: #ffffff;
+
+            font-size: 46px;
+
+            font-weight: 800;
+
+            line-height: 1.15;
+        }
+
+
+        .hero p {
+            max-width: 680px;
+
+            color: #d6e5f4;
+
+            font-size: 16px;
+
+            line-height: 1.8;
+        }
+
+
+
+        /* =====================================================
+           MAIN CONTENT
+        ===================================================== */
+
+        .main-content {
+            width: 86%;
+
+            max-width: 1200px;
+
+            margin: auto;
+
+            padding: 75px 0 90px;
+        }
+
+
+        .section-heading {
+            margin-bottom: 40px;
+        }
+
+
+        .section-heading span {
+            display: block;
+
+            margin-bottom: 10px;
+
+            color: #2f80ed;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1.5px;
+        }
+
+
+        .section-heading h2 {
+            color: #0b1f3a;
+
+            font-size: 32px;
+
+            font-weight: 800;
+        }
+
+
+        .section-heading p {
+            max-width: 680px;
+
+            margin-top: 10px;
+
+            color: #718096;
+
+            font-size: 14px;
+        }
+
+
+
+        /* =====================================================
+           DOCK GRID
+        ===================================================== */
+
+        .dock-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 28px;
+        }
+
+
+
+        /* =====================================================
+           DOCK CARD
+        ===================================================== */
+
+        .dock-card {
+            overflow: hidden;
+
+            background: #ffffff;
+
+            border:
+                1px solid
+                #e5ebf2;
+
+            border-radius: 14px;
+
+            box-shadow:
+                0 8px 25px
+                rgba(20, 50, 80, 0.06);
+
+            transition:
+                transform 0.3s ease,
+                box-shadow 0.3s ease;
+        }
+
+
+        .dock-card:hover {
+            transform: translateY(-6px);
+
+            box-shadow:
+                0 18px 40px
+                rgba(20, 50, 80, 0.12);
+        }
+
+
+
+        /* =====================================================
+           DOCK IMAGE
+        ===================================================== */
+
+        .dock-image {
+            position: relative;
+
+            height: 245px;
+
+            overflow: hidden;
+
+            background: #dce8f5;
+        }
+
+
+        .dock-image img {
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+            transition:
+                transform 0.5s ease;
+        }
+
+
+        .dock-card:hover
+        .dock-image img {
+            transform: scale(1.05);
+        }
+
+
+        /* Image Overlay */
+
+        .dock-image::after {
+            content: "";
+
+            position: absolute;
+
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    to top,
+                    rgba(11,31,58,0.35),
+                    transparent 50%
+                );
+        }
+
+
+
+        /* =====================================================
+           DOCK NUMBER
+        ===================================================== */
+
+        .dock-number {
+            position: absolute;
+
+            z-index: 3;
+
+            top: 18px;
+
+            left: 18px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            width: 38px;
+
+            height: 38px;
+
+            color: #ffffff;
+
+            background:
+                rgba(11,31,58,0.85);
+
+            border-radius: 8px;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+
+
+        /* =====================================================
+           CARD CONTENT
+        ===================================================== */
+
+        .dock-content {
+            padding: 28px;
+        }
+
+
+        .dock-content h3 {
+            margin-bottom: 10px;
+
+            color: #0b1f3a;
+
+            font-size: 22px;
+
+            font-weight: 800;
+        }
+
+
+        .dock-content p {
+            min-height: 105px;
+
+            margin-bottom: 22px;
+
+            color: #68778b;
+
+            font-size: 13px;
+
+            line-height: 1.8;
+        }
+
+
+
+        /* =====================================================
+           BUTTON
+        ===================================================== */
+
+        .dock-button {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 11px 17px;
+
+            color: #ffffff;
+
+            background: #0b1f3a;
+
+            border-radius: 7px;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            transition: 0.3s ease;
+        }
+
+
+        .dock-button:hover {
+            background: #2f80ed;
+        }
+
+
+        .dock-button i {
+            font-size: 11px;
+
+            transition:
+                transform 0.3s ease;
+        }
+
+
+        .dock-button:hover i {
+            transform: translateX(4px);
+        }
+
+
+
+        /* =====================================================
+           INFORMATION SECTION
+        ===================================================== */
+
+        .info-section {
+            margin-top: 65px;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+
+        .info-box {
+            padding: 25px;
+
+            background: #ffffff;
+
+            border:
+                1px solid
+                #e5ebf2;
+
+            border-radius: 10px;
+        }
+
+
+        .info-icon {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            width: 42px;
+
+            height: 42px;
+
+            margin-bottom: 15px;
+
+            color: #2f80ed;
+
+            background: #edf6ff;
+
+            border-radius: 8px;
+        }
+
+
+        .info-box h4 {
+            margin-bottom: 6px;
+
+            color: #0b1f3a;
+
+            font-size: 15px;
+        }
+
+
+        .info-box p {
+            color: #718096;
+
+            font-size: 12px;
+
+            line-height: 1.7;
+        }
+
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        footer {
+            background: #0b1f3a;
+
+            color: #ffffff;
+        }
+
+
+        .footer-container {
+            width: 86%;
+
+            max-width: 1200px;
+
+            margin: auto;
+
+            padding: 50px 0 25px;
+        }
+
+
+        .footer-top {
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 50px;
+
+            padding-bottom: 35px;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.12);
+        }
+
+
+        .footer-brand {
+            max-width: 400px;
+        }
+
+
+        .footer-brand img {
+            width: auto;
+
+            height: 42px;
+
+            margin-bottom: 18px;
+        }
+
+
+        .footer-brand p {
+            color: #aebed0;
+
+            font-size: 12px;
+
+            line-height: 1.8;
+        }
+
+
+        .footer-links h4 {
+            margin-bottom: 15px;
+
+            font-size: 13px;
+        }
+
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+
+        .footer-links li {
+            margin-bottom: 9px;
+        }
+
+
+        .footer-links a {
+            color: #aebed0;
+
+            font-size: 12px;
+
+            transition: 0.3s ease;
+        }
+
+
+        .footer-links a:hover {
+            color: #ffffff;
+        }
+
+
+        .footer-bottom {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding-top: 20px;
+        }
+
+
+        .footer-bottom p {
+            color: #8398ae;
+
+            font-size: 11px;
+        }
+
+
+        .social-icons {
+            display: flex;
+
+            gap: 10px;
+        }
+
+
+        .social-icons a {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            width: 32px;
+
+            height: 32px;
+
+            color: #ffffff;
+
+            background:
+                rgba(255,255,255,0.08);
+
+            border-radius: 6px;
+
+            transition: 0.3s ease;
+        }
+
+
+        .social-icons a:hover {
+            background: #2f80ed;
+        }
+
+
+
+        /* =====================================================
+           RESPONSIVE - TABLET
+        ===================================================== */
+
+        @media (max-width: 1000px) {
+
+            header {
+                padding: 0 4%;
+            }
+
+
+            nav ul {
+                gap: 16px;
+            }
+
+
+            nav ul li a {
+                font-size: 11px;
+            }
+
+
+            .main-content,
+            .hero-content,
+            .footer-container {
+                width: 92%;
+            }
+
+        }
+
+
+
+        /* =====================================================
+           RESPONSIVE - MOBILE
+        ===================================================== */
+
+        @media (max-width: 768px) {
+
+            header {
+                height: auto;
+
+                padding: 18px 5%;
+
+                flex-direction: column;
+
+                gap: 18px;
+            }
+
+
+            .logo-area {
+                width: 100%;
+
+                justify-content: center;
+            }
+
+
+            nav {
+                width: 100%;
+
+                overflow-x: auto;
+            }
+
+
+            nav ul {
+                justify-content: center;
+
+                min-width: max-content;
+            }
+
+
+            .hero {
+                min-height: 350px;
+            }
+
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+
+            .dock-grid {
+                grid-template-columns: 1fr;
+            }
+
+
+            .info-section {
+                grid-template-columns: 1fr;
+            }
+
+
+            .footer-top {
+                flex-direction: column;
+            }
+
+
+            .dropdown-menu {
+                right: auto;
+
+                left: 0;
+            }
+
+        }
+
+
+
+        /* =====================================================
+           RESPONSIVE - SMALL MOBILE
+        ===================================================== */
+
+        @media (max-width: 480px) {
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+
+            .hero p {
+                font-size: 13px;
+            }
+
+
+            .section-heading h2 {
+                font-size: 26px;
+            }
+
+
+            .dock-image {
+                height: 210px;
+            }
+
+
+            .footer-bottom {
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 15px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header>
+
+
+    <!-- LOGO -->
+
+    <div class="logo-area">
+
+        <img
+            src="img/logo.png"
+            alt="Logo PT PAL Indonesia">
+
+
+        <div class="logo-divider"></div>
+
+
+        <img
+            class="cii-logo"
+            src="img/LOGO CII.png"
+            alt="CII Logo">
+
+    </div>
+
+
+
+    <!-- NAVIGATION -->
+
+    <nav>
+
+        <ul>
+
+
+            <!-- DASHBOARD -->
+
+            <li>
+
+                <a href="homepage.html">
+                    Dashboard
+                </a>
+
+            </li>
+
+
+
+            <!-- SCHEDULE -->
+
+            <li>
+
+                <a href="display.html">
+                    Schedule
+                </a>
+
+            </li>
+
+
+
+            <!-- DOCKING SPACE CHECKER -->
+
+            <li>
+
+                <a href="login.html">
+                    Docking Space Checker
+                </a>
+
+            </li>
+
+
+
+            <!-- FACILITIES -->
+
+            <li class="dropdown">
+
+                <a href="#" class="active">
+
+                    Facilities
+
+                    <i class="fa-solid fa-chevron-down"></i>
+
+                </a>
+
+
+
+                <!-- DROPDOWN -->
+
+                <ul class="dropdown-menu">
+
+
+                    <!-- DOCKING FACILITIES -->
+
+                    <li>
+
+                        <a href="dockingfacilities.html">
+
+                            <i class="fa-solid fa-ship"></i>
+
+                            Docking Facilities
+
+                        </a>
+
+                    </li>
+
+
+
+                    <!-- WORKSHOP -->
+
+                    <li>
+
+                        <a href="workshop.html">
+
+                            <i class="fa-solid fa-screwdriver-wrench"></i>
+
+                            Workshop
+
+                        </a>
+
+                    </li>
+
+
+                </ul>
+
+            </li>
+
+
+        </ul>
+
+    </nav>
+
+</header>
+
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="hero">
+
+
+    <div class="hero-content">
+
+
+        <div class="hero-label">
+
+            <i class="fa-solid fa-ship"></i>
+
+            PT PAL INDONESIA
+
+        </div>
+
+
+
+        <h1>
+
+            Our Docking Facilities
+
+        </h1>
+
+
+
+        <p>
+
+            Explore PT PAL Indonesia's docking facilities,
+            designed to support ship construction,
+            maintenance, repair, and modernization
+            with reliable and integrated capabilities.
+
+        </p>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     MAIN CONTENT
+========================================================= -->
+
+<main class="main-content">
+
+
+    <!-- SECTION HEADING -->
+
+    <div class="section-heading">
+
+
+        <span>
+
+            Docking Facilities
+
+        </span>
+
+
+
+        <h2>
+
+            Our Dock
+
+        </h2>
+
+
+
+        <p>
+
+            Discover our strategically located docking
+            facilities and their capabilities for various
+            types of vessels.
+
+        </p>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         DOCK GRID
+    ====================================================== -->
+
+    <div class="dock-grid">
+
+
+
+        <!-- =================================================
+             DOCK IRIAN
+        ================================================== -->
+
+        <div class="dock-card">
+
+
+            <div class="dock-image">
+
+
+                <span class="dock-number">
+
+                    01
+
+                </span>
+
+
+
+                <img
+                    src="https://media.kompas.tv/library/image/content_article/article_img/20231124022727.jpg"
+                    alt="Dock Irian">
+
+
+            </div>
+
+
+
+            <div class="dock-content">
+
+
+                <h3>
+
+                    Dock Irian
+
+                </h3>
+
+
+
+                <p>
+
+                    Merupakan Graving Dock yang telah
+                    beroperasi selama puluhan tahun.
+                    Dock ini memiliki panjang 237 meter,
+                    lebar 28 meter, dan tinggi 12 meter,
+                    dengan kapasitas mencapai 20.000 DWT.
+                    Fasilitas ini melayani pembangunan
+                    dan perbaikan berbagai jenis kapal.
+
+                </p>
+
+
+
+                <a
+                    href="irian.html"
+                    class="dock-button">
+
+                    View Dock Details
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             DOCK SURABAYA
+        ================================================== -->
+
+        <div class="dock-card">
+
+
+            <div class="dock-image">
+
+
+                <span class="dock-number">
+
+                    02
+
+                </span>
+
+
+
+                <img
+                    src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgeBudk0vLIxi5AJOnFJcsp1gHrY5eqtjt0CYPHzQLSQPpGDDEtrxw6iWekAOS0QiishfC-Nq8Id8Z2dr-xg7F0-uOTot1Xr1TGV1rgjrjOY3zwFzEjNzYs5khDy9qLL_JuOqZ6ctAVtMY/w1200-h630-p-k-no-nu/1605682002654160-0.png"
+                    alt="Dock Surabaya">
+
+
+            </div>
+
+
+
+            <div class="dock-content">
+
+
+                <h3>
+
+                    Dock Surabaya
+
+                </h3>
+
+
+
+                <p>
+
+                    Dikenal juga sebagai Floating Dock
+                    "Surabaya". Fasilitas ini merupakan
+                    dok apung yang digunakan untuk
+                    pemeliharaan dan perbaikan kapal.
+                    Memiliki panjang keseluruhan 138 meter,
+                    lebar 26,5 meter, tinggi 12 meter,
+                    dan sarat 2,74 meter.
+
+                </p>
+
+
+
+                <a
+                    href="sby.html"
+                    class="dock-button">
+
+                    View Dock Details
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             DOCK SEMARANG
+        ================================================== -->
+
+        <div class="dock-card">
+
+
+            <div class="dock-image">
+
+
+                <span class="dock-number">
+
+                    03
+
+                </span>
+
+
+
+                <img
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSmyHkno065wlrr5Y7T4zqAHgXQ9lpk2t20A&s"
+                    alt="Dock Semarang">
+
+
+            </div>
+
+
+
+            <div class="dock-content">
+
+
+                <h3>
+
+                    Dock Semarang
+
+                </h3>
+
+
+
+                <p>
+
+                    Fasilitas dock yang digunakan untuk
+                    pembuatan, pemeliharaan, dan perbaikan
+                    kapal. Memiliki panjang keseluruhan
+                    300 meter dan lebar 32 meter serta
+                    dilengkapi Goliath Crane dengan
+                    kapasitas hingga 300 ton.
+
+                </p>
+
+
+
+                <a
+                    href="semarang.html"
+                    class="dock-button">
+
+                    View Dock Details
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             DOCK LAMONGAN
+        ================================================== -->
+
+        <div class="dock-card">
+
+
+            <div class="dock-image">
+
+
+                <span class="dock-number">
+
+                    04
+
+                </span>
+
+
+
+                <img
+                    src="img/dock-lamongan.jpg"
+                    alt="Dock Lamongan">
+
+
+            </div>
+
+
+
+            <div class="dock-content">
+
+
+                <h3>
+
+                    Dock Lamongan
+
+                </h3>
+
+
+
+                <p>
+
+                    Dock Lamongan merupakan salah satu
+                    fasilitas pendukung yang digunakan
+                    untuk kegiatan pembangunan,
+                    pemeliharaan, dan perbaikan kapal.
+                    Fasilitas ini mendukung kebutuhan
+                    docking dengan area kerja dan
+                    infrastruktur yang terintegrasi.
+
+                </p>
+
+
+
+                <a
+                    href="lamongan.html"
+                    class="dock-button">
+
+                    View Dock Details
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         INFORMATION SECTION
+    ====================================================== -->
+
+    <div class="info-section">
+
+
+
+        <!-- SHIP REPAIR -->
+
+        <div class="info-box">
+
+
+            <div class="info-icon">
+
+                <i class="fa-solid fa-ship"></i>
+
+            </div>
+
+
+
+            <h4>
+
+                Ship Repair
+
+            </h4>
+
+
+
+            <p>
+
+                Supporting vessel maintenance,
+                repair, and refurbishment activities.
+
+            </p>
+
+
+        </div>
+
+
+
+        <!-- SHIP CONSTRUCTION -->
+
+        <div class="info-box">
+
+
+            <div class="info-icon">
+
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+
+            </div>
+
+
+
+            <h4>
+
+                Ship Construction
+
+            </h4>
+
+
+
+            <p>
+
+                Integrated facilities for
+                shipbuilding and construction activities.
+
+            </p>
+
+
+        </div>
+
+
+
+        <!-- INTEGRATED FACILITY -->
+
+        <div class="info-box">
+
+
+            <div class="info-icon">
+
+                <i class="fa-solid fa-gears"></i>
+
+            </div>
+
+
+
+            <h4>
+
+                Integrated Facility
+
+            </h4>
+
+
+
+            <p>
+
+                Supporting infrastructure designed
+                for efficient shipyard operations.
+
+            </p>
+
+
+        </div>
+
+
+    </div>
+
+
+</main>
+
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer>
+
+
+    <div class="footer-container">
+
+
+        <div class="footer-top">
+
+
+
+            <!-- FOOTER BRAND -->
+
+            <div class="footer-brand">
+
+
+                <img
+                    src="img/logo.png"
+                    alt="PT PAL Indonesia">
+
+
+                <p>
+
+                    PT PAL Indonesia is a leading
+                    shipbuilding and maritime industry
+                    company providing integrated
+                    solutions for defense and commercial
+                    vessels.
+
+                </p>
+
+
+            </div>
+
+
+
+            <!-- FOOTER NAVIGATION -->
+
+            <div class="footer-links">
+
+
+                <h4>
+
+                    Navigation
+
+                </h4>
+
+
+
+                <ul>
+
+
+                    <li>
+
+                        <a href="homepage.html">
+
+                            Dashboard
+
+                        </a>
+
+                    </li>
+
+
+
+                    <li>
+
+                        <a href="display.html">
+
+                            Schedule
+
+                        </a>
+
+                    </li>
+
+
+
+                    <li>
+
+                        <a href="login.html">
+
+                            Docking Space Checker
+
+                        </a>
+
+                    </li>
+
+
+
+                    <li>
+
+                        <a href="dockingfacilities.html">
+
+                            Docking Facilities
+
+                        </a>
+
+                    </li>
+
+
+
+                    <li>
+
+                        <a href="workshop.html">
+
+                            Workshop
+
+                        </a>
+
+                    </li>
+
+
+                </ul>
+
+
+            </div>
+
+
+
+            <!-- FOOTER INFORMATION -->
+
+            <div class="footer-links">
+
+
+                <h4>
+
+                    Information
+
+                </h4>
+
+
+
+                <ul>
+
+
+                    <li>
+
+                        <a href="#">
+
+                            Privacy Policy
+
+                        </a>
+
+                    </li>
+
+
+
+                    <li>
+
+                        <a href="#">
+
+                            Terms & Conditions
+
+                        </a>
+
+                    </li>
+
+
+                </ul>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- FOOTER BOTTOM -->
+
+        <div class="footer-bottom">
+
+
+            <p>
+
+                © 2026 DIGIDOCC · PT PAL INDONESIA
+
+            </p>
+
+
+
+            <div class="social-icons">
+
+
+                <a href="#">
+
+                    <i class="fa-brands fa-linkedin-in"></i>
+
+                </a>
+
+
+
+                <a href="#">
+
+                    <i class="fa-brands fa-instagram"></i>
+
+                </a>
+
+
+
+                <a href="#">
+
+                    <i class="fa-brands fa-youtube"></i>
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</footer>
+
+
+
+</body>
+
+</html>

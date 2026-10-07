@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>DIGIDOCC - Test Menu</title>
+
+
+    <!-- Font -->
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+
+    <!-- Font Awesome -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            font-family: 'Inter', sans-serif;
+
+            background: #f5f8fc;
+
+            color: #172b4d;
+
+        }
+
+
+        /* =========================
+           HEADER
+        ========================== */
+
+        header {
+
+            height: 82px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 6%;
+
+            background: #ffffff;
+
+            border-bottom: 1px solid #e5ebf2;
+
+        }
+
+
+        /* =========================
+           LOGO
+        ========================== */
+
+        .logo-area {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 20px;
+
+        }
+
+
+        .logo-area img {
+
+            width: auto;
+
+            height: 42px;
+
+            object-fit: contain;
+
+        }
+
+
+        .logo-divider {
+
+            width: 1px;
+
+            height: 32px;
+
+            background: #dce5ef;
+
+        }
+
+
+        .cii-logo {
+
+            height: 48px !important;
+
+        }
+
+
+        /* =========================
+           NAVIGATION
+        ========================== */
+
+        nav ul {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 30px;
+
+            list-style: none;
+
+        }
+
+
+        nav ul li {
+
+            position: relative;
+
+        }
+
+
+        nav ul li a {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            color: #50627a;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            text-decoration: none;
+
+            transition: 0.3s ease;
+
+        }
+
+
+        nav ul li a:hover {
+
+            color: #2f80ed;
+
+        }
+
+
+        /* =========================
+           FACILITIES DROPDOWN
+        ========================== */
+
+        .dropdown-menu {
+
+            position: absolute;
+
+            top: 30px;
+
+            left: 50%;
+
+            transform:
+                translateX(-50%)
+                translateY(10px);
+
+            width: 210px;
+
+            padding: 8px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 3px;
+
+            background: #ffffff;
+
+            border: 1px solid #e5ebf2;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 15px 35px
+                rgba(11, 31, 58, 0.12);
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            transition: 0.25s ease;
+
+        }
+
+
+        .dropdown:hover .dropdown-menu {
+
+            opacity: 1;
+
+            visibility: visible;
+
+            transform:
+                translateX(-50%)
+                translateY(0);
+
+        }
+
+
+        .dropdown-menu li {
+
+            width: 100%;
+
+        }
+
+
+        .dropdown-menu li a {
+
+            display: block;
+
+            width: 100%;
+
+            padding: 11px 13px;
+
+            color: #50627a;
+
+            font-size: 12px;
+
+            border-radius: 6px;
+
+        }
+
+
+        .dropdown-menu li a:hover {
+
+            color: #0b1f3a;
+
+            background: #edf6ff;
+
+        }
+
+
+        /* =========================
+           TEST CONTENT
+        ========================== */
+
+        .test-content {
+
+            min-height: calc(100vh - 82px);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+        }
+
+
+        .test-box {
+
+            padding: 50px;
+
+        }
+
+
+        .test-box i {
+
+            margin-bottom: 20px;
+
+            color: #2f80ed;
+
+            font-size: 50px;
+
+        }
+
+
+        .test-box h1 {
+
+            margin-bottom: 10px;
+
+            color: #0b1f3a;
+
+            font-size: 32px;
+
+        }
+
+
+        .test-box p {
+
+            color: #718096;
+
+            font-size: 14px;
+
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================== */
+
+        @media (max-width: 900px) {
+
+            header {
+
+                padding: 15px 4%;
+
+                flex-direction: column;
+
+                height: auto;
+
+                gap: 20px;
+
+            }
+
+
+            nav ul {
+
+                gap: 15px;
+
+                flex-wrap: wrap;
+
+                justify-content: center;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+
+    <!-- LOGO -->
+
+    <div class="logo-area">
+
+        <img
+            src="img/logo.png"
+            alt="PT PAL Indonesia">
+
+
+        <div class="logo-divider"></div>
+
+
+        <img
+            class="cii-logo"
+            src="img/LOGO CII.png"
+            alt="CII">
+
+    </div>
+
+
+
+    <!-- NAVIGATION -->
+
+    <nav>
+
+        <ul>
+
+
+            <li>
+
+                <a href="homepage.html">
+
+                    Dashboard
+
+                </a>
+
+            </li>
+
+
+
+            <li>
+
+                <a href="display.html">
+
+                    Schedule
+
+                </a>
+
+            </li>
+
+
+
+            <li>
+
+                <a href="login.html">
+
+                    Docking Space Checker
+
+                </a>
+
+            </li>
+
+
+
+            <!-- FACILITIES -->
+
+            <li class="dropdown">
+
+                <a href="#">
+
+                    Facilities
+
+                    <i class="fa-solid fa-chevron-down"></i>
+
+                </a>
+
+
+                <!-- SUB MENU -->
+
+                <ul class="dropdown-menu">
+
+
+                    <li>
+
+                        <a href="productandservice.html">
+
+                            Docking Facilities
+
+                        </a>
+
+                    </li>
+
+
+                    <li>
+
+                        <a href="workshop.html">
+
+                            Workshop
+
+                        </a>
+
+                    </li>
+
+
+                </ul>
+
+            </li>
+
+
+        </ul>
+
+    </nav>
+
+
+</header>
+
+
+
+<!-- =========================
+     TEST CONTENT
+========================= -->
+
+<section class="test-content">
+
+    <div class="test-box">
+
+        <i class="fa-solid fa-building"></i>
+
+        <h1>
+            Facilities
+        </h1>
+
+        <p>
+            Hover over "Facilities" in the navigation
+            to test the dropdown menu.
+        </p>
+
+    </div>
+
+</section>
+
+
+</body>
+
+</html>

@@ -1,150 +1,423 @@
-/* General styles */
-body {
-    font-family: "Montserrat", sans-serif;
+/* =====================================================
+   RESET
+===================================================== */
+
+* {
     margin: 0;
     padding: 0;
-    background-image:  ("https://i.pinimg.com/736x/ad/57/a3/ad57a3a6872a719aaea311c2a8dc0064.jpg");
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family: "Montserrat", Arial, sans-serif;
+    background-color: #f5f7fa;
+    background-image: url("https://i.pinimg.com/736x/ad/57/a3/ad57a3a6872a719aaea311c2a8dc0064.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-attachment: fixed;
     background-size: cover;
-  }
-  
-  .container {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  h2 {
-    color: #000000;
-    margin-bottom: 10px;
-  }
-  
-  p {
-    line-height: 1.6;
-    color: #000000;
-  }
-  
-  .image-container {
-    width: 200px; /* Set width */
-    height: 100px; /* Set height */
-    background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/PT-PAL.svg/2560px-PT-PAL.svg.png'); /* Set background image */
-    background-size: contain; /* Scale image to fit the container */
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Prevent tiling */
 }
-  
-  
-  /* Navigation bar styles */
-  .navbar {
-    color: #000000;
-    padding: 10px 0;
+
+
+/* =====================================================
+   NAVBAR DIGIDOCC
+===================================================== */
+
+.digidocc-navbar {
+    width: 100%;
+    height: 72px;
+
+    background-color: #0a2f6b;
+
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    overflow: hidden;
-  }
-  
-  .navbar a{
-    color: #000000;
+    justify-content: space-between;
+
+    padding: 0 45px;
+
+    position: relative;
+    z-index: 9999;
+}
+
+
+/* LOGO */
+
+.digidocc-logo {
+    color: #ffffff;
     text-decoration: none;
-    padding: 15px;
-    display: inline-block;
-  }
-  
-  .logo {
-    font-weight: bold;
-  }
-  
-  .nav-links {
+
+    font-size: 24px;
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    white-space: nowrap;
+}
+
+
+/* MENU */
+
+.digidocc-menu {
+    display: flex;
+    align-items: center;
+
+    height: 100%;
+
+    list-style: none;
+
+    margin: 0;
+    padding: 0;
+
+    gap: 5px;
+}
+
+.digidocc-menu > li {
+    list-style: none;
+
+    margin: 0;
+    padding: 0;
+
+    position: relative;
+}
+
+
+/* LINK */
+
+.digidocc-menu > li > a {
+    height: 72px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 16px;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    white-space: nowrap;
+
+    transition: 0.2s ease;
+}
+
+.digidocc-menu > li > a:hover {
+    background-color: #16447f;
+}
+
+
+/* =====================================================
+   FACILITIES DROPDOWN
+===================================================== */
+
+.digidocc-dropdown {
+    position: relative;
+}
+
+.digidocc-dropdown-menu {
+    display: none;
+
+    position: absolute;
+
+    top: 72px;
+    right: 0;
+
+    width: 210px;
+
+    background-color: #ffffff;
+
+    list-style: none;
+
+    margin: 0;
+    padding: 0;
+
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+
+    border-radius: 0 0 6px 6px;
+
+    overflow: hidden;
+}
+
+.digidocc-dropdown-menu li {
     list-style: none;
     margin: 0;
     padding: 0;
-    display: flex;
-  }
-  
-  .nav-links li {
-    margin-right: 20px;
-  }
-  
-  .nav-links a {
-    color: #000000;
+}
+
+.digidocc-dropdown-menu a {
+    display: block;
+
+    padding: 15px 18px;
+
+    color: #333333;
+
     text-decoration: none;
-  }
-  
-  .nav-links a:hover {
-    -moz-text-decoration-color:rgb(121, 243, 202) ;
-  }
-  
-  .navbar a:hover{
-      background-color: rgb(9, 36, 78);
-      transition: .3s;
-      touch-action: manipulation;
-  }
-  
-  /* Menu toggle button styles */
-  .menu-toggle {
-    display: none;
-    cursor: pointer;
-  }
-  
-  .bar {
-    width: 25px;
-    height: 3px;
-    background-color: #000000;
-    margin: 5px 0;
-    
-  }
-  
-  /* Button styles */
-  
-  .button-58 {
-    align-items: center;
-    background-color: rgba(80, 80, 80, 0.525);
-    border: 2px solid rgb(255, 255, 255);
-    box-sizing: border-box;
-    color: #fff;
-    cursor: pointer;
-    display: inline-flex;
-    fill: #ffffff;
-    font-family: Inter,sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    height: 38px;
-    justify-content: center;
-    letter-spacing: -.8px;
-    line-height: 24px;
-    min-width: 180px;
-    outline: 0;
-    padding: 0 17px;
+
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.digidocc-dropdown-menu a:hover {
+    background-color: #f1f4f8;
+
+    color: #0a2f6b;
+}
+
+.digidocc-dropdown:hover .digidocc-dropdown-menu {
+    display: block;
+}
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+.digidocc-login {
+    margin-left: 10px;
+}
+
+.digidocc-login a {
+    height: 38px !important;
+
+    padding: 0 18px !important;
+
+    border: 1px solid #ffffff;
+
+    border-radius: 5px;
+}
+
+.digidocc-login a:hover {
+    background-color: #ffffff !important;
+
+    color: #0a2f6b !important;
+}
+
+
+/* =====================================================
+   CONTENT MENU / DOCK ARRANGEMENT
+===================================================== */
+
+.menu-page {
+    width: 100%;
+
+    min-height: calc(100vh - 72px);
+
+    padding: 55px 40px 70px;
+
+    background-color: rgba(255, 255, 255, 0.88);
+}
+
+
+/* TITLE */
+
+.menu-title {
     text-align: center;
-    text-decoration: none;
-    transition: all .3s;
-    user-select: none;
-    -webkit-user-select: none;
-    margin: 5px;
-    touch-action: manipulation;
-  }
-  
-  .button-58:focus {
+
+    margin-bottom: 35px;
+}
+
+.menu-title h1 {
+    color: #0a2f6b;
+
+    font-size: 32px;
+
+    margin-bottom: 10px;
+}
+
+.menu-title p {
+    color: #666666;
+
+    font-size: 15px;
+}
+
+
+/* =====================================================
+   BUTTON AREA
+===================================================== */
+
+.menu-buttons {
+    max-width: 1100px;
+
+    margin: 0 auto;
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    justify-content: center;
+
+    gap: 18px;
+}
+
+
+/* BUTTON */
+
+.button-58 {
+    align-items: center;
+
+    background-color: #0a2f6b;
+
+    border: 2px solid #0a2f6b;
+
+    box-sizing: border-box;
+
     color: #ffffff;
-  }
-  
-  .button-58:hover {
-    background-color: #3385ff;
-    border-color: #3385ff;
-    fill: #06f;
-  }
-  
-  .button-58:active {
-    background-color: #3385ff;
-    border-color: #3385ff;
-    fill: #06f;
-  }
-  
-  @media (min-width: 768px) {
-    .button-58 {
-      min-width: 170px;
+
+    cursor: pointer;
+
+    display: inline-flex;
+
+    font-family: "Montserrat", Arial, sans-serif;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    min-height: 48px;
+
+    min-width: 180px;
+
+    justify-content: center;
+
+    padding: 0 20px;
+
+    text-align: center;
+
+    text-decoration: none;
+
+    border-radius: 5px;
+
+    transition: all 0.25s ease;
+
+    margin: 0;
+}
+
+.button-58:hover {
+    background-color: #16447f;
+
+    border-color: #16447f;
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+}
+
+.button-58:active {
+    transform: translateY(0);
+}
+
+
+/* =====================================================
+   IMAGE
+===================================================== */
+
+.image-container {
+    width: 200px;
+
+    height: 100px;
+
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/PT-PAL.svg/2560px-PT-PAL.svg.png");
+
+    background-size: contain;
+
+    background-position: center;
+
+    background-repeat: no-repeat;
+
+    margin: 0 auto 25px;
+}
+
+
+/* =====================================================
+   TEXT
+===================================================== */
+
+h2 {
+    color: #0a2f6b;
+
+    margin-bottom: 10px;
+}
+
+p {
+    line-height: 1.6;
+
+    color: #333333;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 900px) {
+
+    .digidocc-navbar {
+        padding: 0 20px;
     }
-  }
+
+    .digidocc-menu > li > a {
+        padding: 0 9px;
+
+        font-size: 12px;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .digidocc-navbar {
+        height: auto;
+
+        flex-direction: column;
+
+        padding: 18px;
+
+        gap: 12px;
+    }
+
+    .digidocc-menu {
+        width: 100%;
+
+        height: auto;
+
+        flex-wrap: wrap;
+
+        justify-content: center;
+    }
+
+    .digidocc-menu > li > a {
+        height: 45px;
+
+        padding: 0 10px;
+    }
+
+    .digidocc-dropdown-menu {
+        top: 45px;
+    }
+
+    .menu-page {
+        padding: 40px 20px;
+    }
+
+    .menu-buttons {
+        flex-direction: column;
+
+        align-items: center;
+    }
+
+    .button-58 {
+        width: 100%;
+
+        max-width: 400px;
+    }
+
+}

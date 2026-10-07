@@ -1,30 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Dashboard</title>
+
+    <title>DIGIDOCC - Employee Dashboard</title>
+
     <link rel="stylesheet" href="dashboard.css">
 </head>
+
 <body>
-    <div class="container">
-        <!-- Log out button at top-left corner -->
-        <a href="login.html">
-            <button id="logout" style="position: absolute; top: 10px; left: 10px;">Log Out</button>
-        </a>
-        <h1>Employee Dashboard</h1>
-        <nav>
-            <ul>
-                <li><button onclick="location.href='update.html'">View Map</button></li>
-                <li><button onclick="location.href='menu.html'">Dock Arrangement</button></li>
-                <li><button onclick="location.href='#contract-ag'">Contract and Agreement</button></li>
-                <li><button onclick="location.href='omset.html'">MRO Sales Database</button></li>
-            </ul>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <header class="navbar">
+
+        <div class="navbar-brand">
+            DIGIDOCC
+        </div>
+
+        <nav class="navbar-links">
+
+            <a href="dashboard.html">Home</a>
+
+            <a href="productandservice.html">
+                Product &amp; Service
+            </a>
+
+            <a href="login.html">
+                Docking Space Checker
+            </a>
+
+            <a href="display.html">
+                Schedule
+            </a>
+
+            <div class="dropdown">
+
+                <a href="#" class="dropdown-button">
+                    Facilities ▾
+                </a>
+
+                <div class="dropdown-content">
+
+                    <a href="dockingfacilities.html">
+                        Docking Facilities
+                    </a>
+
+                    <a href="workshop.html">
+                        Workshop
+                    </a>
+
+                </div>
+
+            </div>
+
+            <a href="login.html" class="login-button">
+                Log In
+            </a>
+
         </nav>
 
-        
-    </div>
+    </header>
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main class="dashboard">
+
+        <section class="dashboard-header">
+
+            <h1>Employee Dashboard</h1>
+
+            <p>
+                Digital Docking Coordination &amp; Collaboration
+            </p>
+
+        </section>
+
+
+        <!-- ================= EMPLOYEE FEATURES ================= -->
+
+        <section class="employee-features">
+
+            <!-- VIEW MAP -->
+
+            <a href="update.html" class="feature-card">
+
+                <div class="feature-icon">
+                    🗺️
+                </div>
+
+                <div class="feature-text">
+
+                    <h2>View Map</h2>
+
+                    <p>
+                        View and monitor the docking area map.
+                    </p>
+
+                </div>
+
+            </a>
+
+
+            <!-- DOCK ARRANGEMENT -->
+
+            <a href="menu.html" class="feature-card">
+
+                <div class="feature-icon">
+                    ⚓
+                </div>
+
+                <div class="feature-text">
+
+                    <h2>Dock Arrangement</h2>
+
+                    <p>
+                        Manage and arrange ship docking activities.
+                    </p>
+
+                </div>
+
+            </a>
+
+
+            <!-- CONTRACT & AGREEMENT -->
+
+            <a href="#contract-ag" class="feature-card">
+
+                <div class="feature-icon">
+                    📄
+                </div>
+
+                <div class="feature-text">
+
+                    <h2>Contract &amp; Agreement</h2>
+
+                    <p>
+                        Manage contract and agreement information.
+                    </p>
+
+                </div>
+
+            </a>
+
+
+            <!-- MRO SALES DATABASE -->
+
+            <a href="omset.html" class="feature-card">
+
+                <div class="feature-icon">
+                    📊
+                </div>
+
+                <div class="feature-text">
+
+                    <h2>MRO Sales Database</h2>
+
+                    <p>
+                        View and manage MRO sales database.
+                    </p>
+
+                </div>
+
+            </a>
+
+        </section>
+
+    </main>
+
 
     <script src="dashboard.js"></script>
+
 </body>
+
 </html>

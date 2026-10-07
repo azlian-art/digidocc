@@ -1,226 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>
-        PT PAL INDONESIA
-    </title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            background-color: #fff;
-            border-bottom: 1px solid #ddd;
-        }
-        header h1 {
-            margin: 0;
-            font-size: 24px;
-        }
-        header img {
-            height: 30px; /* Atur tinggi logo sesuai kebutuhan */
-        }
-        .collaboration-images {
-            display: flex;
-            align-items: center;
-            margin-left: 25px; /* Jarak antara logo dan gambar kolaborasi */
-        }
-        .collaboration-images img {
-            height: 100px; /* Atur tinggi gambar kolaborasi sesuai kebutuhan */
-            margin-right: 5px; /* Jarak antara gambar */
-        }
-        .collaboration-images .separator {
-            font-size: 15px; /* Ukuran font untuk "X" */
-            margin: 0 5px; /* Jarak di sekitar "X" */
-        }
-        nav ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-        }
-        nav ul li {
-            margin-left: 20px;
-        }
-        nav ul li a {
-            text-decoration: none;
-            color: #000;
-            font-weight: 700;
-        }
-        .hero {
-            position: relative;
-            text-align: center;
-            color: white;
-        }
-        .hero img {
-            width: 100%;
-            height: auto;
-        }
-        .hero .text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 36px;
-            font-weight: 700;
-        }
-        .hero .arrows {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 24px;
-            color: white;
-        }
-        .hero .arrows.left {
-            left: 10px;
-        }
-        .hero .arrows.right {
-            right: 10px;
-        }
-        .arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 24px;
-            color: white;
-            cursor: pointer;
-            z-index: 10;
-        }
-        .arrow.left {
-            left: 10px;
-        }
-        .arrow.right {
-            right: 10px;
-        }
-        .content {
-            padding: 40px 20px;
-            text-align: center;
-        }
-        .content h2 {
-            font-size: 28px;
-            margin-bottom: 20px;
-        }
-        .content p {
-            font-size: 16px;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-        .content .quote {
-            font-size: 18px;
-            font-style: italic;
-            margin: 20px 0;
-        }
-        .content .author {
-            font-size: 16px;
-            font-weight: 700;
-        }
-        .testimonial {
-            background-color: #f9f9f9;
-            padding: 40px 20px;
-            text-align: center;
-        }
-        .testimonial h3 {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-        .testimonial p {
-            font-size: 16px;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-        .testimonial .button {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #000;
-            color: #fff;
-            text-decoration: none;
-            font-weight: 700;
-            margin: 100px auto; /* Menggeser tombol ke tengah */
-        }
-        .testimonial .icon {
-            font-size: 24px;
-            color: #000;
-        }
-        @media (max-width: 600px) {
-            .hero .text {
-                font-size: 24px;
-            }
-            .content h2 {
-                font-size: 24px;
-            }
-            .testimonial h3 {
-                font-size: 20px;
-            }
-        }
-        footer {
-    background-color: #0f1f3d;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
-}
 
-footer .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+    <meta charset="UTF-8">
 
-footer nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-footer nav ul li {
-    margin-left: 20px;
-}
+    <title>DIGIDOCC - Dock Arrangement</title>
 
-footer nav ul li a {
-    text-decoration: none;
-    color: #fff;
-}
-    </style>
+    <!-- Google Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Menu CSS -->
+    <link rel="stylesheet" href="menu.css">
+
 </head>
+
+
 <body>
-<header>
-    <h1>
-        <img src="img/logo.png" alt="Logo PT PAL INDONESIA"/>
-    </h1>
-    <div class="collaboration-images">
-        <img src="img/LOGO CII.png" alt="Gambar Kolaborasi 1"/>  
-    </div>
-    <nav>
-        <ul>
+
+
+    <!-- =====================================================
+         NAVBAR DIGIDOCC
+    ====================================================== -->
+
+    <header class="digidocc-navbar">
+
+        <!-- LOGO / BRAND -->
+
+        <a href="dashboard.html" class="digidocc-logo">
+            DIGIDOCC
+        </a>
+
+
+        <!-- NAVIGATION -->
+
+        <ul class="digidocc-menu">
+
             <li>
-                <a href="homepage.html">
+                <a href="dashboard.html">
                     Home
                 </a>
             </li>
-            <li>
-                <a href="display.html">
-                    View Schedule
-                </a>
-            </li>
+
+
             <li>
                 <a href="productandservice.html">
-                    Product and Service
+                    Product &amp; Service
                 </a>
             </li>
+
+
             <li>
                 <a href="login.html">
                     Docking Space Checker
                 </a>
             </li>
+
+
+            <li>
+                <a href="display.html">
+                    Schedule
+                </a>
+            </li>
+
+
+            <!-- FACILITIES DROPDOWN -->
+
+            <li class="digidocc-dropdown">
+
+                <a href="#">
+                    Facilities ▾
+                </a>
+
+
+                <ul class="digidocc-dropdown-menu">
+
+                    <li>
+                        <a href="dockingfacilities.html">
+                            Docking Facilities
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="workshop.html">
+                            Workshop
+                        </a>
+                    </li>
+
+                </ul>
+
+            </li>
+
+
+            <!-- LOGIN -->
+
+            <li class="digidocc-login">
+
+                <a href="login.html">
+                    Log In
+                </a>
+
+            </li>
+
         </ul>
     </nav>
 </header>
@@ -327,18 +220,5 @@ footer nav ul li a {
     </p>
 </div>
 </body>
-<footer>
-    <div class="container">
-        <p>&copy; <P>DIGIDOCC</p>
-            <Br/>
-        <p> PT PAL INDONESIA</p>
-        <nav>
-            <ul>
-                <li><a href="#">Privacy Policy</a></li>
-                <li><a href="#">Terms & Conditions</a></li>
-            </ul>
-        </nav>
-    </div>
-</footer>
-</html>
+
 </html>
