@@ -33,7 +33,7 @@
                             <ul> 
                                 <li><a href="bluga.html">Dock Bluga</a></li> 
                                 <li><a href="sby.html">Dock Surabaya</a></li> 
-                                <li><a href="semarang.html">Dock Iri</a></li> 
+                                <li><a href="orca.html">Dock Orca</a></li>
                                 <li><a href="floating.html">Dock 2</a></li> 
                                 <li><a href="dock1.html">Dock 1</a></li> 
                             </ul> 
@@ -59,27 +59,27 @@
 
                     <div class="input-group"> 
                         <label for="loa">Ship LOA (Length Overall in meters):</label> 
-                        <input type="number" id="loa" required> 
+                        <input type="text" id="loa" inputmode="text" required>
                     </div> 
 
                     <div class="input-group"> 
                         <label for="b">Ship Beam (Width in meters):</label> 
-                        <input type="number" id="b" required> 
+                        <input type="text" id="b" inputmode="text" required>
                     </div> 
 
                     <div class="input-group"> 
                         <label for="t">Ship Draft (Depth in meters):</label> 
-                        <input type="number" id="t" required> 
+                        <input type="text" id="t" inputmode="text" required>
                     </div> 
 
                     <div class="input-group"> 
                         <label for="gt">Ship GT (Gross Tonnage):</label> 
-                        <input type="number" id="gt" required> 
+                        <input type="text" id="gt" inputmode="text" required>
                     </div> 
 
                     <div class="input-group"> 
                         <label for="dwt">Ship DWT (Deadweight Tonnage):</label> 
-                        <input type="number" id="dwt" required> 
+                        <input type="text" id="dwt" inputmode="text" required>
                     </div> 
 
                     <div class="input-group"> 
@@ -184,23 +184,13 @@
     <script src="bluga.js"></script> 
 
     <script> 
-        // Show the dock select dropdown when clicking on "Docking Space Checker" 
+        // Show the dock dropdown when clicking on "Docking Space Checker" 
         document.getElementById('dockingSpaceChecker').addEventListener('click', function(event) { 
             event.preventDefault(); 
 
-            const dockSelect = document.getElementById('dockSelect'); 
-
-            dockSelect.style.display = 
-                dockSelect.style.display === 'none' ? 'block' : 'none'; 
-        }); 
- 
-        // Function to navigate to the selected dock page 
-        document.getElementById('dockSelect').addEventListener('change', function() { 
-            const selectedDock = this.value; 
-
-            if (selectedDock) { 
-                window.location.href = selectedDock; 
-            } 
+            const dockDropdown = document.getElementById('dockDropdown'); 
+            dockDropdown.style.display = 
+                dockDropdown.style.display === 'none' ? 'block' : 'none'; 
         }); 
     </script> 
 

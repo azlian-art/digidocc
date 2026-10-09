@@ -42,7 +42,7 @@
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
     // Initialize map
-    var map = L.map('map').setView([-7.197, 112.737], 16); // Default location near Dok Semarang
+    var map = L.map('map').setView([-7.197, 112.737], 16); // Default location near Dok Orca
 
     // Add tile layer from OpenStreetMap
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -77,17 +77,17 @@
     }
 
     // Retrieve ship data from local storage
-    var dokSemarangData = JSON.parse(localStorage.getItem('ships_smg')) || [];
+    var dokOrcaData = JSON.parse(localStorage.getItem('ships_smg')) || [];
     var dokBlugaData = JSON.parse(localStorage.getItem('ships')) || [];
     var dokSurabayaData = JSON.parse(localStorage.getItem('ships_sby')) || [];
 
     // Update statuses for each dock
-    updateShipStatus(dokSemarangData);
+    updateShipStatus(dokOrcaData);
     updateShipStatus(dokBlugaData);
     updateShipStatus(dokSurabayaData);
 
-    // Dok Semarang coordinates
-    var dokSemarangCoordinates = [
+    // Dok Orca coordinates
+    var dokOrcaCoordinates = [
       [-7.1964058527520836, 112.73727942343834],
       [-7.196363298534857, 112.73753158476643],
       [-7.199427191973455, 112.73788031851797],
@@ -95,31 +95,31 @@
       [-7.1964058527520836, 112.73727942343834]
     ];
 
-    var dokSemarangPolygon = L.polygon(dokSemarangCoordinates, {
+    var dokOrcaPolygon = L.polygon(dokOrcaCoordinates, {
       color: 'transparent',
       fillColor: 'lightgreen',
       fillOpacity: 0.5
     }).addTo(map);
 
-    dokSemarangPolygon.options.originalFillColor = dokSemarangPolygon.options.fillColor;
+    dokOrcaPolygon.options.originalFillColor = dokOrcaPolygon.options.fillColor;
 
-    dokSemarangPolygon.on('mouseover', function () {
-      highlightPolygon(dokSemarangPolygon, 'yellow');
+    dokOrcaPolygon.on('mouseover', function () {
+      highlightPolygon(dokOrcaPolygon, 'yellow');
     });
-    dokSemarangPolygon.on('mouseout', function () {
-      resetPolygon(dokSemarangPolygon);
+    dokOrcaPolygon.on('mouseout', function () {
+      resetPolygon(dokOrcaPolygon);
     });
 
-    dokSemarangPolygon.on('click', function (e) {
+    dokOrcaPolygon.on('click', function (e) {
       L.popup()
         .setLatLng(e.latlng)
-        .setContent(generatePopupContent('Ship Data at Dok Semarang', dokSemarangData))
+        .setContent(generatePopupContent('Ship Data at Dok Orca', dokOrcaData))
         .openOn(map);
     });
 
-    // Marker for Dok Semarang
+    // Marker for Dok Orca
     L.marker([-7.1975, 112.7373]).addTo(map)
-      .bindPopup('<b>Dok Semarang</b>');
+      .bindPopup('<b>Dok Orca</b>');
 
     // Dok Bluga coordinates
     var dokBlugaCoordinates = [

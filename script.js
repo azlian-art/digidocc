@@ -26,7 +26,7 @@ async function apiRequest(endpoint, options = {}, fallbackValue = null) {
         return payload;
     } catch (error) {
         if (fallbackValue !== null) {
-            return fallbackValue;
+            return { ...fallbackValue, message: error.message };
         }
         return { success: false, message: error.message };
     }
@@ -40,6 +40,19 @@ function saveShipsToStorage(ships) {
     localStorage.setItem(LOCAL_SHIPS_KEY, JSON.stringify(ships));
     return ships;
 }
+
+function parseDecimalInput(id) {
+    const value = document.getElementById(id).value.trim().replace(',', '.');
+    return /^\d+(\.\d+)?$/.test(value) ? Number(value) : NaN;
+}
+
+document.querySelectorAll('input[type="date"]').forEach(input => {
+    input.addEventListener('click', function () {
+        if (typeof this.showPicker === 'function') {
+            this.showPicker();
+        }
+    });
+});
 
 async function syncShipsFromServer() {
     const response = await apiRequest('/ships.php', { method: 'GET' }, { success: true, data: [] });
@@ -92,14 +105,21 @@ document.getElementById('dockingForm').addEventListener('submit', async function
     event.preventDefault();
 
     const shipName = document.getElementById('shipName').value;
-    const loa = parseFloat(document.getElementById('loa').value);
-    const b = parseFloat(document.getElementById('b').value);
-    const t = parseFloat(document.getElementById('t').value);
-    const gt = parseFloat(document.getElementById('gt').value);
-    const dwt = parseFloat(document.getElementById('dwt').value);
+    const loa = parseDecimalInput('loa');
+    const b = parseDecimalInput('b');
+    const t = parseDecimalInput('t');
+    const gt = parseDecimalInput('gt');
+    const dwt = parseDecimalInput('dwt');
     const date = document.getElementById('date').value;
-    const stayStart = new Date(document.getElementById('stayStart').value);
-    const stayEnd = new Date(document.getElementById('stayEnd').value);
+    const stayStartValue = document.getElementById('stayStart').value;
+    const stayEndValue = document.getElementById('stayEnd').value;
+    const stayStart = new Date(`${stayStartValue}T00:00:00`);
+    const stayEnd = new Date(`${stayEndValue}T00:00:00`);
+
+    if (![loa, b, t, gt, dwt].every(Number.isFinite)) {
+        document.getElementById('result').textContent = 'Masukkan angka yang valid. Gunakan koma atau titik untuk desimal.';
+        return;
+    }
 
     if (canDock(loa, b, stayStart, stayEnd)) {
         totalLengthUsed += loa;
@@ -126,11 +146,11 @@ document.getElementById('dockingForm').addEventListener('submit', async function
                 draft: t,
                 gt: gt,
                 dwt: dwt,
-                stay_start: stayStart.toISOString(),
-                stay_end: stayEnd.toISOString(),
+                stay_start: `${stayStartValue} 00:00:00`,
+                stay_end: `${stayEndValue} 00:00:00`,
                 schedule_date: date
             })
-        }, { success: true, message: 'Saved locally' });
+        }, { success: false, message: 'Database request failed' });
 
         let ships = getShipsFromStorage();
         ships.push(shipDetails);
@@ -143,10 +163,10 @@ document.getElementById('dockingForm').addEventListener('submit', async function
         populateCalendarSchedule();
 
         if (saveResponse && saveResponse.success === false) {
-            document.getElementById('result').innerHTML = `
-                <h3>Saved Locally</h3>
-                <p>Database is unavailable, but data was kept in browser storage.</p>
-            `;
+            const result = document.getElementById('result');
+            result.innerHTML = '<h3>Saved Locally Only</h3><p></p>';
+            result.querySelector('p').textContent =
+                `Database save failed: ${saveResponse.message}. Data is only in this browser.`;
         }
     } else {
         document.getElementById('result').innerHTML = `
@@ -511,4 +531,3 @@ window.onload = function() {
     drawRemainingSpaceChart(ships); // Draw the initial remaining space chart
     populateCalendarSchedule(); // Populate the calendar schedule
 };
-

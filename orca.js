@@ -17,7 +17,7 @@ async function apiRequest(endpoint, options = {}, fallbackValue = null) {
         if (!response.ok) throw new Error(payload.message || 'Request failed');
         return payload;
     } catch (error) {
-        if (fallbackValue !== null) return fallbackValue;
+        if (fallbackValue !== null) return { ...fallbackValue, message: error.message };
         return { success: false, message: error.message };
     }
 }
@@ -31,6 +31,79 @@ function saveShipsToStorage(ships) {
     return ships;
 }
 
+function parseRangeInput(id) {
+    const value = document.getElementById(id).value.trim();
+    const match = value.match(/^(\d+(?:[.,]\d+)?)\s*(?:[-–—]\s*(\d+(?:[.,]\d+)?))?$/);
+    if (!match) return { min: NaN, max: NaN };
+
+    const min = Number(match[1].replace(',', '.'));
+    const max = match[2] ? Number(match[2].replace(',', '.')) : min;
+    return { min, max };
+}
+
+function parseLoaRange() {
+    return parseRangeInput('loa');
+}
+
+function parseDraftRange() {
+    return parseRangeInput('t');
+}
+
+function getRangeText(ship, minKey, maxKey, textKey, valueKey = minKey) {
+    if (ship[textKey]) return ship[textKey];
+    const min = ship[minKey] ?? ship[valueKey];
+    const max = ship[maxKey] ?? ship[valueKey];
+    return max != null && Number(max) !== Number(min) ? `${min}–${max}` : min;
+}
+
+function formatRange(ship, minKey, maxKey, textKey, valueKey = minKey) {
+    return String(getRangeText(ship, minKey, maxKey, textKey, valueKey)).replace(/[&<>"']/g, character => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+    })[character]);
+}
+
+function formatDraft(ship) {
+    if (ship.draftText) {
+        return ship.draftText.replace(/[&<>"']/g, character => ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;'
+        })[character]);
+    }
+    return ship.draftMax != null && Number(ship.draftMax) !== Number(ship.draft)
+        ? `${ship.draft}–${ship.draftMax}`
+        : ship.draft;
+}
+
+function formatLoa(ship) {
+    if (ship.loaText) {
+        return ship.loaText.replace(/[&<>"']/g, character => ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;'
+        })[character]);
+    }
+    return ship.loaMax != null && Number(ship.loaMax) !== Number(ship.loa)
+        ? `${ship.loa}–${ship.loaMax}`
+        : ship.loa;
+}
+
+document.querySelectorAll('input[type="date"]').forEach(input => {
+    input.addEventListener('click', function () {
+        if (typeof this.showPicker === 'function') {
+            this.showPicker();
+        }
+    });
+});
+
 async function syncShipsFromServer() {
     const response = await apiRequest('/ships.php', { method: 'GET' }, { success: true, data: [] });
     if (!response || !response.success || !Array.isArray(response.data)) return getShipsFromStorage();
@@ -39,11 +112,24 @@ async function syncShipsFromServer() {
         .filter(ship => Number(ship.dock_id) === DOCK_ID)
         .map(ship => ({
             shipName: ship.ship_name,
-            loa: Number(ship.loa),
-            beam: Number(ship.beam),
+            loa: ship.loa_max == null ? Number(ship.loa) : Number(ship.loa_max),
+            loaMax: ship.loa_max == null ? Number(ship.loa) : Number(ship.loa_max),
+            loaText: ship.loa_text || '',
+            beam: ship.beam_max == null ? Number(ship.beam) : Number(ship.beam_max),
+            beamMin: Number(ship.beam),
+            beamMax: ship.beam_max == null ? Number(ship.beam) : Number(ship.beam_max),
+            beamText: ship.beam_text || '',
             draft: Number(ship.draft),
-            gt: Number(ship.gt),
-            dwt: Number(ship.dwt),
+            draftMax: ship.draft_max == null ? Number(ship.draft) : Number(ship.draft_max),
+            draftText: ship.draft_text || '',
+            gt: ship.gt_max == null ? Number(ship.gt) : Number(ship.gt_max),
+            gtMin: Number(ship.gt),
+            gtMax: ship.gt_max == null ? Number(ship.gt) : Number(ship.gt_max),
+            gtText: ship.gt_text || '',
+            dwt: ship.dwt_max == null ? Number(ship.dwt) : Number(ship.dwt_max),
+            dwtMin: Number(ship.dwt),
+            dwtMax: ship.dwt_max == null ? Number(ship.dwt) : Number(ship.dwt_max),
+            dwtText: ship.dwt_text || '',
             date: ship.schedule_date || ship.stay_start,
             stayStart: ship.stay_start,
             stayEnd: ship.stay_end
@@ -79,25 +165,67 @@ document.getElementById('dockingForm').addEventListener('submit', async function
     event.preventDefault();
 
     const shipName = document.getElementById('shipName').value;
-    const loa = parseFloat(document.getElementById('loa').value);
-    const b = parseFloat(document.getElementById('b').value);
-    const t = parseFloat(document.getElementById('t').value);
-    const gt = parseFloat(document.getElementById('gt').value);
-    const dwt = parseFloat(document.getElementById('dwt').value);
+    const loaRange = parseLoaRange();
+    const loaText = document.getElementById('loa').value.trim();
+    const loaMin = loaRange.min;
+    const loa = loaRange.max;
+    const beamRange = parseRangeInput('b');
+    const beamText = document.getElementById('b').value.trim();
+    const b = beamRange.max;
+    const draftRange = parseDraftRange();
+    const draftText = document.getElementById('t').value.trim();
+    const t = Number.isFinite(draftRange.min) ? draftRange.min : 0;
+    const draftMax = Number.isFinite(draftRange.max) ? draftRange.max : t;
+    const gtRange = parseRangeInput('gt');
+    const gtText = document.getElementById('gt').value.trim();
+    const gt = gtRange.max;
+    const dwtRange = parseRangeInput('dwt');
+    const dwtText = document.getElementById('dwt').value.trim();
+    const dwt = dwtRange.max;
     const date = document.getElementById('date').value;
-    const stayStart = new Date(document.getElementById('stayStart').value);
-    const stayEnd = new Date(document.getElementById('stayEnd').value);
+    const stayStartValue = document.getElementById('stayStart').value;
+    const stayEndValue = document.getElementById('stayEnd').value;
+    const stayStart = new Date(`${stayStartValue}T00:00:00`);
+    const stayEnd = new Date(`${stayEndValue}T00:00:00`);
     const editingIndex = document.getElementById('editingShipIndex').value;
+
+    const invalidFields = [
+        ['Ship LOA', Number.isFinite(loaMin) && loaMin > 0 && Number.isFinite(loa) && loa >= loaMin ? loa : NaN],
+        ['Ship Beam', Number.isFinite(beamRange.min) && beamRange.min > 0 && Number.isFinite(b) && b >= beamRange.min ? b : NaN],
+        ['Ship GT', Number.isFinite(gtRange.min) && gtRange.min > 0 && Number.isFinite(gt) && gt >= gtRange.min ? gt : NaN],
+        ['Ship DWT', Number.isFinite(dwtRange.min) && dwtRange.min > 0 && Number.isFinite(dwt) && dwt >= dwtRange.min ? dwt : NaN]
+    ].filter(([, value]) => !Number.isFinite(value)).map(([label]) => label);
+
+    if (!draftText) invalidFields.push('Ship Draft');
+
+    if (invalidFields.length > 0) {
+        document.getElementById('result').textContent =
+            `Periksa kolom berikut: ${invalidFields.join(', ')}.`;
+        return;
+    }
 
     if (canDock(loa, b, stayStart, stayEnd)) {
         const ships = getShipsFromStorage();
         const shipDetails = {
             shipName: shipName,
             loa: loa,
+            loaMax: loa,
+            loaText: loaText,
             beam: b,
+            beamMin: beamRange.min,
+            beamMax: b,
+            beamText: beamText,
             draft: t,
+            draftMax: draftMax,
+            draftText: draftText,
             gt: gt,
+            gtMin: gtRange.min,
+            gtMax: gt,
+            gtText: gtText,
             dwt: dwt,
+            dwtMin: dwtRange.min,
+            dwtMax: dwt,
+            dwtText: dwtText,
             date: date,
             stayStart: stayStart.toISOString(),
             stayEnd: stayEnd.toISOString()
@@ -116,15 +244,29 @@ document.getElementById('dockingForm').addEventListener('submit', async function
                 dock_id: DOCK_ID,
                 ship_name: shipName,
                 loa: loa,
+                loa_min: loaMin,
+                loa_max: loa,
+                loa_text: loaText,
                 beam: b,
+                beam_min: beamRange.min,
+                beam_max: b,
+                beam_text: beamText,
                 draft: t,
+                draft_max: draftMax,
+                draft_text: draftText,
                 gt: gt,
+                gt_min: gtRange.min,
+                gt_max: gt,
+                gt_text: gtText,
                 dwt: dwt,
-                stay_start: stayStart.toISOString(),
-                stay_end: stayEnd.toISOString(),
+                dwt_min: dwtRange.min,
+                dwt_max: dwt,
+                dwt_text: dwtText,
+                stay_start: `${stayStartValue} 00:00:00`,
+                stay_end: `${stayEndValue} 00:00:00`,
                 schedule_date: date
             })
-        }, { success: true, message: 'Saved locally' });
+        }, { success: false, message: 'Database request failed' });
 
         saveShipsToStorage(ships);
         displayResult(ships);
@@ -134,10 +276,10 @@ document.getElementById('dockingForm').addEventListener('submit', async function
         populateCalendarSchedule();
 
         if (saveResponse && saveResponse.success === false) {
-            document.getElementById('result').innerHTML = `
-                <h3>Saved Locally</h3>
-                <p>Database is unavailable, but data was kept in browser storage.</p>
-            `;
+            const result = document.getElementById('result');
+            result.innerHTML = '<h3>Saved Locally Only</h3><p></p>';
+            result.querySelector('p').textContent =
+                `Database save failed: ${saveResponse.message}. Data is only in this browser.`;
         }
     } else {
         document.getElementById('result').innerHTML = `
@@ -224,11 +366,11 @@ function displayShipList(ships) {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${ship.shipName}</td>
-            <td>${ship.loa}</td>
-            <td>${ship.beam}</td>
-            <td>${ship.draft}</td>
-            <td>${ship.gt}</td>
-            <td>${ship.dwt}</td>
+            <td>${formatLoa(ship)}</td>
+            <td>${formatRange(ship, 'beamMin', 'beamMax', 'beamText', 'beam')}</td>
+            <td>${formatDraft(ship)}</td>
+            <td>${formatRange(ship, 'gtMin', 'gtMax', 'gtText', 'gt')}</td>
+            <td>${formatRange(ship, 'dwtMin', 'dwtMax', 'dwtText', 'dwt')}</td>
             <td>${formatDate(stayStartDate)} to ${formatDate(stayEndDate)}</td>
             <td>${daysOfStay} days</td>
             <td>${formatDate(new Date(ship.date))}</td>
@@ -254,11 +396,19 @@ function editShip(index) {
 
     // Populate the form fields with the ship's details
     document.getElementById('shipName').value = ship.shipName;
-    document.getElementById('loa').value = ship.loa;
-    document.getElementById('b').value = ship.beam;
-    document.getElementById('t').value = ship.draft;
-    document.getElementById('gt').value = ship.gt;
-    document.getElementById('dwt').value = ship.dwt;
+    document.getElementById('loa').value = ship.loaText || (
+        ship.loaMax != null && Number(ship.loaMax) !== Number(ship.loa)
+            ? `${ship.loa}–${ship.loaMax}`
+            : ship.loa
+    );
+    document.getElementById('b').value = getRangeText(ship, 'beamMin', 'beamMax', 'beamText', 'beam');
+    document.getElementById('t').value = ship.draftText || (
+        ship.draftMax != null && Number(ship.draftMax) !== Number(ship.draft)
+            ? `${ship.draft}–${ship.draftMax}`
+            : ship.draft
+    );
+    document.getElementById('gt').value = getRangeText(ship, 'gtMin', 'gtMax', 'gtText', 'gt');
+    document.getElementById('dwt').value = getRangeText(ship, 'dwtMin', 'dwtMax', 'dwtText', 'dwt');
     document.getElementById('date').value = ship.date;
     document.getElementById('stayStart').value = formatDate(new Date(ship.stayStart));
     document.getElementById('stayEnd').value = formatDate(new Date(ship.stayEnd));

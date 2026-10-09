@@ -1,7 +1,156 @@
 const dockLength = 225; // meters
 const dockWidth = 25; // meters
+const DOCK_ID = 1;
+const LOCAL_SHIPS_KEY = 'ships';
+const API_BASE = './api';
 let totalLengthUsed = 0; // Track total length used by ships
 let currentMonth = new Date(); // Track the currently displayed month
+
+async function apiRequest(endpoint, options = {}, fallbackValue = null) {
+    try {
+        const response = await fetch(`${API_BASE}${endpoint}`, {
+            headers: { 'Content-Type': 'application/json', ...(options.headers || {}) },
+            ...options
+        });
+        const text = await response.text();
+        const payload = text ? JSON.parse(text) : {};
+
+        if (!response.ok) {
+            throw new Error(payload.message || 'Request failed');
+        }
+
+        return payload;
+    } catch (error) {
+        if (fallbackValue !== null) {
+            return { ...fallbackValue, message: error.message };
+        }
+        return { success: false, message: error.message };
+    }
+}
+
+function getShipsFromStorage() {
+    return JSON.parse(localStorage.getItem(LOCAL_SHIPS_KEY)) || [];
+}
+
+function saveShipsToStorage(ships) {
+    localStorage.setItem(LOCAL_SHIPS_KEY, JSON.stringify(ships));
+    return ships;
+}
+
+function parseRangeInput(id) {
+    const value = document.getElementById(id).value.trim();
+    const match = value.match(/^(\d+(?:[.,]\d+)?)\s*(?:[-–—]\s*(\d+(?:[.,]\d+)?))?$/);
+    if (!match) return { min: NaN, max: NaN };
+
+    const min = Number(match[1].replace(',', '.'));
+    const max = match[2] ? Number(match[2].replace(',', '.')) : min;
+    return { min, max };
+}
+
+function parseLoaRange() {
+    return parseRangeInput('loa');
+}
+
+function parseDraftRange() {
+    return parseRangeInput('t');
+}
+
+function getRangeText(ship, minKey, maxKey, textKey, valueKey = minKey) {
+    if (ship[textKey]) return ship[textKey];
+    const min = ship[minKey] ?? ship[valueKey];
+    const max = ship[maxKey] ?? ship[valueKey];
+    return max != null && Number(max) !== Number(min) ? `${min}–${max}` : min;
+}
+
+function formatRange(ship, minKey, maxKey, textKey, valueKey = minKey) {
+    return String(getRangeText(ship, minKey, maxKey, textKey, valueKey)).replace(/[&<>"']/g, character => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+    })[character]);
+}
+
+function formatDraft(ship) {
+    if (ship.draftText) {
+        return ship.draftText.replace(/[&<>"']/g, character => ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;'
+        })[character]);
+    }
+    return ship.draftMax != null && Number(ship.draftMax) !== Number(ship.draft)
+        ? `${ship.draft}–${ship.draftMax}`
+        : ship.draft;
+}
+
+function formatLoa(ship) {
+    if (ship.loaText) {
+        return ship.loaText.replace(/[&<>"']/g, character => ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;'
+        })[character]);
+    }
+    return ship.loaMax != null && Number(ship.loaMax) !== Number(ship.loa)
+        ? `${ship.loa}–${ship.loaMax}`
+        : ship.loa;
+}
+
+document.querySelectorAll('input[type="date"]').forEach(input => {
+    input.addEventListener('click', function () {
+        if (typeof this.showPicker === 'function') {
+            this.showPicker();
+        }
+    });
+});
+
+async function syncShipsFromServer() {
+    const response = await apiRequest('/ships.php', { method: 'GET' }, { success: false, data: [] });
+    if (!response.success || !Array.isArray(response.data)) {
+        return getShipsFromStorage();
+    }
+
+    const dockShips = response.data
+        .filter(ship => Number(ship.dock_id) === DOCK_ID)
+        .map(ship => ({
+            id: Number(ship.id),
+            shipName: ship.ship_name,
+            loa: ship.loa_max == null ? Number(ship.loa) : Number(ship.loa_max),
+            loaMax: ship.loa_max == null ? Number(ship.loa) : Number(ship.loa_max),
+            loaText: ship.loa_text || '',
+            beam: ship.beam_max == null ? Number(ship.beam) : Number(ship.beam_max),
+            beamMin: Number(ship.beam),
+            beamMax: ship.beam_max == null ? Number(ship.beam) : Number(ship.beam_max),
+            beamText: ship.beam_text || '',
+            draft: Number(ship.draft),
+            draftMax: ship.draft_max == null ? Number(ship.draft) : Number(ship.draft_max),
+            draftText: ship.draft_text || '',
+            gt: ship.gt_max == null ? Number(ship.gt) : Number(ship.gt_max),
+            gtMin: Number(ship.gt),
+            gtMax: ship.gt_max == null ? Number(ship.gt) : Number(ship.gt_max),
+            gtText: ship.gt_text || '',
+            dwt: ship.dwt_max == null ? Number(ship.dwt) : Number(ship.dwt_max),
+            dwtMin: Number(ship.dwt),
+            dwtMax: ship.dwt_max == null ? Number(ship.dwt) : Number(ship.dwt_max),
+            dwtText: ship.dwt_text || '',
+            date: ship.stay_start.slice(0, 10),
+            stayStart: ship.stay_start.replace(' ', 'T'),
+            stayEnd: ship.stay_end.replace(' ', 'T')
+        }));
+
+    if (dockShips.length > 0) {
+        saveShipsToStorage(dockShips);
+        return dockShips;
+    }
+
+    return getShipsFromStorage();
+}
 
 document.getElementById('dockingSpaceChecker').addEventListener('click', function(event) {
     event.preventDefault(); // Prevent default link behavior
@@ -18,33 +167,75 @@ document.querySelectorAll('#dockDropdown a').forEach(link => {
     });
 });
 
-document.getElementById('dockingForm').addEventListener('submit', function(event) {
+document.getElementById('dockingForm').addEventListener('submit', async function(event) {
     event.preventDefault();
 
     const shipName = document.getElementById('shipName').value;
-    const loa = parseFloat(document.getElementById('loa').value);
-    const b = parseFloat(document.getElementById('b').value);
-    const t = parseFloat(document.getElementById('t').value);
-    const gt = parseFloat(document.getElementById('gt').value);
-    const dwt = parseFloat(document.getElementById('dwt').value);
+    const loaRange = parseLoaRange();
+    const loaText = document.getElementById('loa').value.trim();
+    const loaMin = loaRange.min;
+    const loa = loaRange.max;
+    const beamRange = parseRangeInput('b');
+    const beamText = document.getElementById('b').value.trim();
+    const b = beamRange.max;
+    const draftRange = parseDraftRange();
+    const draftText = document.getElementById('t').value.trim();
+    const t = Number.isFinite(draftRange.min) ? draftRange.min : 0;
+    const draftMax = Number.isFinite(draftRange.max) ? draftRange.max : t;
+    const gtRange = parseRangeInput('gt');
+    const gtText = document.getElementById('gt').value.trim();
+    const gt = gtRange.max;
+    const dwtRange = parseRangeInput('dwt');
+    const dwtText = document.getElementById('dwt').value.trim();
+    const dwt = dwtRange.max;
     const date = document.getElementById('date').value;
-    const stayStart = new Date(document.getElementById('stayStart').value);
-    const stayEnd = new Date(document.getElementById('stayEnd').value);
+    const stayStartValue = document.getElementById('stayStart').value;
+    const stayEndValue = document.getElementById('stayEnd').value;
+    const stayStart = new Date(`${stayStartValue}T00:00:00`);
+    const stayEnd = new Date(`${stayEndValue}T00:00:00`);
     const editingIndex = document.getElementById('editingShipIndex').value; // Get the editing index
+
+    const invalidFields = [
+        ['Ship LOA', Number.isFinite(loaMin) && loaMin > 0 && Number.isFinite(loa) && loa >= loaMin ? loa : NaN],
+        ['Ship Beam', Number.isFinite(beamRange.min) && beamRange.min > 0 && Number.isFinite(b) && b >= beamRange.min ? b : NaN],
+        ['Ship GT', Number.isFinite(gtRange.min) && gtRange.min > 0 && Number.isFinite(gt) && gt >= gtRange.min ? gt : NaN],
+        ['Ship DWT', Number.isFinite(dwtRange.min) && dwtRange.min > 0 && Number.isFinite(dwt) && dwt >= dwtRange.min ? dwt : NaN]
+    ].filter(([, value]) => !Number.isFinite(value)).map(([label]) => label);
+
+    if (!draftText) invalidFields.push('Ship Draft');
+
+    if (invalidFields.length > 0) {
+        document.getElementById('result').textContent =
+            `Periksa kolom berikut: ${invalidFields.join(', ')}.`;
+        return;
+    }
 
     // Check if the ship fits in the docking space
     if (canDock(loa, b, stayStart, stayEnd)) {
-        const ships = JSON.parse(localStorage.getItem('ships')) || [];
+        const ships = getShipsFromStorage();
 
         if (editingIndex !== "") {
             // Update existing ship
             ships[editingIndex] = {
                 shipName: shipName,
                 loa: loa,
+                loaMax: loa,
+                loaText: loaText,
                 beam: b,
+                beamMin: beamRange.min,
+                beamMax: b,
+                beamText: beamText,
                 draft: t,
+                draftMax: draftMax,
+                draftText: draftText,
                 gt: gt,
+                gtMin: gtRange.min,
+                gtMax: gt,
+                gtText: gtText,
                 dwt: dwt,
+                dwtMin: dwtRange.min,
+                dwtMax: dwt,
+                dwtText: dwtText,
                 date: date,
                 stayStart: stayStart.toISOString(),
                 stayEnd: stayEnd.toISOString()
@@ -55,17 +246,60 @@ document.getElementById('dockingForm').addEventListener('submit', function(event
             ships.push({
                 shipName: shipName,
                 loa: loa,
+                loaMax: loa,
+                loaText: loaText,
                 beam: b,
+                beamMin: beamRange.min,
+                beamMax: b,
+                beamText: beamText,
                 draft: t,
+                draftMax: draftMax,
                 gt: gt,
+                gtMin: gtRange.min,
+                gtMax: gt,
+                gtText: gtText,
                 dwt: dwt,
+                dwtMin: dwtRange.min,
+                dwtMax: dwt,
+                dwtText: dwtText,
                 date: date,
                 stayStart: stayStart.toISOString(),
                 stayEnd: stayEnd.toISOString()
             });
         }
 
-        localStorage.setItem('ships', JSON.stringify(ships)); // Save to local storage
+        const saveResponse = editingIndex === ""
+            ? await apiRequest('/ships.php', {
+                method: 'POST',
+                body: JSON.stringify({
+                    dock_id: DOCK_ID,
+                    ship_name: shipName,
+                    loa,
+                    loa_min: loaMin,
+                    loa_max: loa,
+                    loa_text: loaText,
+                    beam: b,
+                    beam_min: beamRange.min,
+                    beam_max: b,
+                    beam_text: beamText,
+                    draft: t,
+                    draft_max: draftMax,
+                    draft_text: draftText,
+                    gt,
+                    gt_min: gtRange.min,
+                    gt_max: gt,
+                    gt_text: gtText,
+                    dwt,
+                    dwt_min: dwtRange.min,
+                    dwt_max: dwt,
+                    dwt_text: dwtText,
+                    stay_start: `${stayStartValue} 00:00:00`,
+                    stay_end: `${stayEndValue} 00:00:00`
+                })
+            }, { success: false, message: 'Database request failed' })
+            : { success: false, message: 'Editing an existing ship only updates browser storage.' };
+
+        saveShipsToStorage(ships);
 
         // Display the result and ship list
         displayResult(ships);
@@ -73,6 +307,13 @@ document.getElementById('dockingForm').addEventListener('submit', function(event
         drawGanttChart(ships); // Draw the Gantt chart
         drawRemainingSpaceChart(ships); // Draw the remaining space chart
         populateCalendarSchedule(); // Populate the calendar schedule
+
+        if (saveResponse.success === false) {
+            const result = document.getElementById('result');
+            result.innerHTML = '<h3>Saved Locally Only</h3><p></p>';
+            result.querySelector('p').textContent =
+                `Database save failed: ${saveResponse.message}. Data is only in this browser.`;
+        }
     } else {
         // Display a message if the ship does not fit
         document.getElementById('result').innerHTML = `
@@ -159,11 +400,11 @@ function displayShipList(ships) {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${ship.shipName}</td>
-            <td>${ship.loa}</td>
-            <td>${ship.beam}</td>
-            <td>${ship.draft}</td>
-            <td>${ship.gt}</td>
-            <td>${ship.dwt}</td>
+            <td>${formatLoa(ship)}</td>
+            <td>${formatRange(ship, 'beamMin', 'beamMax', 'beamText', 'beam')}</td>
+            <td>${formatDraft(ship)}</td>
+            <td>${formatRange(ship, 'gtMin', 'gtMax', 'gtText', 'gt')}</td>
+            <td>${formatRange(ship, 'dwtMin', 'dwtMax', 'dwtText', 'dwt')}</td>
             <td>${formatDate(stayStartDate)} to ${formatDate(stayEndDate)}</td>
             <td>${daysOfStay} days</td>
             <td>${formatDate(new Date(ship.date))}</td>
@@ -189,11 +430,19 @@ function editShip(index) {
 
     // Populate the form fields with the ship's details
     document.getElementById('shipName').value = ship.shipName;
-    document.getElementById('loa').value = ship.loa;
-    document.getElementById('b').value = ship.beam;
-    document.getElementById('t').value = ship.draft;
-    document.getElementById('gt').value = ship.gt;
-    document.getElementById('dwt').value = ship.dwt;
+    document.getElementById('loa').value = ship.loaText || (
+        ship.loaMax != null && Number(ship.loaMax) !== Number(ship.loa)
+            ? `${ship.loa}–${ship.loaMax}`
+            : ship.loa
+    );
+    document.getElementById('b').value = getRangeText(ship, 'beamMin', 'beamMax', 'beamText', 'beam');
+    document.getElementById('t').value = ship.draftText || (
+        ship.draftMax != null && Number(ship.draftMax) !== Number(ship.draft)
+            ? `${ship.draft}–${ship.draftMax}`
+            : ship.draft
+    );
+    document.getElementById('gt').value = getRangeText(ship, 'gtMin', 'gtMax', 'gtText', 'gt');
+    document.getElementById('dwt').value = getRangeText(ship, 'dwtMin', 'dwtMax', 'dwtText', 'dwt');
     document.getElementById('date').value = ship.date;
     document.getElementById('stayStart').value = formatDate(new Date(ship.stayStart));
     document.getElementById('stayEnd').value = formatDate(new Date(ship.stayEnd));
@@ -439,8 +688,8 @@ document.getElementById('deleteAllButton').addEventListener('click', function() 
 });
 
 // Call populateCalendarSchedule on page load
-window.onload = function() {
-    const ships = JSON.parse(localStorage.getItem('ships')) || [];
+window.addEventListener('DOMContentLoaded', async function() {
+    const ships = await syncShipsFromServer();
     ships.forEach(ship => {
         totalLengthUsed += ship.loa; // Update total length used
     });
@@ -449,5 +698,4 @@ window.onload = function() {
     drawGanttChart(ships); // Draw the initial Gantt chart
     drawRemainingSpaceChart(ships); // Draw the initial remaining space chart
     populateCalendarSchedule(); // Populate the calendar schedule
-};
-
+});
