@@ -24,7 +24,8 @@ CREATE TABLE IF NOT EXISTS docks (
 INSERT INTO docks (id, code, name) VALUES
     (1, 'BLUGA', 'Dock Bluga'),
     (2, 'ORCA', 'Dock Orca'),
-    (3, 'SURABAYA', 'Dock Surabaya')
+    (3, 'SURABAYA', 'Dock Surabaya'),
+    (4, 'LAMONGAN', 'Dock Lamongan')
 ON DUPLICATE KEY UPDATE
     code = VALUES(code),
     name = VALUES(name);
@@ -50,6 +51,7 @@ CREATE TABLE IF NOT EXISTS ships (
     dwt_text TEXT NULL,
     stay_start DATETIME NOT NULL,
     stay_end DATETIME NOT NULL,
+    schedule_date DATE NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     KEY idx_ships_dock_stay_start (dock_id, stay_start),
@@ -58,6 +60,22 @@ CREATE TABLE IF NOT EXISTS ships (
         ON UPDATE CASCADE
         ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+SET @schedule_date_exists = (
+    SELECT COUNT(*)
+    FROM information_schema.columns
+    WHERE table_schema = DATABASE()
+      AND table_name = 'ships'
+      AND column_name = 'schedule_date'
+);
+SET @schedule_date_migration = IF(
+    @schedule_date_exists = 0,
+    'ALTER TABLE ships ADD COLUMN schedule_date DATE NULL AFTER stay_end',
+    'SELECT 1'
+);
+PREPARE schedule_date_statement FROM @schedule_date_migration;
+EXECUTE schedule_date_statement;
+DEALLOCATE PREPARE schedule_date_statement;
 
 SET @beam_max_exists = (
     SELECT COUNT(*)

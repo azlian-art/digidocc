@@ -76,6 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $dwtMin = is_numeric($dwtMinValue) ? (float)$dwtMinValue : 0;
     $dwtMax = is_numeric($dwtMaxValue) ? (float)$dwtMaxValue : 0;
     $dwtText = is_string($dwtTextInput) ? trim($dwtTextInput) : '';
+    $scheduleDate = trim((string)($data['schedule_date'] ?? ''));
     $stayStart = trim((string)($data['stay_start'] ?? ''));
     $stayEnd = trim((string)($data['stay_end'] ?? ''));
 
@@ -106,8 +107,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
         $stmt = $pdo->prepare(
-            'INSERT INTO ships (dock_id, ship_name, loa, loa_max, loa_text, beam, beam_max, beam_text, draft, draft_max, draft_text, gt, gt_max, gt_text, dwt, dwt_max, dwt_text, stay_start, stay_end)
-             VALUES (:dock_id, :ship_name, :loa, :loa_max, :loa_text, :beam, :beam_max, :beam_text, :draft, :draft_max, :draft_text, :gt, :gt_max, :gt_text, :dwt, :dwt_max, :dwt_text, :stay_start, :stay_end)'
+            'INSERT INTO ships (dock_id, ship_name, loa, loa_max, loa_text, beam, beam_max, beam_text, draft, draft_max, draft_text, gt, gt_max, gt_text, dwt, dwt_max, dwt_text, stay_start, stay_end, schedule_date)
+             VALUES (:dock_id, :ship_name, :loa, :loa_max, :loa_text, :beam, :beam_max, :beam_text, :draft, :draft_max, :draft_text, :gt, :gt_max, :gt_text, :dwt, :dwt_max, :dwt_text, :stay_start, :stay_end, :schedule_date)'
         );
 
         $stmt->execute([
@@ -130,6 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ':dwt_text' => $dwtText,
             ':stay_start' => $stayStart,
             ':stay_end' => $stayEnd,
+            ':schedule_date' => $scheduleDate !== '' ? $scheduleDate : null,
         ]);
 
         echo json_encode([
