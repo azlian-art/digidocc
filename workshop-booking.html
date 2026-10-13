@@ -1371,144 +1371,63 @@
 
     const bookingForm = document.getElementById("bookingForm");
 
-    bookingForm.addEventListener("submit", function(event) {
+    bookingForm.addEventListener("submit", async function(event) {
 
         event.preventDefault();
 
-        // =========================
-        // GENERATE REQUEST ID
-        // =========================
+        const submitButton = bookingForm.querySelector('button[type="submit"]');
+        submitButton.disabled = true;
 
-        const requestId =
-            "REQ-" +
-            Math.floor(100000 + Math.random() * 900000);
+        const payload = {
+            company_name: document.getElementById("companyName").value,
+            contact_person: document.getElementById("contactPerson").value,
+            email: document.getElementById("email").value,
+            phone: document.getElementById("phone").value,
+            country_region: document.getElementById("country").value,
+            company_website: document.getElementById("companyWebsite").value,
+            vessel_name: document.getElementById("vesselName").value,
+            vessel_type: document.getElementById("vesselType").value,
+            imo_number: document.getElementById("imo").value,
+            flag_country: document.getElementById("flag").value,
+            dwt: document.getElementById("dwt").value,
+            gross_tonnage: document.getElementById("gt").value,
+            loa: document.getElementById("loa").value,
+            beam: document.getElementById("beam").value,
+            draft: document.getElementById("draft").value,
+            service_name: document.getElementById("serviceName").value,
+            facility: document.getElementById("facility").value,
+            planned_start_date: document.getElementById("startDate").value,
+            duration_days: document.getElementById("duration").value,
+            scope_of_work: document.getElementById("scope").value,
+            capabilities: document.getElementById("capabilities").value,
+            notes: document.getElementById("notes").value
+        };
 
+        try {
+            const response = await fetch("api/workshop-bookings.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+            const result = await response.json();
 
-        // =========================
-        // AMBIL DATA FORM
-        // =========================
+            if (!response.ok || !result.success) {
+                throw new Error(result.message || "Booking request could not be saved.");
+            }
 
-        const companyName =
-            document.getElementById("companyName").value;
-
-        const contactPerson =
-            document.getElementById("contactPerson").value;
-
-        const email =
-            document.getElementById("email").value;
-
-        const phone =
-            document.getElementById("phone").value;
-
-        const vesselName =
-            document.getElementById("vesselName").value;
-
-        const vesselType =
-            document.getElementById("vesselType").value;
-
-        const serviceName =
-            document.getElementById("serviceName").value;
-
-        const facility =
-            document.getElementById("facility").value;
-
-        const startDate =
-            document.getElementById("startDate").value;
-
-        const duration =
-            document.getElementById("duration").value;
-
-        const scope =
-            document.getElementById("scope").value;
-
-
-        // =========================
-        // SIMPAN DATA KE LOCAL STORAGE
-        // =========================
-
-        localStorage.setItem(
-            "bookingRequestId",
-            requestId
-        );
-
-        localStorage.setItem(
-            "bookingStatus",
-            "Under Review"
-        );
-
-        localStorage.setItem(
-            "companyName",
-            companyName
-        );
-
-        localStorage.setItem(
-            "contactPerson",
-            contactPerson
-        );
-
-        localStorage.setItem(
-            "email",
-            email
-        );
-
-        localStorage.setItem(
-            "phone",
-            phone
-        );
-
-        localStorage.setItem(
-            "vesselName",
-            vesselName
-        );
-
-        localStorage.setItem(
-            "vesselType",
-            vesselType
-        );
-
-        localStorage.setItem(
-            "serviceName",
-            serviceName
-        );
-
-        localStorage.setItem(
-            "facility",
-            facility
-        );
-
-        localStorage.setItem(
-            "startDate",
-            startDate
-        );
-
-        localStorage.setItem(
-            "duration",
-            duration
-        );
-
-        localStorage.setItem(
-            "scope",
-            scope
-        );
-
-
-        // =========================
-        // NOTIFICATION
-        // =========================
-
-        alert(
-            "Booking request submitted successfully!\n\n" +
-            "Request ID: " + requestId +
-            "\nStatus: Under Review"
-        );
-
-
-        // =========================
-        // PINDAH KE HALAMAN STATUS
-        // =========================
-
-        window.location.href =
-            "booking-status.html";
+            localStorage.setItem("bookingRequestId", result.request_id);
+            alert(
+                "Booking request submitted successfully!\n\n" +
+                "Request ID: " + result.request_id +
+                "\nStatus: " + result.status
+            );
+            window.location.href = "booking-status.html";
+        } catch (error) {
+            alert(error.message || "Unable to submit the booking request. Please try again.");
+            submitButton.disabled = false;
+        }
 
     });
 

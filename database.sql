@@ -247,3 +247,37 @@ CREATE TABLE IF NOT EXISTS vessel_sales (
     PRIMARY KEY (id),
     KEY idx_vessel_sales_created_at (created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS workshop_bookings (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    request_id VARCHAR(40) NOT NULL,
+    status ENUM('Under Review', 'Approved', 'Rejected') NOT NULL DEFAULT 'Under Review',
+    company_name VARCHAR(150) NOT NULL,
+    contact_person VARCHAR(150) NOT NULL,
+    email VARCHAR(254) NOT NULL,
+    phone VARCHAR(30) NOT NULL,
+    country_region VARCHAR(100) NULL,
+    company_website VARCHAR(255) NULL,
+    vessel_name VARCHAR(150) NOT NULL,
+    vessel_type VARCHAR(80) NOT NULL,
+    imo_number VARCHAR(20) NULL,
+    flag_country VARCHAR(100) NULL,
+    dwt DECIMAL(12,2) UNSIGNED NULL,
+    gross_tonnage DECIMAL(12,2) UNSIGNED NULL,
+    loa DECIMAL(10,2) UNSIGNED NOT NULL,
+    beam DECIMAL(10,2) UNSIGNED NOT NULL,
+    draft DECIMAL(10,2) UNSIGNED NOT NULL,
+    service_name VARCHAR(100) NOT NULL,
+    facility VARCHAR(100) NULL,
+    planned_start_date DATE NOT NULL,
+    duration_days INT UNSIGNED NOT NULL,
+    scope_of_work TEXT NOT NULL,
+    capabilities TEXT NULL,
+    notes TEXT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    UNIQUE KEY uq_workshop_bookings_request_id (request_id),
+    KEY idx_workshop_bookings_status_created_at (status, created_at),
+    KEY idx_workshop_bookings_email (email)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

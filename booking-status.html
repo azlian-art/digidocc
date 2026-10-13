@@ -1901,77 +1901,14 @@
 
 <script>
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
 
-
-    /* ==================================================
-       GET DATA FROM LOCAL STORAGE
-    ================================================== */
-
-
-    const requestId =
-        localStorage.getItem("bookingRequestId");
-
-
-    const bookingStatus =
-        localStorage.getItem("bookingStatus")
-        || "Under Review";
-
-
-    const companyName =
-        localStorage.getItem("companyName");
-
-
-    const contactPerson =
-        localStorage.getItem("contactPerson");
-
-
-    const email =
-        localStorage.getItem("email");
-
-
-    const phone =
-        localStorage.getItem("phone");
-
-
-    const vesselName =
-        localStorage.getItem("vesselName");
-
-
-    const vesselType =
-        localStorage.getItem("vesselType");
-
-
-    const serviceName =
-        localStorage.getItem("serviceName");
-
-
-    const facility =
-        localStorage.getItem("facility");
-
-
-    const startDate =
-        localStorage.getItem("startDate");
-
-
-    const duration =
-        localStorage.getItem("duration");
-
-
-    const scope =
-        localStorage.getItem("scope");
-
-
-
-    /* ==================================================
-       CHECK REQUEST
-    ================================================== */
-
+    const requestId = localStorage.getItem("bookingRequestId");
+    const requestCard = document.getElementById("requestCard");
 
     if (!requestId) {
 
-
-        document.getElementById("requestCard").innerHTML = `
+        requestCard.innerHTML = `
 
             <div class="empty-state">
 
@@ -2012,179 +1949,82 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         return;
-
     }
 
-
-
-    /* ==================================================
-       REQUEST ID
-    ================================================== */
-
-
-    document.getElementById("requestId").textContent =
-        requestId;
-
-
-
-    /* ==================================================
-       STATUS
-    ================================================== */
-
-
-    document.getElementById("statusText").textContent =
-        bookingStatus;
-
-
-
-    /* ==================================================
-       STATUS TITLE
-    ================================================== */
-
-
-    if (bookingStatus === "Approved") {
-
-        document.getElementById("statusTitle").textContent =
-            "Your booking request has been approved";
-
-
-        document.getElementById("statusDescription").textContent =
-            "Your workshop booking request has been approved. Please follow the instructions provided by the PT PAL team for the next stage.";
-
-    }
-
-
-    else if (bookingStatus === "Rejected") {
-
-        document.getElementById("statusTitle").textContent =
-            "Your booking request was not approved";
-
-
-        document.getElementById("statusDescription").textContent =
-            "Your booking request has not been approved. Please contact the relevant PT PAL team for further information.";
-
-    }
-
-
-    else {
-
-        document.getElementById("statusTitle").textContent =
-            "Your request is currently under review";
-
-
-        document.getElementById("statusDescription").textContent =
-            "Your booking request has been successfully submitted. The PT PAL team will review the project requirements, vessel dimensions, facility suitability, and planned schedule.";
-
-    }
-
-
-
-    /* ==================================================
-       DISPLAY BOOKING DATA
-    ================================================== */
-
-
-    document.getElementById("companyName").textContent =
-        companyName || "-";
-
-
-    document.getElementById("contactPerson").textContent =
-        contactPerson || "-";
-
-
-    document.getElementById("email").textContent =
-        email || "-";
-
-
-    document.getElementById("phone").textContent =
-        phone || "-";
-
-
-    document.getElementById("vesselName").textContent =
-        vesselName || "-";
-
-
-    document.getElementById("vesselType").textContent =
-        vesselType || "-";
-
-
-    document.getElementById("serviceName").textContent =
-        serviceName || "-";
-
-
-    document.getElementById("facility").textContent =
-        facility || "-";
-
-
-    document.getElementById("duration").textContent =
-        duration || "-";
-
-
-    document.getElementById("scope").textContent =
-        scope || "-";
-
-
-
-    /* ==================================================
-       FORMAT START DATE
-    ================================================== */
-
-
-    if (startDate) {
-
-
-        const date =
-            new Date(startDate);
-
-
-        if (!isNaN(date.getTime())) {
-
-
-            document.getElementById("startDate").textContent =
-
-                date.toLocaleDateString(
-                    "en-GB",
-                    {
-                        day: "2-digit",
-                        month: "long",
-                        year: "numeric"
-                    }
-                );
-
+    try {
+        const response = await fetch(
+            "api/workshop-bookings.php?request_id=" + encodeURIComponent(requestId)
+        );
+        const result = await response.json();
+        if (!response.ok || !result.success) {
+            throw new Error(result.message || "Unable to load booking request.");
         }
 
+        const booking = result.data;
+        const bookingStatus = booking.status;
+        document.getElementById("requestId").textContent = booking.request_id;
+        document.getElementById("statusText").textContent = bookingStatus;
 
-        else {
-
-            document.getElementById("startDate").textContent =
-                startDate;
-
+        if (bookingStatus === "Approved") {
+            document.getElementById("statusTitle").textContent =
+                "Your booking request has been approved";
+            document.getElementById("statusDescription").textContent =
+                "Your workshop booking request has been approved. Please follow the instructions provided by the PT PAL team for the next stage.";
+        } else if (bookingStatus === "Rejected") {
+            document.getElementById("statusTitle").textContent =
+                "Your booking request was not approved";
+            document.getElementById("statusDescription").textContent =
+                "Your booking request has not been approved. Please contact the relevant PT PAL team for further information.";
+        } else {
+            document.getElementById("statusTitle").textContent =
+                "Your request is currently under review";
+            document.getElementById("statusDescription").textContent =
+                "Your booking request has been successfully submitted. The PT PAL team will review the project requirements, vessel dimensions, facility suitability, and planned schedule.";
         }
 
-    }
+        document.getElementById("companyName").textContent = booking.company_name || "-";
+        document.getElementById("contactPerson").textContent = booking.contact_person || "-";
+        document.getElementById("email").textContent = booking.email || "-";
+        document.getElementById("phone").textContent = booking.phone || "-";
+        document.getElementById("vesselName").textContent = booking.vessel_name || "-";
+        document.getElementById("vesselType").textContent = booking.vessel_type || "-";
+        document.getElementById("serviceName").textContent = booking.service_name || "-";
+        document.getElementById("facility").textContent = booking.facility || "-";
+        document.getElementById("duration").textContent = booking.duration_days || "-";
+        document.getElementById("scope").textContent = booking.scope_of_work || "-";
 
+        const startDate = new Date(booking.planned_start_date);
+        document.getElementById("startDate").textContent = isNaN(startDate.getTime())
+            ? booking.planned_start_date
+            : startDate.toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "long",
+                year: "numeric"
+            });
 
-
-    /* ==================================================
-       SUBMITTED DATE
-    ================================================== */
-
-
-    const today =
-        new Date();
-
-
-    document.getElementById("submittedDate").textContent =
-
-        today.toLocaleDateString(
-            "en-GB",
-            {
+        const submittedDate = new Date(booking.created_at);
+        document.getElementById("submittedDate").textContent =
+            submittedDate.toLocaleDateString("en-GB", {
                 day: "2-digit",
                 month: "short",
                 year: "numeric"
-            }
-        );
-
+            });
+    } catch (error) {
+        requestCard.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-icon">!</div>
+                <h3>Unable to Load Booking Request</h3>
+                <p id="bookingLoadError"></p>
+                <div class="button-group" style="justify-content:center;">
+                    <a href="workshop-booking.html" class="back-button">
+                        Create Booking Request →
+                    </a>
+                </div>
+            </div>
+        `;
+        requestCard.querySelector("#bookingLoadError").textContent =
+            error.message || "Please try again later.";
+    }
 
 });
 
