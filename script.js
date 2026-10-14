@@ -55,7 +55,7 @@ document.querySelectorAll('input[type="date"]').forEach(input => {
 });
 
 async function syncShipsFromServer() {
-    const response = await apiRequest('/ships.php', { method: 'GET' }, { success: true, data: [] });
+    const response = await window.syncDockShipsWithDatabase(DOCK_ID, LOCAL_SHIPS_KEY, apiRequest);
     if (!response || !response.success || !Array.isArray(response.data)) {
         return getShipsFromStorage();
     }
@@ -63,6 +63,7 @@ async function syncShipsFromServer() {
     const dockShips = response.data
         .filter(ship => Number(ship.dock_id) === DOCK_ID)
         .map(ship => ({
+            id: Number(ship.id),
             shipName: ship.ship_name,
             loa: Number(ship.loa),
             beam: Number(ship.beam),
@@ -74,12 +75,9 @@ async function syncShipsFromServer() {
             stayEnd: ship.stay_end
         }));
 
-    if (dockShips.length > 0) {
-        saveShipsToStorage(dockShips);
-        return dockShips;
-    }
-
-    return getShipsFromStorage();
+    const mergedShips = window.mergeDockShipCache(LOCAL_SHIPS_KEY, dockShips);
+    saveShipsToStorage(mergedShips);
+    return mergedShips;
 }
 
 window.addEventListener('DOMContentLoaded', async function () {
@@ -153,6 +151,9 @@ document.getElementById('dockingForm').addEventListener('submit', async function
         }, { success: false, message: 'Database request failed' });
 
         let ships = getShipsFromStorage();
+        if (saveResponse.success && saveResponse.ship_id) {
+            shipDetails.id = Number(saveResponse.ship_id);
+        }
         ships.push(shipDetails);
         saveShipsToStorage(ships);
 
@@ -501,18 +502,37 @@ document.getElementById('prevYearButton').addEventListener('click', function() {
 });
 
 // Function to delete a ship from the list
-function deleteShip(index) {
-    let ships = JSON.parse(localStorage.getItem('ships')) || [];
+async function deleteShip(index) {
+    let ships = getShipsFromStorage();
+    const ship = ships[index];
+    if (ship && ship.id) {
+        const response = await apiRequest('/ships.php', {
+            method: 'DELETE',
+            body: JSON.stringify({ id: ship.id })
+        }, { success: false, message: 'Database request failed' });
+        if (!response.success) {
+            alert(`Database delete failed: ${response.message}. The browser cache was kept.`);
+            return;
+        }
+    }
     ships.splice(index, 1); // Remove the ship at the specified index
-    localStorage.setItem('ships', JSON.stringify(ships)); // Update local storage
+    saveShipsToStorage(ships);
     displayShipList(ships); // Refresh the ship list
     drawRemainingSpaceChart(ships); // Redraw the remaining space chart
     populateCalendarSchedule(); // Refresh the calendar schedule
 }
 
 // Event listener for the delete all button
-document.getElementById('deleteAllButton').addEventListener('click', function() {
-    localStorage.removeItem('ships'); // Clear all ships from local storage
+document.getElementById('deleteAllButton').addEventListener('click', async function() {
+    const response = await apiRequest('/ships.php', {
+        method: 'DELETE',
+        body: JSON.stringify({ dock_id: DOCK_ID })
+    }, { success: false, message: 'Database request failed' });
+    if (!response.success) {
+        alert(`Database delete failed: ${response.message}. Browser data was kept.`);
+        return;
+    }
+    saveShipsToStorage([]);
     totalLengthUsed = 0; // Reset total length used
     displayShipList([]); // Clear the ship list display
     drawRemainingSpaceChart([]); // Clear the remaining space chart

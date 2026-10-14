@@ -16,6 +16,16 @@ function formatDate(date) {
     });
 }
 
+function escapeHtml(value) {
+    return String(value).replace(/[&<>"']/g, character => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[character]);
+}
+
 
 // =====================================================
 // 2. GET DATA FROM LOCAL STORAGE
@@ -46,7 +56,7 @@ function getStorageData(key) {
 // 3. RENDER TIMELINE
 // =====================================================
 
-function renderTimeline(timelineContainerId, localStorageKey) {
+async function renderTimeline(timelineContainerId, localStorageKey, dockId = null) {
 
     const timelineContainer =
         document.getElementById(timelineContainerId);
@@ -61,8 +71,37 @@ function renderTimeline(timelineContainerId, localStorageKey) {
     }
 
 
-    // Get ship data
-    const ships = getStorageData(localStorageKey);
+    let ships = getStorageData(localStorageKey);
+    if (dockId !== null) {
+        try {
+            const response = await fetch("./api/ships.php");
+            const payload = await response.json();
+            if (!response.ok || !payload.success || !Array.isArray(payload.data)) {
+                throw new Error(payload.message || "Could not load schedules from database.");
+            }
+            const databaseShips = payload.data
+                .filter(ship => Number(ship.dock_id) === dockId)
+                .map(ship => ({
+                    id: Number(ship.id),
+                    shipName: ship.ship_name,
+                    loa: Number(ship.loa),
+                    stayStart: ship.stay_start,
+                    stayEnd: ship.stay_end
+                }));
+            ships = window.mergeDockShipCache(localStorageKey, databaseShips);
+            localStorage.setItem(localStorageKey, JSON.stringify(ships));
+        } catch (error) {
+            console.error("Database schedule load failed; showing browser cache.", error);
+            let notice = timelineContainer.querySelector("[data-database-notice]");
+            if (!notice) {
+                notice = document.createElement("p");
+                notice.dataset.databaseNotice = "true";
+                notice.setAttribute("role", "status");
+                timelineContainer.before(notice);
+            }
+            notice.textContent = `Database unavailable; displaying saved browser schedules. ${error.message}`;
+        }
+    }
 
 
     // Clear previous content
@@ -179,7 +218,7 @@ function renderTimeline(timelineContainerId, localStorageKey) {
         // =================================================
 
         const shipName =
-            ship.shipName || "Unknown Vessel";
+            escapeHtml(ship.shipName || "Unknown Vessel");
 
         const loa =
             ship.loa
@@ -269,12 +308,14 @@ function renderTimeline(timelineContainerId, localStorageKey) {
 
 renderTimeline(
     "timelineContainerBluga",
-    "ships"
+    "ships",
+    1
 );
 
 renderTimeline(
     "timelineContainerSurabaya",
-    "ships_sby"
+    "ships_sby",
+    3
 );
 
 renderTimeline(

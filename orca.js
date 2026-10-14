@@ -105,12 +105,13 @@ document.querySelectorAll('input[type="date"]').forEach(input => {
 });
 
 async function syncShipsFromServer() {
-    const response = await apiRequest('/ships.php', { method: 'GET' }, { success: true, data: [] });
+    const response = await window.syncDockShipsWithDatabase(DOCK_ID, LOCAL_SHIPS_KEY, apiRequest);
     if (!response || !response.success || !Array.isArray(response.data)) return getShipsFromStorage();
 
     const dockShips = response.data
         .filter(ship => Number(ship.dock_id) === DOCK_ID)
         .map(ship => ({
+            id: Number(ship.id),
             shipName: ship.ship_name,
             loa: ship.loa_max == null ? Number(ship.loa) : Number(ship.loa_max),
             loaMax: ship.loa_max == null ? Number(ship.loa) : Number(ship.loa_max),
@@ -135,11 +136,9 @@ async function syncShipsFromServer() {
             stayEnd: ship.stay_end
         }));
 
-    if (dockShips.length > 0) {
-        saveShipsToStorage(dockShips);
-        return dockShips;
-    }
-    return getShipsFromStorage();
+    const mergedShips = window.mergeDockShipCache(LOCAL_SHIPS_KEY, dockShips);
+    saveShipsToStorage(mergedShips);
+    return mergedShips;
 }
 
 window.addEventListener('DOMContentLoaded', async function () {
@@ -206,7 +205,9 @@ document.getElementById('dockingForm').addEventListener('submit', async function
 
     if (canDock(loa, b, stayStart, stayEnd)) {
         const ships = getShipsFromStorage();
+        const existingShipId = editingIndex === "" ? 0 : Number(ships[editingIndex].id) || 0;
         const shipDetails = {
+            id: existingShipId || undefined,
             shipName: shipName,
             loa: loa,
             loaMax: loa,
@@ -239,8 +240,9 @@ document.getElementById('dockingForm').addEventListener('submit', async function
         }
 
         const saveResponse = await apiRequest('/ships.php', {
-            method: 'POST',
+            method: existingShipId ? 'PUT' : 'POST',
             body: JSON.stringify({
+                ...(existingShipId ? { id: existingShipId } : {}),
                 dock_id: DOCK_ID,
                 ship_name: shipName,
                 loa: loa,
@@ -268,6 +270,9 @@ document.getElementById('dockingForm').addEventListener('submit', async function
             })
         }, { success: false, message: 'Database request failed' });
 
+        if (saveResponse.success && saveResponse.ship_id) {
+            shipDetails.id = Number(saveResponse.ship_id);
+        }
         saveShipsToStorage(ships);
         displayResult(ships);
         displayShipList(ships);
@@ -635,18 +640,37 @@ document.getElementById('prevYearButton').addEventListener('click', function() {
 });
 
 // Function to delete a ship from the list
-function deleteShip(index) {
-    let ships = JSON.parse(localStorage.getItem('ships_smg')) || [];
+async function deleteShip(index) {
+    let ships = getShipsFromStorage();
+    const ship = ships[index];
+    if (ship && ship.id) {
+        const response = await apiRequest('/ships.php', {
+            method: 'DELETE',
+            body: JSON.stringify({ id: ship.id })
+        }, { success: false, message: 'Database request failed' });
+        if (!response.success) {
+            alert(`Database delete failed: ${response.message}. The browser cache was kept.`);
+            return;
+        }
+    }
     ships.splice(index, 1); // Remove the ship at the specified index
-    localStorage.setItem('ships_smg', JSON.stringify(ships)); // Update local storage
+    saveShipsToStorage(ships);
     displayShipList(ships); // Refresh the ship list
     drawRemainingSpaceChart(ships); // Redraw the remaining space chart
     populateCalendarSchedule(); // Refresh the calendar schedule
 }
 
 // Event listener for the delete all button
-document.getElementById('deleteAllButton').addEventListener('click', function() {
-    localStorage.removeItem('ships_smg'); // Clear all ships from local storage
+document.getElementById('deleteAllButton').addEventListener('click', async function() {
+    const response = await apiRequest('/ships.php', {
+        method: 'DELETE',
+        body: JSON.stringify({ dock_id: DOCK_ID })
+    }, { success: false, message: 'Database request failed' });
+    if (!response.success) {
+        alert(`Database delete failed: ${response.message}. Browser data was kept.`);
+        return;
+    }
+    saveShipsToStorage([]);
     totalLengthUsed = 0; // Reset total length used
     displayShipList([]); // Clear the ship list display
     drawRemainingSpaceChart([]); // Clear the remaining space chart

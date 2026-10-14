@@ -26,7 +26,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     }
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+    $raw = file_get_contents('php://input');
+    $data = json_decode($raw, true);
+    $shipId = is_array($data) ? (int)($data['id'] ?? 0) : 0;
+    $dockId = is_array($data) ? (int)($data['dock_id'] ?? 0) : 0;
+
+    if ($shipId <= 0 && $dockId <= 0) {
+        http_response_code(400);
+        echo json_encode(['success' => false, 'message' => 'A valid ship id or dock id is required']);
+        exit;
+    }
+
+    try {
+        if ($dockId > 0) {
+            $stmt = $pdo->prepare('DELETE FROM ships WHERE dock_id = :dock_id');
+            $stmt->execute([':dock_id' => $dockId]);
+            echo json_encode([
+                'success' => true,
+                'message' => 'Dock ships deleted successfully',
+                'deleted_count' => $stmt->rowCount()
+            ]);
+            exit;
+        }
+
+        $stmt = $pdo->prepare('DELETE FROM ships WHERE id = :id');
+        $stmt->execute([':id' => $shipId]);
+        if ($stmt->rowCount() === 0) {
+            http_response_code(404);
+            echo json_encode(['success' => false, 'message' => 'Ship not found']);
+            exit;
+        }
+
+        echo json_encode(['success' => true, 'message' => 'Ship deleted successfully']);
+    } catch (PDOException $e) {
+        http_response_code(500);
+        echo json_encode([
+            'success' => false,
+            'message' => 'Failed to delete ship',
+            'error' => $e->getMessage()
+        ]);
+    }
+    exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' || $_SERVER['REQUEST_METHOD'] === 'PUT') {
     $raw = file_get_contents('php://input');
     $data = json_decode($raw, true);
 
@@ -36,6 +80,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    $shipId = (int)($data['id'] ?? 0);
+    $isUpdate = $_SERVER['REQUEST_METHOD'] === 'PUT';
     $dockId = (int)($data['dock_id'] ?? 0);
     $shipName = trim((string)($data['ship_name'] ?? ''));
     $loaValue = $data['loa'] ?? 0;
@@ -81,6 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stayEnd = trim((string)($data['stay_end'] ?? ''));
 
     if (
+        ($isUpdate && $shipId <= 0) ||
         $dockId <= 0 ||
         $shipName === '' ||
         $loa <= 0 ||
@@ -106,12 +153,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     try {
-        $stmt = $pdo->prepare(
-            'INSERT INTO ships (dock_id, ship_name, loa, loa_max, loa_text, beam, beam_max, beam_text, draft, draft_max, draft_text, gt, gt_max, gt_text, dwt, dwt_max, dwt_text, stay_start, stay_end, schedule_date)
-             VALUES (:dock_id, :ship_name, :loa, :loa_max, :loa_text, :beam, :beam_max, :beam_text, :draft, :draft_max, :draft_text, :gt, :gt_max, :gt_text, :dwt, :dwt_max, :dwt_text, :stay_start, :stay_end, :schedule_date)'
-        );
-
-        $stmt->execute([
+        $parameters = [
             ':dock_id' => $dockId,
             ':ship_name' => $shipName,
             ':loa' => $loa,
@@ -132,12 +174,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ':stay_start' => $stayStart,
             ':stay_end' => $stayEnd,
             ':schedule_date' => $scheduleDate !== '' ? $scheduleDate : null,
-        ]);
+        ];
+
+        if ($isUpdate) {
+            $parameters[':id'] = $shipId;
+            $stmt = $pdo->prepare(
+                'UPDATE ships
+                 SET dock_id = :dock_id, ship_name = :ship_name, loa = :loa, loa_max = :loa_max,
+                     loa_text = :loa_text, beam = :beam, beam_max = :beam_max, beam_text = :beam_text,
+                     draft = :draft, draft_max = :draft_max, draft_text = :draft_text,
+                     gt = :gt, gt_max = :gt_max, gt_text = :gt_text, dwt = :dwt, dwt_max = :dwt_max,
+                     dwt_text = :dwt_text, stay_start = :stay_start, stay_end = :stay_end,
+                     schedule_date = :schedule_date
+                 WHERE id = :id'
+            );
+            $stmt->execute($parameters);
+            if ($stmt->rowCount() === 0) {
+                $check = $pdo->prepare('SELECT id FROM ships WHERE id = :id');
+                $check->execute([':id' => $shipId]);
+                if (!$check->fetch()) {
+                    http_response_code(404);
+                    echo json_encode(['success' => false, 'message' => 'Ship not found']);
+                    exit;
+                }
+            }
+        } else {
+            $stmt = $pdo->prepare(
+                'INSERT INTO ships (dock_id, ship_name, loa, loa_max, loa_text, beam, beam_max, beam_text, draft, draft_max, draft_text, gt, gt_max, gt_text, dwt, dwt_max, dwt_text, stay_start, stay_end, schedule_date)
+                 VALUES (:dock_id, :ship_name, :loa, :loa_max, :loa_text, :beam, :beam_max, :beam_text, :draft, :draft_max, :draft_text, :gt, :gt_max, :gt_text, :dwt, :dwt_max, :dwt_text, :stay_start, :stay_end, :schedule_date)'
+            );
+            $stmt->execute($parameters);
+            $shipId = (int)$pdo->lastInsertId();
+        }
 
         echo json_encode([
             'success' => true,
-            'message' => 'Ship saved successfully',
-            'ship_id' => (int)$pdo->lastInsertId()
+            'message' => $isUpdate ? 'Ship updated successfully' : 'Ship saved successfully',
+            'ship_id' => $shipId
         ]);
     } catch (PDOException $e) {
         http_response_code(500);

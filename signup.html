@@ -27,11 +27,16 @@
                 <input type="email" id="email" required>
             </div>
             <div class="input-group">
+                <label for="id">ID Number</label>
+                <input type="text" id="id" required maxlength="50">
+            </div>
+            <div class="input-group">
                 <label for="password">Password</label>
                 <input type="password" id="password" required>
             </div>
             <button type="submit" class="btn">Sign Up</button>
-            <p class="login">Already have an account? <a href="blackboc.html">Login</a></p>
+            <p id="signup-message" class="login" role="status" aria-live="polite"></p>
+            <p class="login">Already have an account? <a href="login.html">Login</a></p>
         </form>
     </div>
     <script src="blackbox.js"></script>

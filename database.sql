@@ -3,14 +3,48 @@
 CREATE TABLE IF NOT EXISTS users (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     username VARCHAR(100) NOT NULL,
+    email VARCHAR(254) NULL,
     password_hash VARCHAR(255) NOT NULL,
     id_number VARCHAR(50) NOT NULL,
     user_type ENUM('admin', 'employee', 'customer') NOT NULL DEFAULT 'employee',
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     UNIQUE KEY uq_users_username (username),
+    UNIQUE KEY uq_users_email (email),
     UNIQUE KEY uq_users_id_number (id_number)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+SET @users_email_exists = (
+    SELECT COUNT(*)
+    FROM information_schema.columns
+    WHERE table_schema = DATABASE()
+      AND table_name = 'users'
+      AND column_name = 'email'
+);
+SET @users_email_migration = IF(
+    @users_email_exists = 0,
+    'ALTER TABLE users ADD COLUMN email VARCHAR(254) NULL AFTER username',
+    'SELECT 1'
+);
+PREPARE users_email_statement FROM @users_email_migration;
+EXECUTE users_email_statement;
+DEALLOCATE PREPARE users_email_statement;
+
+SET @users_email_index_exists = (
+    SELECT COUNT(*)
+    FROM information_schema.statistics
+    WHERE table_schema = DATABASE()
+      AND table_name = 'users'
+      AND index_name = 'uq_users_email'
+);
+SET @users_email_index_migration = IF(
+    @users_email_index_exists = 0,
+    'ALTER TABLE users ADD UNIQUE KEY uq_users_email (email)',
+    'SELECT 1'
+);
+PREPARE users_email_index_statement FROM @users_email_index_migration;
+EXECUTE users_email_index_statement;
+DEALLOCATE PREPARE users_email_index_statement;
 
 CREATE TABLE IF NOT EXISTS docks (
     id INT UNSIGNED NOT NULL,
@@ -247,6 +281,35 @@ CREATE TABLE IF NOT EXISTS vessel_sales (
     PRIMARY KEY (id),
     KEY idx_vessel_sales_created_at (created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS mro_sales_records (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    vessel_name VARCHAR(150) NOT NULL,
+    sales_type VARCHAR(100) NOT NULL,
+    budget DECIMAL(15,2) NOT NULL DEFAULT 0,
+    currency CHAR(3) NOT NULL DEFAULT 'IDR',
+    target_sales_percent DECIMAL(5,2) NOT NULL DEFAULT 0,
+    project_start DATE NULL,
+    project_end DATE NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    KEY idx_mro_sales_records_created_at (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS mro_sales_weeks (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    sales_record_id INT UNSIGNED NOT NULL,
+    week_number INT UNSIGNED NOT NULL,
+    cost DECIMAL(15,2) NOT NULL DEFAULT 0,
+    PRIMARY KEY (id),
+    UNIQUE KEY uq_mro_sales_weeks_record_week (sales_record_id, week_number),
+    CONSTRAINT fk_mro_sales_weeks_record
+        FOREIGN KEY (sales_record_id) REFERENCES mro_sales_records (id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 CREATE TABLE IF NOT EXISTS workshop_bookings (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,

@@ -27,10 +27,20 @@ async function apiRequest(endpoint, options = {}, fallbackValue = null) {
         });
 
         const text = await response.text();
-        const payload = text ? JSON.parse(text) : {};
+        let payload = {};
+        if (text) {
+            try {
+                payload = JSON.parse(text);
+            } catch (error) {
+                error.status = response.status;
+                throw error;
+            }
+        }
 
         if (!response.ok) {
-            throw new Error(payload.message || 'Request failed');
+            const error = new Error(payload.message || 'Request failed');
+            error.status = response.status;
+            throw error;
         }
 
         return payload;
@@ -141,11 +151,18 @@ document.getElementById('login-form').addEventListener('submit', async function 
         throw new Error(response && response.message ? response.message : 'Invalid credentials');
     } catch (error) {
         document.getElementById('loading').style.display = 'none';
+        if (error.status) {
+            document.getElementById('feedback-message').textContent =
+                error.message || 'Database login failed. Please check your credentials.';
+            document.getElementById('feedback-message').style.color = 'red';
+            return;
+        }
         const fallbackAccount = localFallbackLogin(username, password, id, userType);
 
         if (fallbackAccount) {
-            document.getElementById('feedback-message').textContent = 'Login successful!';
-            document.getElementById('feedback-message').style.color = 'green';
+            document.getElementById('feedback-message').textContent =
+                "Database unavailable; logged in using this browser's saved account.";
+            document.getElementById('feedback-message').style.color = 'orange';
 
             setTimeout(() => {
                 if (userType === 'admin') {
@@ -172,11 +189,8 @@ document.getElementById('sign-up-form').addEventListener('submit', async functio
     const id = document.getElementById('signup-id').value.trim();
     const userType = document.getElementById('user-type-signup').value;
 
-    const isEmployeeValid = userType === 'employee' && id.length === 3 && parseInt(id[2]) % 2 !== 0;
-    const isCustomerValid = userType === 'customer' && id.length === 6 && parseInt(id[5]) % 2 === 0;
-
-    if (!isEmployeeValid && !isCustomerValid) {
-        document.getElementById('feedback-message').textContent = 'Invalid ID format for selected user type!';
+    if (!username || !password || !id || !userType) {
+        document.getElementById('feedback-message').textContent = 'Please fill in all fields.';
         document.getElementById('feedback-message').style.color = 'red';
         return;
     }
@@ -209,11 +223,18 @@ document.getElementById('sign-up-form').addEventListener('submit', async functio
         throw new Error(response && response.message ? response.message : 'Registration failed');
     } catch (error) {
         document.getElementById('loading').style.display = 'none';
+        if (error.status) {
+            document.getElementById('feedback-message').textContent =
+                error.message || 'Database registration failed.';
+            document.getElementById('feedback-message').style.color = 'red';
+            return;
+        }
         const fallbackResult = localFallbackRegister(username, password, id, userType);
 
         if (fallbackResult.success) {
-            document.getElementById('feedback-message').textContent = 'Account created successfully!';
-            document.getElementById('feedback-message').style.color = 'green';
+            document.getElementById('feedback-message').textContent =
+                `Database unavailable; account saved only in this browser. ${error.message}`;
+            document.getElementById('feedback-message').style.color = 'orange';
             setTimeout(() => {
                 window.location.href = 'login.html';
             }, 1500);

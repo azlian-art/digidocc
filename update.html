@@ -40,6 +40,7 @@
 <body>
   <div id="map"></div>
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="dock-cache.js"></script>
   <script>
     // Initialize map
     var map = L.map('map').setView([-7.197, 112.737], 16); // Default location near Dok Orca
@@ -51,11 +52,18 @@
 
     // Function to create popup content
     function generatePopupContent(title, data) {
+      const escapeHtml = value => String(value).replace(/[&<>"']/g, character => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      })[character]);
       let popupContent = `<div class="custom-popup"><b>${title}</b>`;
       popupContent += '<table class="popup-table">';
       popupContent += '<thead><tr><th>Ship Name</th><th>LOA</th><th>Status</th></tr></thead><tbody>';
       data.forEach(ship => {
-        popupContent += `<tr><td>${ship.shipName || 'N/A'}</td><td>${ship.loa || 'N/A'}</td><td>${ship.status || 'N/A'}</td></tr>`;
+        popupContent += `<tr><td>${escapeHtml(ship.shipName || 'N/A')}</td><td>${ship.loa || 'N/A'}</td><td>${escapeHtml(ship.status || 'N/A')}</td></tr>`;
       });
       popupContent += '</tbody></table></div>';
       return popupContent;
@@ -85,6 +93,49 @@
     updateShipStatus(dokOrcaData);
     updateShipStatus(dokBlugaData);
     updateShipStatus(dokSurabayaData);
+
+    async function syncDockStatusFromDatabase() {
+      try {
+        const response = await fetch('./api/ships.php');
+        const payload = await response.json();
+        if (!response.ok || !payload.success || !Array.isArray(payload.data)) {
+          throw new Error(payload.message || 'Could not load schedules from database.');
+        }
+
+        const toCacheShip = ship => ({
+          id: Number(ship.id),
+          shipName: ship.ship_name,
+          loa: Number(ship.loa),
+          stayStart: ship.stay_start,
+          stayEnd: ship.stay_end
+        });
+        const rowsForDock = dockId => payload.data
+          .filter(ship => Number(ship.dock_id) === dockId)
+          .map(toCacheShip);
+
+        dokOrcaData = window.mergeDockShipCache('ships_smg', rowsForDock(2));
+        dokBlugaData = window.mergeDockShipCache('ships', rowsForDock(1));
+        dokSurabayaData = window.mergeDockShipCache('ships_sby', rowsForDock(3));
+        localStorage.setItem('ships_smg', JSON.stringify(dokOrcaData));
+        localStorage.setItem('ships', JSON.stringify(dokBlugaData));
+        localStorage.setItem('ships_sby', JSON.stringify(dokSurabayaData));
+        updateShipStatus(dokOrcaData);
+        updateShipStatus(dokBlugaData);
+        updateShipStatus(dokSurabayaData);
+      } catch (error) {
+        console.error('Database schedule load failed; showing browser cache.', error);
+        let notice = document.getElementById('dockDatabaseNotice');
+        if (!notice) {
+          notice = document.createElement('p');
+          notice.id = 'dockDatabaseNotice';
+          notice.setAttribute('role', 'status');
+          document.body.prepend(notice);
+        }
+        notice.textContent = `Database unavailable; displaying saved browser schedules. ${error.message}`;
+      }
+    }
+
+    syncDockStatusFromDatabase();
 
     // Dok Orca coordinates
     var dokOrcaCoordinates = [
