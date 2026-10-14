@@ -1,5 +1,8 @@
 <?php
 require_once __DIR__ . '/../db.php';
+require_once __DIR__ . '/auth.php';
+
+startAppSession();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
@@ -46,6 +49,15 @@ try {
         echo json_encode(['success' => false, 'message' => 'Invalid username, ID, user type, or password']);
         exit;
     }
+
+    if (!session_regenerate_id(true)) {
+        http_response_code(500);
+        echo json_encode(['success' => false, 'message' => 'Could not establish secure login session']);
+        exit;
+    }
+    $_SESSION['user_id'] = (int)$user['id'];
+    $_SESSION['user_type'] = $user['user_type'];
+    $_SESSION['last_activity'] = time();
 
     echo json_encode([
         'success' => true,

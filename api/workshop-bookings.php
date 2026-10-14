@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../db.php';
+require_once __DIR__ . '/auth.php';
 
 function respond(int $statusCode, array $body): void
 {
@@ -7,6 +8,8 @@ function respond(int $statusCode, array $body): void
     echo json_encode($body);
     exit;
 }
+
+requireAppAccess($pdo, ['customer']);
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $requestId = trim((string)($_GET['request_id'] ?? ''));

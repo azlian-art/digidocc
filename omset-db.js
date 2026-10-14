@@ -21,7 +21,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
         const result = await response.json();
         if (!response.ok || !result.success) {
-            throw new Error(result.message || "Database request failed");
+            const error = new Error(result.message || "Database request failed");
+            error.status = response.status;
+            throw error;
         }
         return result;
     }
@@ -391,6 +393,11 @@ document.addEventListener("DOMContentLoaded", async () => {
                 : "No MRO sales records yet. Use “Add New Vessel” to create one.";
         }
     } catch (error) {
+        if (error.status === 401 || error.status === 403) {
+            window.location.replace(error.status === 401 ? "login.html" : "menu.html");
+            return;
+        }
+
         const cachedRecords = readLocalCache();
         for (const cached of cachedRecords) {
             const record = {

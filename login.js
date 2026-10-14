@@ -1,21 +1,6 @@
 
 const API_BASE = window.location.protocol === 'file:' ? 'http://localhost/digidocc/api' : './api';
 
-let accounts = JSON.parse(localStorage.getItem('accounts')) || [];
-
-function ensureLocalAdmin() {
-    const adminExists = accounts.some(acc => acc.username === 'admin' && acc.userType === 'admin');
-    if (!adminExists) {
-        accounts.push({
-            username: 'admin',
-            password: 'admin123',
-            id: 'ADM',
-            userType: 'admin'
-        });
-        localStorage.setItem('accounts', JSON.stringify(accounts));
-    }
-}
-
 async function apiRequest(endpoint, options = {}, fallbackValue = null) {
     try {
         const response = await fetch(`${API_BASE}${endpoint}`, {
@@ -52,18 +37,6 @@ async function apiRequest(endpoint, options = {}, fallbackValue = null) {
     }
 }
 
-function localFallbackLogin(username, password, id, userType) {
-    const localAccounts = JSON.parse(localStorage.getItem('accounts')) || [];
-    const account = localAccounts.find(acc =>
-        acc.username === username &&
-        acc.password === password &&
-        acc.id === id &&
-        acc.userType === userType
-    );
-
-    return account || null;
-}
-
 function localFallbackRegister(username, password, id, userType) {
     const localAccounts = JSON.parse(localStorage.getItem('accounts')) || [];
     const duplicate = localAccounts.some(acc => acc.username === username || acc.id === id);
@@ -74,8 +47,6 @@ function localFallbackRegister(username, password, id, userType) {
     localStorage.setItem('accounts', JSON.stringify(localAccounts));
     return { success: true, message: 'Account created successfully!', account: newAccount };
 }
-
-ensureLocalAdmin();
 
 document.getElementById('toggle-link').addEventListener('click', function (e) {
     e.preventDefault();
@@ -103,18 +74,7 @@ document.getElementById('login-form').addEventListener('submit', async function 
     let username = document.getElementById('login-username').value.trim();
     let password = document.getElementById('login-password').value;
     let id = document.getElementById('login-id').value.trim().toUpperCase();
-    let userType = document.getElementById('user-type-login').value;
-
-    const isAdminLogin = (
-        userType === 'employee' &&
-        username.toLowerCase() === 'admin' &&
-        password === 'admin123' &&
-        id === 'ADM'
-    );
-
-    if (isAdminLogin) {
-        userType = 'admin';
-    }
+    const userType = document.getElementById('user-type-login').value;
 
     document.getElementById('loading').style.display = 'block';
     document.getElementById('feedback-message').textContent = '';
@@ -133,15 +93,19 @@ document.getElementById('login-form').addEventListener('submit', async function 
         document.getElementById('loading').style.display = 'none';
 
         if (response && response.success) {
+            const authenticatedType = response.user?.user_type;
+            if (!['admin', 'employee', 'customer'].includes(authenticatedType)) {
+                throw new Error('Login response did not contain a valid user type');
+            }
             document.getElementById('feedback-message').textContent = 'Login successful!';
             document.getElementById('feedback-message').style.color = 'green';
 
             setTimeout(() => {
-                if (userType === 'admin') {
+                if (authenticatedType === 'admin') {
                     tampilkanPanelAdmin();
-                } else if (userType === 'employee') {
+                } else if (authenticatedType === 'employee') {
                     window.location.href = 'dashboard.html';
-                } else if (userType === 'customer') {
+                } else if (authenticatedType === 'customer') {
                     window.location.href = 'menu.html';
                 }
             }, 1000);
@@ -157,25 +121,6 @@ document.getElementById('login-form').addEventListener('submit', async function 
             document.getElementById('feedback-message').style.color = 'red';
             return;
         }
-        const fallbackAccount = localFallbackLogin(username, password, id, userType);
-
-        if (fallbackAccount) {
-            document.getElementById('feedback-message').textContent =
-                "Database unavailable; logged in using this browser's saved account.";
-            document.getElementById('feedback-message').style.color = 'orange';
-
-            setTimeout(() => {
-                if (userType === 'admin') {
-                    tampilkanPanelAdmin();
-                } else if (userType === 'employee') {
-                    window.location.href = 'dashboard.html';
-                } else if (userType === 'customer') {
-                    window.location.href = 'menu.html';
-                }
-            }, 1000);
-            return;
-        }
-
         document.getElementById('feedback-message').textContent = error.message || 'Invalid credentials. Please try again.';
         document.getElementById('feedback-message').style.color = 'red';
     }

@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../db.php';
+require_once __DIR__ . '/auth.php';
 
 function respond(int $statusCode, array $body): void
 {
@@ -16,6 +17,8 @@ function readPayload(): array
     }
     return $data;
 }
+
+requireAppAccess($pdo, ['employee']);
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     try {

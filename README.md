@@ -1,7 +1,9 @@
 
 
-## Catatan Serah Terima
+## Catatan Keamanan dan Serah Terima
 
-Sebelum situs digunakan dengan data perusahaan, tim IT perlu meninjau dan mengamankan endpoint API MRO (`/api/mro-sales.php`). Pada pemeriksaan kode, endpoint tersebut belum terlihat memiliki pemeriksaan autentikasi dan otorisasi di sisi server. Pastikan hanya pengguna yang berwenang yang dapat membaca, membuat, mengubah, atau menghapus data MRO.
+Hak akses API diperiksa di server: customer dapat membaca data docking dan mengirim/melihat permintaan workshop setelah login; hanya admin/pegawai dapat mengubah data docking; hanya pegawai dapat mengakses MRO; daftar akun hanya dapat dibaca admin. API workshop meminta login customer, termasuk untuk melihat status permintaan. Pendaftaran customer dan pegawai tetap terbuka untuk umum; akun pegawai baru langsung memperoleh akses pegawai, termasuk MRO. Siapa pun yang dapat membuka halaman pendaftaran dapat membuat akun pegawai; kebijakan ini harus disetujui perusahaan sebelum situs digunakan dengan data sungguhan. Halaman HTML statis masih dapat dibuka langsung; data dan operasi API yang dibatasi tetap ditolak oleh server.
 
-Jika pengamanan belum selesai, jangan gunakan fitur MRO dengan data sungguhan. Koordinasikan pembatasan atau penonaktifan sementara endpoint dengan tim IT/hosting agar fitur API lain tidak ikut terganggu.
+Sesi API berakhir setelah 30 menit tidak aktif. Sebelum deploy, tim IT perlu meninjau kebijakan pendaftaran, menguji penolakan API tanpa login dan akses oleh jenis akun yang tidak berwenang, serta mengonfigurasi HTTPS dan kredensial database produksi. Admin hanya dapat dibuat melalui CLI dengan variabel lingkungan `DIGIDOCC_ADMIN_USERNAME`, `DIGIDOCC_ADMIN_PASSWORD`, dan `DIGIDOCC_ADMIN_ID`; endpoint web seed admin dinonaktifkan.
+
+Jika database pernah dibuat menggunakan akun admin bawaan lama (`admin` / `admin123`), nonaktifkan atau ganti kredensial akun tersebut sebelum deploy. Jangan gunakan kembali password default.

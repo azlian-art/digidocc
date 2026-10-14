@@ -34,8 +34,10 @@ if ($email !== '' && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit;
 }
 
-if (!in_array($userType, ['admin', 'employee', 'customer'], true)) {
-    $userType = 'employee';
+if (!in_array($userType, ['employee', 'customer'], true)) {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'User type must be employee or customer']);
+    exit;
 }
 
 try {

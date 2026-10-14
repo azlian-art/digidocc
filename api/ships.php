@@ -1,5 +1,12 @@
 <?php
 require_once __DIR__ . '/../db.php';
+require_once __DIR__ . '/auth.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    requireAppAccess($pdo, ['admin', 'employee', 'customer']);
+} else {
+    requireAppAccess($pdo, ['admin', 'employee']);
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     try {
