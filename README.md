@@ -76,18 +76,4 @@ Git/VCS **tidak terhubung langsung ke server MySQL**. Git menyimpan perubahan be
    ```
 
    Jangan gunakan `git add .` sebelum memeriksa `git status`, agar dump database, file rahasia, atau berkas lain yang tidak dimaksud tidak ikut ter-commit.
-6. Di komputer tujuan, ambil perubahan kode dengan `git pull origin main`, backup database tujuan, lalu impor perubahan SQL ke database yang benar melalui phpMyAdmin. Sesuaikan `db.php` dengan konfigurasi MySQL lokal tujuan; jangan commit kredensial lokal.
-7. Verifikasi hasilnya dengan membuka endpoint API dan menjalankan kueri pemeriksaan di bagian sebelumnya.
 
-**Yang masuk Git:** `database.sql` dan berkas migrasi SQL yang sengaja dibuat, serta kode aplikasi. **Yang tidak otomatis masuk Git:** isi tabel MySQL, perubahan yang dibuat manual hanya di phpMyAdmin, dan data lokal browser (`localStorage`). Jika data kapal perlu dipindahkan, lakukan Export/Import database secara terpisah, backup terlebih dahulu, dan jangan commit dump yang berisi data operasional.
-
-## Batasan sinkronisasi yang diketahui
-
-Saat ini formulir penambahan mengirim kapal ke API MySQL, tetapi fitur **Edit**, **Del**, dan **Delete All Ships** belum menjalankan operasi update/delete pada database. Edit dapat membuat baris baru, sedangkan penghapusan hanya mengubah data lokal browser. Sinkronisasi server ke browser juga memakai data lokal sebagai fallback jika API gagal atau tidak menemukan kapal. Karena itu, perubahan edit/hapus belum tersinkron sepenuhnya dan data lokal dapat berbeda dari database. Perbaiki operasi tersebut sebelum mengandalkan fitur edit/hapus untuk data produksi.
-
-## Pemecahan masalah
-
-- **phpMyAdmin 403 pada `/phpmyadmin/`:** Laragon pada instalasi ini menggunakan `http://localhost/phpmyadmin6/`.
-- **API menampilkan `Database connection failed`:** Periksa apakah MySQL aktif dan cocokkan konfigurasi pada `db.php` dengan database/akun Laragon.
-- **API menampilkan error tabel atau kolom tidak ditemukan:** Pastikan `db_digidocc` dipilih saat mengimpor `database.sql`.
-- **Kapal hanya terlihat di halaman:** Periksa respons `/api/ships.php` dan jalankan kueri verifikasi pada bagian sebelumnya. Data lokal browser tidak membuktikan insert database berhasil.
