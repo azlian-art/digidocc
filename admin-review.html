@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workshop Booking Management | DIGIDOCC</title>
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f6fa;
+            color: #1e293b;
+        }
+
+        header {
+            background: #123456;
+            color: white;
+            padding: 22px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        header h1 { margin: 0; font-size: 22px; }
+
+        header a {
+            color: white;
+            text-decoration: none;
+            border: 1px solid #ffffff80;
+            padding: 9px 14px;
+            border-radius: 6px;
+        }
+
+        main {
+            width: 94%;
+            max-width: 1500px;
+            margin: 28px auto;
+        }
+
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+
+        .toolbar h2 { margin: 0; }
+
+        button, select {
+            padding: 10px 13px;
+            border: 0;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .refresh { background: #123456; color: white; }
+        .approve { background: #15803d; color: white; }
+        .reject { background: #b91c1c; color: white; }
+        button:disabled { opacity: .5; cursor: not-allowed; }
+
+        .table-wrap {
+            background: white;
+            border-radius: 10px;
+            overflow: auto;
+            box-shadow: 0 3px 14px #0000000d;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            min-width: 1150px;
+        }
+
+        th, td {
+            padding: 13px 14px;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: left;
+            vertical-align: top;
+            font-size: 13px;
+        }
+
+        th { background: #eaf0f7; }
+        .status {
+            display: inline-block;
+            padding: 5px 8px;
+            border-radius: 20px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .pending { background: #fef3c7; color: #92400e; }
+        .approved { background: #dcfce7; color: #166534; }
+        .rejected { background: #fee2e2; color: #991b1b; }
+
+        .actions { display: flex; gap: 7px; }
+        #message { margin: 14px 0; font-size: 14px; }
+        .error { color: #b91c1c; }
+        .success { color: #15803d; }
+        .muted { color: #64748b; }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 18px; }
+            main { width: 96%; }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>DIGIDOCC — Workshop Bookings</h1>
+    <a href="homepage.html">Back to Homepage</a>
+</header>
+
+<main>
+    <div class="toolbar">
+        <h2>Booking Requests</h2>
+        <button class="refresh" id="refreshBtn" onclick="loadBookings()">Refresh List</button>
+    </div>
+
+    <p id="message" aria-live="polite">Loading booking requests...</p>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Request ID</th>
+                    <th>Company / Contact</th>
+                    <th>Vessel</th>
+                    <th>Workshop Service</th>
+                    <th>Planned Start</th>
+                    <th>Duration</th>
+                    <th>Scope of Work</th>
+                    <th>Status</th>
+                    <th>Rejection Reason</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="bookingRows">
+                <tr><td colspan="10">Loading...</td></tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<script>
+const API_URL = 'api/admin-review.php';
+
+const messageEl = document.getElementById('message');
+const rowsEl = document.getElementById('bookingRows');
+const refreshBtn = document.getElementById('refreshBtn');
+
+function showMessage(message, type = '') {
+    messageEl.textContent = message;
+    messageEl.className = type;
+}
+
+function makeCell(value) {
+    const td = document.createElement('td');
+    td.textContent = value === null || value === undefined || value === ''
+        ? '—'
+        : String(value);
+    return td;
+}
+
+function statusBadge(status) {
+    const span = document.createElement('span');
+    span.className = 'status';
+
+    if (status === 'Approved') span.classList.add('approved');
+    else if (status === 'Rejected') span.classList.add('rejected');
+    else span.classList.add('pending');
+
+    span.textContent = status || 'Unknown';
+    return span;
+}
+
+async function loadBookings() {
+    refreshBtn.disabled = true;
+    showMessage('Loading booking requests...');
+    rowsEl.replaceChildren();
+
+    try {
+        const response = await fetch(API_URL, {
+            method: 'GET',
+            credentials: 'same-origin',
+            headers: { 'Accept': 'application/json' }
+        });
+
+        const result = await response.json();
+
+        if (!response.ok || !result.success) {
+            throw new Error(result.message || 'Unable to load bookings.');
+        }
+
+        const bookings = Array.isArray(result.data) ? result.data : [];
+
+        if (bookings.length === 0) {
+            rowsEl.appendChild(makeEmptyRow('No workshop bookings found.'));
+            showMessage('No booking requests found.');
+            return;
+        }
+
+        bookings.forEach(booking => {
+            const tr = document.createElement('tr');
+
+            tr.appendChild(makeCell(booking.request_id));
+            tr.appendChild(makeCell(
+                `${booking.company_name || '—'}\n${booking.contact_person || '—'}\n${booking.email || '—'}`
+            ));
+            tr.appendChild(makeCell(
+                `${booking.vessel_name || '—'}\n${booking.vessel_type || ''}`
+            ));
+            tr.appendChild(makeCell(
+                `${booking.service_name || '—'}\n${booking.facility || ''}`
+            ));
+            tr.appendChild(makeCell(booking.planned_start_date));
+            tr.appendChild(makeCell(
+                booking.duration_days ? `${booking.duration_days} days` : '—'
+            ));
+            tr.appendChild(makeCell(booking.scope_of_work));
+
+            const statusCell = document.createElement('td');
+            statusCell.appendChild(statusBadge(booking.status));
+            tr.appendChild(statusCell);
+
+            tr.appendChild(makeCell(booking.rejection_reason));
+
+            const actionCell = document.createElement('td');
+            const actions = document.createElement('div');
+            actions.className = 'actions';
+
+            if (booking.status === 'Under Review') {
+                const approveBtn = document.createElement('button');
+                approveBtn.className = 'approve';
+                approveBtn.textContent = 'Approve';
+                approveBtn.addEventListener('click', () => {
+                    decideBooking(booking.request_id, 'Approved');
+                });
+
+                const rejectBtn = document.createElement('button');
+                rejectBtn.className = 'reject';
+                rejectBtn.textContent = 'Reject';
+                rejectBtn.addEventListener('click', () => {
+                    decideBooking(booking.request_id, 'Rejected');
+                });
+
+                actions.append(approveBtn, rejectBtn);
+            } else {
+                actions.textContent = 'Decision saved';
+                actions.className = 'muted';
+            }
+
+            actionCell.appendChild(actions);
+            tr.appendChild(actionCell);
+            rowsEl.appendChild(tr);
+        });
+
+        showMessage(`Loaded ${bookings.length} booking request(s).`, 'success');
+    } catch (error) {
+        rowsEl.appendChild(makeEmptyRow('Could not load bookings.'));
+        showMessage(
+            `${error.message} Make sure you are logged in as an admin or employee.`,
+            'error'
+        );
+    } finally {
+        refreshBtn.disabled = false;
+    }
+}
+
+function makeEmptyRow(text) {
+    const tr = document.createElement('tr');
+    const td = document.createElement('td');
+    td.colSpan = 10;
+    td.textContent = text;
+    tr.appendChild(td);
+    return tr;
+}
+
+async function decideBooking(requestId, status) {
+    let reason = '';
+
+    if (status === 'Rejected') {
+        reason = window.prompt('Enter the reason for rejecting this booking:');
+
+        if (reason === null) return;
+
+        reason = reason.trim();
+
+        if (!reason) {
+            showMessage('A rejection reason is required.', 'error');
+            return;
+        }
+
+        if (reason.length > 1000) {
+            showMessage('The reason must not exceed 1000 characters.', 'error');
+            return;
+        }
+    } else {
+        const confirmed = window.confirm(
+            `Approve booking ${requestId}?`
+        );
+        if (!confirmed) return;
+    }
+
+    try {
+        showMessage(`Saving decision for ${requestId}...`);
+
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                request_id: requestId,
+                status: status,
+                reason: reason
+            })
+        });
+
+        const result = await response.json();
+
+        if (!response.ok || !result.success) {
+            throw new Error(result.message || 'Unable to save decision.');
+        }
+
+        showMessage(
+            `Booking ${requestId} successfully updated to ${status}.`,
+            'success'
+        );
+
+        await loadBookings();
+    } catch (error) {
+        showMessage(error.message, 'error');
+    }
+}
+
+loadBookings();
+</script>
+</body>
+</html>

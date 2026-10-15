@@ -337,6 +337,7 @@ CREATE TABLE IF NOT EXISTS workshop_bookings (
     scope_of_work TEXT NOT NULL,
     capabilities TEXT NULL,
     notes TEXT NULL,
+    rejection_reason TEXT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
@@ -344,3 +345,19 @@ CREATE TABLE IF NOT EXISTS workshop_bookings (
     KEY idx_workshop_bookings_status_created_at (status, created_at),
     KEY idx_workshop_bookings_email (email)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+SET @workshop_rejection_reason_exists = (
+    SELECT COUNT(*)
+    FROM information_schema.columns
+    WHERE table_schema = DATABASE()
+      AND table_name = 'workshop_bookings'
+      AND column_name = 'rejection_reason'
+);
+SET @workshop_rejection_reason_migration = IF(
+    @workshop_rejection_reason_exists = 0,
+    'ALTER TABLE workshop_bookings ADD COLUMN rejection_reason TEXT NULL AFTER notes',
+    'SELECT 1'
+);
+PREPARE workshop_rejection_reason_statement FROM @workshop_rejection_reason_migration;
+EXECUTE workshop_rejection_reason_statement;
+DEALLOCATE PREPARE workshop_rejection_reason_statement;
